@@ -180,8 +180,56 @@ class CSVImport {
 
 			printf( '<p>--- Created day: %s</p>', get_the_title( $chapter ) );
 
+
 			$study_part_keys = array( 'Memory Verse', 'Title', 'Devo Thought', 'Say What?', 'So What?', 'Now What?', 'Then What?' );
 			$menu_order      = 0;
+
+			wp_insert_post( array(
+				'post_status'  => 'publish',
+				'post_type'    => 'sc_study',
+				'post_content' => "<h3>Journal</h3><p>Use the questions in this section to reflect on the experiences, questions, and conclusions currently present in your life. These answers are private… nobody else can see them.</p>",
+				'menu_order'   => $menu_order ++,
+				'post_parent'  => $chapter,
+				'meta_input'   => array(
+					'_sc_data_type' => 'content',
+				),
+			) );
+
+			wp_insert_post( array(
+				'post_status'  => 'publish',
+				'post_type'    => 'sc_study',
+				'post_content' => "What <strong>experiences</strong> have you faced in the last 24 hours?",
+				'menu_order'   => $menu_order ++,
+				'post_parent'  => $chapter,
+				'meta_input'   => array(
+					'_sc_data_type' => 'question_short',
+					'_sc_privacy'   => 'private'
+				),
+			) );
+
+			wp_insert_post( array(
+				'post_status'  => 'publish',
+				'post_type'    => 'sc_study',
+				'post_content' => "What <strong>questions</strong> do you find yourself asking?",
+				'menu_order'   => $menu_order ++,
+				'post_parent'  => $chapter,
+				'meta_input'   => array(
+					'_sc_data_type' => 'question_short',
+					'_sc_privacy'   => 'private'
+				),
+			) );
+
+			wp_insert_post( array(
+				'post_status'  => 'publish',
+				'post_type'    => 'sc_study',
+				'post_content' => "What <strong>conclusions</strong> are you coming to about yourself and others?",
+				'menu_order'   => $menu_order ++,
+				'post_parent'  => $chapter,
+				'meta_input'   => array(
+					'_sc_data_type' => 'question_short',
+					'_sc_privacy'   => 'private'
+				),
+			) );
 
 			foreach( $study_part_keys as $key ) {
 
