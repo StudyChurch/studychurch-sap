@@ -1,0 +1,20 @@
+{
+    "name": "studychurch/sap",
+    "description": "StudyChurch child theme for SimplyAPilgrim",
+    "type": "wordpress-theme",
+    "require": {
+        "webdevstudios/cmb2": "^2.4"
+    },
+    "license": "GPL2",
+    "authors": [
+        {
+            "name": "Tanner Moushey",
+            "email": "tanner@iwitnessdesign.com"
+        }
+    ],
+    "autoload" : {
+        "psr-4" : {
+            "StudyChurchSAP\\" : "inc/"
+        }
+    }
+}
