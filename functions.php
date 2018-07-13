@@ -44,11 +44,11 @@ class SCV_Setup {
 	 */
 	protected function add_actions() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		add_action( 'wp_footer', array( $this, 'reftagger' ) );
 	}
 
 	protected function add_filters() {
 		add_filter( 'sc_everyone_can_add_studies', '__return_false' );
-		add_filter( 'sc_study_show_print', '__return_false' );
 		add_filter( 'sc_froala_key', array( $this, 'froala_key' ) );
 	}
 
@@ -80,5 +80,15 @@ class SCV_Setup {
 
 	public static function is_dev() {
 		return ( defined( 'WP_DEBUG' ) && WP_DEBUG );
+	}
+
+	public function reftagger() {
+		?>
+		<script src="https://www.biblegateway.com/public/link-to-us/tooltips/bglinks.js" type="text/javascript"></script>
+		<script type="text/javascript">
+          BGLinks.version = 'ASV';
+          BGLinks.linkVerses();
+		</script>
+		<?php
 	}
 }
