@@ -46,15 +46,18 @@ class SCV_Email_Answers {
 
 		$user = wp_get_current_user();
 		?>
-		<hr />
-		<p>Email these answers to:</p>
-		<form action="" method="post" class="ajax-form">
-			<input type="email" name="email" value="<?php echo $user->user_email; ?>" />
-			<input type="hidden" name="action" value="email_answers" />
-			<input type="hidden" name="chapter_id" value="<?php the_ID(); ?>" />
-			<?php wp_nonce_field( 'sc_email_answers', 'sc_email_answers_nonce' ); ?>
-			<input type="submit" class="button expand small" value="<?php _e( 'Email Answers', 'sc' ); ?>" />
-		</form>
+		<div class="no-print">
+			<hr />
+			<p>Email these answers to:</p>
+			<form action="" method="post" class="ajax-form">
+				<input type="email" name="email" value="<?php echo $user->user_email; ?>" />
+				<input type="hidden" name="action" value="email_answers" />
+				<input type="hidden" name="chapter_id" value="<?php the_ID(); ?>" />
+				<?php wp_nonce_field( 'sc_email_answers', 'sc_email_answers_nonce' ); ?>
+				<input type="submit" class="button expand small" value="<?php _e( 'Email Answers', 'sc' ); ?>" />
+			</form>
+		</div>
+
 		<?php
 	}
 
