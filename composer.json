@@ -3,7 +3,8 @@
     "description": "StudyChurch child theme for SimplyAPilgrim",
     "type": "wordpress-theme",
     "require": {
-        "webdevstudios/cmb2": "^2.4"
+        "webdevstudios/cmb2": "^2.4",
+        "a5hleyrich/wp-background-processing": "^1.0"
     },
     "license": "GPL2",
     "authors": [

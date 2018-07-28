@@ -37,6 +37,7 @@ class SCV_Setup {
 		require_once get_stylesheet_directory() . '/inc/email-answers.php';
 
 		StudyChurchSAP\CSVImport::get_instance();
+		StudyChurchSAP\AutoAssignments::get_instance();
 	}
 
 	/**
