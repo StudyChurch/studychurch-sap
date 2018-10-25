@@ -47,7 +47,7 @@ let vm = new Vue({
     userData: getUserData(),
   },
   created() {
-    this.$http.defaults.baseURL = 'https://scpilgrim.local';
+    this.$http.defaults.baseURL = window.location.protocol + '//' + window.location.host;
     this.$http.defaults.headers.common['X-WP-NONCE'] = this.$cookies.get( '_wpnonce' );
 
     this.$http.interceptors.response.use(function (response) {
@@ -60,7 +60,7 @@ let vm = new Vue({
     });
 
     this.$http
-      .post('https://scpilgrim.local/wp-json/studychurch/v1/authenticate', {})
+      .post('/wp-json/studychurch/v1/authenticate', {})
       .then(response => {
         setAccessToken(response.data.token);
         setUserData(response.data.user);

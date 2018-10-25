@@ -46,6 +46,17 @@ eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// lo
 
 /***/ }),
 
+/***/ "./src/assets/img/emilyz.jpg":
+/*!***********************************!*\
+  !*** ./src/assets/img/emilyz.jpg ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"img/emilyz.9fcf69e5.jpg\";//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvYXNzZXRzL2ltZy9lbWlseXouanBnLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vc3JjL2Fzc2V0cy9pbWcvZW1pbHl6LmpwZz9mMDQzIl0sInNvdXJjZXNDb250ZW50IjpbIm1vZHVsZS5leHBvcnRzID0gX193ZWJwYWNrX3B1YmxpY19wYXRoX18gKyBcImltZy9lbWlseXouOWZjZjY5ZTUuanBnXCI7Il0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/assets/img/emilyz.jpg\n");
+
+/***/ }),
+
 /***/ "./src/pages/Dashboard/Pages/Lock.vue":
 /*!********************************************!*\
   !*** ./src/pages/Dashboard/Pages/Lock.vue ***!

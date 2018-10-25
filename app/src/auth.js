@@ -12,7 +12,7 @@ let router = new Router({
 export function login(username, password, redirect = true) {
 
   axios
-    .post('https://scpilgrim.local/wp-json/studychurch/v1/authenticate', {
+    .post('/wp-json/studychurch/v1/authenticate', {
       username,
       password
     } )
