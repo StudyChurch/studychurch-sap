@@ -51,6 +51,7 @@ class SCV_Setup {
 	protected function add_filters() {
 		add_filter( 'sc_everyone_can_add_studies', '__return_false' );
 		add_filter( 'sc_froala_key', array( $this, 'froala_key' ) );
+		add_filter( 'template_include', array( $this, 'app_template' ) );
 	}
 
 	/**
@@ -91,5 +92,22 @@ class SCV_Setup {
           BGLinks.linkVerses();
 		</script>
 		<?php
+	}
+
+	public function app_template( $template ) {
+
+		if ( ! is_user_logged_in() ) {
+			return $template;
+		}
+
+		if ( in_array( $_SERVER['REQUEST_URI'], array( '/' ) ) ) {
+			return get_stylesheet_directory() . '/app.php';
+		}
+
+		if ( strpos( $_SERVER['REQUEST_URI'], 'groups/' ) || strpos( $_SERVER['REQUEST_URI'], 'studies/' ) ) {
+			return get_stylesheet_directory() . '/app.php';
+		}
+
+		return $template;
 	}
 }
