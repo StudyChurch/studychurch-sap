@@ -80,7 +80,7 @@
           <div class="table-responsive">
             <n-table :data="$root.$data.userData.groups">
               <template slot-scope="{row}">
-                <td><a :href=row.link>{{row.name}}</a></td>
+                <td><router-link :to="$root.cleanLink(row.link)">{{row.name}}</router-link></td>
                 <td class="text-right">
                   <!--{{row.members}} <i class="now-ui-icons users_single-02"></i>-->
                 </td>
@@ -110,7 +110,7 @@
           <div class="table-responsive">
             <n-table :data="studyData">
               <template slot-scope="{row}">
-                <td><a :href=row.link>{{row.title.rendered}}</a></td>
+                <td><router-link :to="$root.cleanLink(row.link)">{{row.title.rendered}}</router-link></td>
               </template>
             </n-table>
           </div>

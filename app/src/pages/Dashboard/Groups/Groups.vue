@@ -34,7 +34,7 @@
           <div class="table-responsive">
             <n-table :data="groupData.studies">
               <template slot-scope="{row}">
-                <td><a :href=row.link>{{row.title}}</a></td>
+                <td><router-link :to="$root.cleanLink(row.link)">{{row.title}}</router-link></td>
               </template>
             </n-table>
           </div>

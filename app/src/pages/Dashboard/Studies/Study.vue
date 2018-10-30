@@ -1,86 +1,44 @@
 <template>
-  <div>
+	<div>
 
-    <div class="row">
-      <div class="col-lg-4">
-        <card class="card-user">
-          <div slot="image" class="image">
-            <img src="@/assets/img/bg5.jpg" alt="...">
-          </div>
-          <div>
-            <div class="author">
-              <a href="#">
-                <img class="avatar border-gray" :src="groupData.avatar_urls.full" alt="...">
-                <h5 class="title">{{groupData.name}}</h5>
-              </a>
-              <p class="description" v-html="groupData.description.rendered"></p>
-            </div>
-          </div>
-        </card>
+		<div class="row">
+			<div class="col-md-9 ml-auto mr-auto">
+				<div class="card" v-loading="loading">
+					<div class="card-header">
+						<div>
+							<h5 class="title" v-html="studyData.title.rendered">Now Ui Table Heading</h5>
+							<h1 class="title" v-html="chapterData.title.rendered">Now Ui Table Heading</h1>
+						</div>
+					</div>
+				</div>
 
-        <card class="card-chart" no-footer-line>
+				<div class="card" v-for="data in chapterData.elements">
+					<div class="card-body" v-html="data.content.rendered"></div>
+					<div  v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
+						<img class="avatar border-gray" :src="$root.$data.userData.avatar.full" alt="..."><el-input
+							type="textarea"
+							autosize
+							placeholder="Please input">
+						</el-input>
+					</div>
+				</div>
 
-          <div slot="header">
-            <h2 class="card-title">Studies</h2>
-            <drop-down :hide-arrow="true" position="right">
-              <n-button slot="title" class="dropdown-toggle no-caret" round simple icon>
-                <i class="now-ui-icons loader_gear"></i>
-              </n-button>
+					<div>
+						<router-link v-if="prevChapter.id" :to="$root.cleanLink(prevChapter.link)" tag="button" class="btn btn-default">
+							<span v-html="prevChapter.title.rendered"></span>
+							<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-right"></i></span>
+						</router-link>
+						<router-link v-if="nextChapter.id" :to="$root.cleanLink(nextChapter.link)" tag="button" class="btn btn-default">
+							<span v-html="nextChapter.title.rendered"></span>
+							<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-right"></i></span>
+						</router-link>
+					</div>
+				</div>
 
-              <a class="dropdown-item" href="#">Add a Study</a>
-            </drop-down>
-          </div>
+			</div>
+		</div>
 
-          <div class="table-responsive">
-            <n-table :data="groupData.studies">
-              <template slot-scope="{row}">
-                <td><a :href=row.link>{{row.title}}</a></td>
-              </template>
-            </n-table>
-          </div>
-
-          <div slot="footer" class="stats">
-            <i :class="this.loadingStudies ? 'now-ui-icons arrows-1_refresh-69 spin' : 'now-ui-icons arrows-1_refresh-69'"></i> Just Updated
-          </div>
-
-        </card>
-      </div>
-
-      <div class="col-lg-8">
-
-        <h3 class="title mt-4 text-center">Upcoming Todos</h3>
-        <card no-footer-line>
-          <ul slot="raw-content" class="list-group list-group-flush">
-            <li v-for="data in todoData" :class="'list-group-item'">
-              &nbsp;
-              <h6>Due Date: {{data.date}}</h6>
-              <p v-for="lesson in data.lessons">
-                <i class="now-ui-icons design_bullet-list-67"></i>&nbsp; <span v-html="lesson.title"></span>
-              </p>
-              <p v-html="data.content"></p>
-            </li>
-          </ul>
-          <div slot="footer" class="stats">
-            <i :class="this.loadingTodos ? 'now-ui-icons arrows-1_refresh-69 spin' : 'now-ui-icons arrows-1_refresh-69'"></i> Just Updated
-          </div>
-        </card>
-
-        <h3 class="title mt-4 text-center">Activity</h3>
-        <time-line type="simple">
-          <time-line-item v-for="activity in activityData" inverted="" :badge-type="getActivityBadgeType(activity.type)" :badge-image="activity.user_avatar.thumb">
-            <h6 slot="header" v-html="activity.title"></h6>
-            <p slot="content" v-html="activity.content.rendered"></p>
-
-            <h6 slot="footer">
-              <i class="ti-time"></i>
-              {{activity.date}}
-            </h6>
-          </time-line-item>
-        </time-line>
-      </div>
-    </div>
-
-  </div>
+	</div>
 </template>
 <script>
   import {
@@ -103,17 +61,33 @@
     },
     data() {
       return {
-        loadingGroups: false,
-        loadingStudies: false,
-        loadingActivity: true,
-        loadingTodos: true,
-        todoData: [],
-        groupData: {
-          id: 0,
-          name: '',
-          slug: '',
+        loading: true,
+        todoData    : [],
+        prevChapter : [],
+        nextChapter : [],
+        chapters    : [],
+        chapterData : {
+          id      : 0,
+          title   : {
+            rendered: '',
+          },
+          elements: [
+            {
+              content: {
+                rendered: ''
+              }
+            }
+          ],
+        },
+        studyData   : {
+          id         : 0,
+          name       : '',
+          slug       : '',
+          title      : {
+            rendered: ''
+          },
           avatar_urls: {
-            full: '',
+            full : '',
             thumb: ''
           },
           description: {
@@ -123,62 +97,61 @@
         activityData: [],
       }
     },
-    created() {
-      for ( let i = 0; i < this.$root.$data.userData.groups.length; i ++ ) {
-        if ( this.$route.params.slug === this.$root.$data.userData.groups[i].slug ) {
-          this.groupData = this.$root.$data.userData.groups[i];
-          break;
-        }
-      }
-
-      if ( this.groupData.id ) {
-        this.getCurrentGroup();
-      } else {
-        this.getGroupTodos();
-        this.getGroupActivity();
+    mounted() {
+      this.getCurrentStudy();
+      this.getChapterItems();
+      this.getStudyChapters();
+    },
+	watch : {
+      '$route' (to, from) {
+        this.getChapterItems();
       }
     },
-    computed : {},
-    methods : {
-      getCurrentGroup () {
+    computed  : {},
+    methods   : {
+      getCurrentStudy () {
         this.$http
           .get(
-            '/wp-json/buddypress/v1/groups/' + this.$route.params.slug)
+            '/wp-json/studychurch/v1/studies/?status=any&slug[]=' + this.$route.params.study)
           .then(response => {
-            console.log( response );
-            this.groupData = response.data[0];
-            this.getGroupTodos();
-            this.getGroupActivity();
+            console.log(response);
+            this.studyData = response.data[0];
           })
-          .finally(() => this.loadingTodos = false)
+          .finally(() => this.loading = false)
       },
-      getActivityBadgeType (type) {
-        switch(type) {
-          case 'activity_comment' :
-            return 'info';
-          default:
-            return 'success';
+      getStudyChapters () {
+        this.$http
+          .get(
+            '/wp-json/studychurch/v1/studies/' + this.$route.params.study + '/chapters')
+          .then(response => {
+            console.log(response);
+            this.chapters = response.data;
+            this.getChapterItems();
+          })
+          .finally(() => this.loading = false)
+      },
+      getChapterItems () {
+		let i = 0;
+
+        for (i = 0; i < this.chapters.length; i++) {
+          if (undefined === this.$route.params.chapter || this.chapters[i].slug === this.$route.params.chapter) {
+            this.chapterData = this.chapters[i];
+            break;
+          }
         }
-      },
-      getGroupTodos () {
-        this.loadingTodos = true;
-        this.$http
-          .get(
-            '/wp-json/studychurch/v1/assignments?group_id=' + this.groupData.id)
-          .then(response => (
-            this.todoData = response.data
-          ))
-          .finally(() => this.loadingTodos = false)
-      },
-      getGroupActivity () {
-        this.loadingActivity = true;
-        this.$http
-          .get(
-            '/wp-json/buddypress/v1/activity?show_hidden=true&per_page=50&primary_id=' + this.groupData.id )
-          .then(response => (
-            this.activityData = response.data
-          ))
-          .finally(() => this.loadingActivity = false)
+
+        if (i > this.chapters.length) {
+          return;
+        }
+
+        if (i > 0) {
+          this.prevChapter = this.chapters[i - 1];
+        }
+
+        if (i < this.chapters.length) {
+          this.nextChapter = this.chapters[i + 1];
+        }
+
       }
     }
   }

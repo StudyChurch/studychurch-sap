@@ -70,6 +70,9 @@ let vm = new Vue({
   methods : {
     updateUserData (data) {
       this.userData = data;
+    },
+    cleanLink (link) {
+      return link.replace(window.location.protocol + '//' + window.location.host, '');
     }
   }
 

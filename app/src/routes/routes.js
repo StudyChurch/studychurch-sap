@@ -28,7 +28,7 @@ const routes = [
         components: {default: Dashboard, header: DefaultHeader}
       },
       {
-        path      : 'studies/:study/:chapter',
+        path      : 'studies/:study/:chapter?',
         name      : 'Studies',
         components: {default: Study, header: DefaultHeader}
       },

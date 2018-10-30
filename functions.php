@@ -104,7 +104,11 @@ class SCV_Setup {
 			return get_stylesheet_directory() . '/app.php';
 		}
 
-		if ( strpos( $_SERVER['REQUEST_URI'], 'groups/' ) || strpos( $_SERVER['REQUEST_URI'], 'studies/' ) ) {
+		if ( strpos( $_SERVER['REQUEST_URI'], 'groups/' ) ) {
+			return get_stylesheet_directory() . '/app.php';
+		}
+
+		if ( strpos( $_SERVER['REQUEST_URI'], 'studies/' ) ) {
 			return get_stylesheet_directory() . '/app.php';
 		}
 
