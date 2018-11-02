@@ -143,6 +143,7 @@
 
         if (this.groupData.id) {
           this.getCurrentGroup();
+          this.$root.setCurrentGroup(this.groupData.id);
         } else {
           this.getGroupTodos();
           this.getGroupActivity();
@@ -153,8 +154,8 @@
           .get(
             '/wp-json/buddypress/v1/groups/' + this.$route.params.slug)
           .then(response => {
-            console.log( response );
             this.groupData = response.data[0];
+            this.$root.setCurrentGroup(this.groupData.id);
             this.getGroupTodos();
             this.getGroupActivity();
           })

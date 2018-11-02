@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import DashboardPlugin from './dashboard-plugin'
 import Axios from 'axios'
+import DateFilter from './filters/date';
 
 // Plugins
 import App from './App.vue'
@@ -26,16 +27,12 @@ const router = new VueRouter({
   mode: 'history'
 });
 
-let globalData = {
-  userData: getUserData(),
-  setUserData(data) {
-    this.userData = data;
-  }
-};
-
 let mixin = {
   methods: {}
 };
+
+// Filters
+Vue.filter('dateFormat', DateFilter);
 
 /* eslint-disable no-new */
 let vm = new Vue({
@@ -68,6 +65,17 @@ let vm = new Vue({
       });
   },
   methods : {
+    setCurrentGroup (groupID) {
+      this.userData.currentGroup = groupID;
+      setUserData( this.userData );
+    },
+    getCurrentGroup () {
+      if ( undefined === this.userData.currentGroup ) {
+        return 0;
+      }
+
+      return this.userData.currentGroup;
+    },
     updateUserData (data) {
       this.userData = data;
     },
