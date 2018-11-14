@@ -3,21 +3,21 @@
 
 		<div class="row">
 			<div class="col-md-9 ml-auto mr-auto">
-				<div class="card" v-loading="loading">
+				<card v-loading="loading">
 					<div class="card-header">
 						<div>
 							<h5 class="title" v-html="studyData.title.rendered"></h5>
 							<h1 class="title" v-html="chapterData.title.rendered"></h1>
 						</div>
 					</div>
-				</div>
+				</card>
 
-				<div class="card" v-for="data in chapterData.elements">
+				<card v-for="data in chapterData.elements" :id="'post-' + data.id">
 					<div class="card-body" v-html="data.content.rendered"></div>
 					<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
-						<sc-question :questionData="data"></sc-question>
+						<answer :questionData="data"></answer>
 					</div>
-				</div>
+				</card>
 
 				<div>
 					<router-link v-if="prevChapter.id" :to="$root.cleanLink(prevChapter.link)" tag="button" class="btn btn-default">
@@ -45,7 +45,7 @@
     TimeLineItem
   } from 'src/components';
 
-  import scQuestion from './Elements/scQuestion.vue';
+  import Answer from './Elements/Answer.vue';
 
   export default {
     components: {
@@ -55,7 +55,7 @@
       AnimatedNumber,
       TimeLine,
       TimeLineItem,
-      scQuestion
+      Answer
     },
     data() {
       return {
