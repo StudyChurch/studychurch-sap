@@ -1,5 +1,5 @@
 <template>
-	<div class="sc-question">
+	<div class="sc-answer">
 		<img class="avatar border-gray" :src="$root.$data.userData.avatar.full" alt="..." style="position: absolute;">
 		<div class="el-textarea" @mouseenter="hovering = true" @mouseleave="hovering = false" style="width: calc( 100% - 40px );margin-left: 40px;">
 			<textarea
@@ -15,25 +15,46 @@
 				ref="textarea"
 				v-bind="$attrs"
 				:style="textareaStyle"
-				@focus="handleFocus"
-				@blur="handleBlur"
 				@change="handleChange"
 				:aria-label="label"
 				placeholder="Enter your answer..."
+				:name="'question_' + questionData.id"
 			>
 			</textarea>
 			<div v-show="answer.content.raw" @click="handleEditAnswer" style="cursor: pointer;">
-				<div class="category">{{ answer.date | dateFormat }} | Your Answer</div>
-				<p style="white-space: pre;" v-html="answer.content.raw"></p></div>
+				<div class="category">{{ answer.date | dateFormat }} | <a href="#">Edit Your Answer</a></div>
+				<p style="white-space: pre-wrap;" v-html="answer.content.raw"></p>
+			</div>
+		</div>
+
+		<div v-if="groupAnswers.length" class="sc-answer--group" style="margin-top:1rem;">
+			<hr />
+			<div v-for="gAnswer in groupAnswers" class="sc-question--group-answers--answer" style="padding-left: 40px;position:relative;">
+				<img class="avatar border-gray" :src="gAnswer.user_avatar.full" alt="..." style="position: absolute;left:0;">
+				<div class="category">{{ gAnswer.date | dateFormat }} | {{ gAnswer._embedded.user[0].name }} Answered</div>
+				<p style="white-space: pre-wrap;" v-html="gAnswer.content.raw"></p>
+
+				<div v-for="comment in gAnswer.comments" class="sc-answer--comment">
+					<img class="avatar border-gray" :src="comment.user_avatar.full" alt="..." style="position: absolute;left:0;">
+					<p style="white-space: pre-wrap;" v-html="comment.content.raw"></p>
+				</div>
+
+				<answer-comment></answer-comment>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
   import calcTextareaHeight from 'element-ui/packages/input/src/calcTextareaHeight';
   import merge from 'element-ui/src/utils/merge';
+  import AnswerComment from './AnswerComment.vue';
 
   export default {
-    name: 'sc-question',
+    name: 'sc-answer',
+
+	components: {
+      AnswerComment
+	},
 
     data() {
       return {
@@ -43,6 +64,7 @@
             raw: ''
           }
         },
+        groupAnswers          : [],
         currentValue          : this.value === undefined || this.value === null
           ? ''
           : this.value,
@@ -80,14 +102,10 @@
         this.setCurrentValue(val);
       },
       '$route' () {
-        this.answer = {
-          date   : 0,
-          content: {
-            raw: ''
-          }
-        };
+        this.resetAnswer();
+        this.resetGroupAnswers();
 
-        this.getAnswer();
+        this.getGroupAnswers();
       }
     },
 
@@ -116,13 +134,6 @@
         let date = new Date();
         this.answer.date = date.toISOString();
         this.answer.content.raw = this.currentValue;
-        return;
-        this.answer = '<p>' + this.currentValue.split(/\n+/).join('</p>\n<p>') + '</p>';
-      },
-      select() {
-        (
-          this.$refs.textarea
-        ).select();
       },
       resizeTextarea() {
         if (this.$isServer) return;
@@ -141,6 +152,10 @@
       handleEditAnswer(event) {
         this.currentValue = this.answer.content.raw;
         this.answer.content.raw = '';
+        this.$nextTick(() => {
+          this.$refs.textarea.focus();
+        })
+
       },
       handleFocus(event) {
         this.focused = true;
@@ -183,29 +198,41 @@
         this.setCurrentValue('');
         this.focus();
       },
-      getAnswer() {
+      getGroupAnswers() {
         this.$http
           .get(
-            '/wp-json/studychurch/v1/answers/?context=edit&per_page=1&post[]=' + this.questionData.id + '&author[]=' + this.$root.$data.userData.id + '&group_id=' + this.$root.getCurrentGroup())
+            '/wp-json/studychurch/v1/answers/?context=edit&_embed=true&display_comments=threaded&per_page=20&secondary_id=' + this.questionData.id + '&primary_id=' + this.$root.getCurrentGroup())
           .then(response => {
-            if (response.data.length && undefined !== response.data[0].id) {
-              this.answer = response.data[0];
+            console.log(response);
+
+            if (response.data.length) {
+              this.groupAnswers = [];
+              for (let i = 0; i < response.data.length; i++) {
+                if (this.$root.$data.userData.id === response.data[i].user) {
+                  this.answer = response.data[i];
+                } else {
+                  this.groupAnswers.push(response.data[i]);
+                }
+              }
             }
           })
           .finally(() => this.loading = false)
       },
-      getGroupAnswers() {
-
-      }
+      resetAnswer() {
+        this.answer = {
+          date   : 0,
+          content: {
+            raw: ''
+          }
+        };
+      },
+      resetGroupAnswers() {
+        this.groupAnswers = [];
+      },
     },
-
-    created() {
-      this.$on('inputSelect', this.select);
-    },
-
     mounted() {
       this.resizeTextarea();
-      this.getAnswer();
+      this.getGroupAnswers();
     },
   };
 </script>

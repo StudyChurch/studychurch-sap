@@ -94,7 +94,7 @@ class SCV_Email_Answers {
 
 	public function generate_email( $study_id ) {
 
-		SC_Study::get_instance()->setup_study_group( $study_id );
+//		SC_Study::get_instance()->setup_study_group( $study_id );
 
 		$elements = new WP_Query( array(
 			'post_type'      => 'sc_study',
