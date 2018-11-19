@@ -134,6 +134,30 @@
         let date = new Date();
         this.answer.date = date.toISOString();
         this.answer.content.raw = this.currentValue;
+
+        this.$http
+          .post('/wp-json/studychurch/v1/answers/', {
+			type : 'answer_update',
+			user : this.$root.$data.userData.id,
+			prime_association : this.$root.getCurrentGroup(),
+			secondary_association : this.questionData.id,
+			content : this.currentValue
+		  })
+          .then(response => {
+            console.log(response);
+
+            if (response.data.length) {
+              this.groupAnswers = [];
+              for (let i = 0; i < response.data.length; i++) {
+                if (this.$root.$data.userData.id === response.data[i].user) {
+                  this.answer = response.data[i];
+                } else {
+                  this.groupAnswers.push(response.data[i]);
+                }
+              }
+            }
+          })
+          .finally(() => this.loading = false)
       },
       resizeTextarea() {
         if (this.$isServer) return;
