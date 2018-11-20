@@ -58,7 +58,7 @@
                 <h5 class="title">{{userData.name}}</h5>
               </a>
               <p class="description">
-                {{userData.username}}
+                @{{userData.username}}
               </p>
             </div>
           </div>
