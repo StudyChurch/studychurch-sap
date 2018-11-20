@@ -17,4 +17,8 @@
   }
 </script>
 <style>
+  .card-timeline .timeline:before {
+    top: 50px;
+    bottom: 50px;
+  }
 </style>

@@ -72952,7 +72952,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n@-webkit-keyframes zoomIn95 {\nfrom {\n    opacity: 0;\n    -webkit-transform: scale3d(0.95, 0.95, 0.95);\n            transform: scale3d(0.95, 0.95, 0.95);\n}\nto {\n    opacity: 1;\n}\n}\n@keyframes zoomIn95 {\nfrom {\n    opacity: 0;\n    -webkit-transform: scale3d(0.95, 0.95, 0.95);\n            transform: scale3d(0.95, 0.95, 0.95);\n}\nto {\n    opacity: 1;\n}\n}\n.main-panel .zoomIn {\n  -webkit-animation-name: zoomIn95;\n          animation-name: zoomIn95;\n}\n@-webkit-keyframes zoomOut95 {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n    -webkit-transform: scale3d(0.95, 0.95, 0.95);\n            transform: scale3d(0.95, 0.95, 0.95);\n}\n}\n@keyframes zoomOut95 {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n    -webkit-transform: scale3d(0.95, 0.95, 0.95);\n            transform: scale3d(0.95, 0.95, 0.95);\n}\n}\n.main-panel .zoomOut {\n  -webkit-animation-name: zoomOut95;\n          animation-name: zoomOut95;\n}\n", ""]);
+exports.push([module.i, "\n@-webkit-keyframes zoomIn95 {\nfrom {\n    opacity: 0;\n    -webkit-transform: scale3d(0.95, 0.95, 0.95);\n            transform: scale3d(0.95, 0.95, 0.95);\n}\nto {\n    opacity: 1;\n}\n}\n@keyframes zoomIn95 {\nfrom {\n    opacity: 0;\n    -webkit-transform: scale3d(0.95, 0.95, 0.95);\n            transform: scale3d(0.95, 0.95, 0.95);\n}\nto {\n    opacity: 1;\n}\n}\n.main-panel .zoomIn {\n  -webkit-animation-name: zoomIn95;\n          animation-name: zoomIn95;\n}\n@-webkit-keyframes zoomOut95 {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n    -webkit-transform: scale3d(0.95, 0.95, 0.95);\n            transform: scale3d(0.95, 0.95, 0.95);\n}\n}\n@keyframes zoomOut95 {\nfrom {\n    opacity: 1;\n}\nto {\n    opacity: 0;\n    -webkit-transform: scale3d(0.95, 0.95, 0.95);\n            transform: scale3d(0.95, 0.95, 0.95);\n}\n}\n.main-panel .zoomOut {\n  -webkit-animation-name: zoomOut95;\n          animation-name: zoomOut95;\n}\n.wrapper {\n  height: initial;\n}\n", ""]);
 
 // exports
 
@@ -89344,7 +89344,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.card-timeline .timeline:before {\n  top: 50px;\n  bottom: 50px;\n}\n", ""]);
 
 // exports
 
@@ -98369,7 +98369,17 @@ var render = function() {
           ]),
           _c(
             "time-line",
-            { attrs: { type: "simple" } },
+            {
+              directives: [
+                {
+                  name: "loading",
+                  rawName: "v-loading",
+                  value: this.loadingActivity,
+                  expression: "this.loadingActivity"
+                }
+              ],
+              attrs: { type: "simple" }
+            },
             _vm._l(_vm.activityData, function(activity) {
               return _c(
                 "time-line-item",
@@ -98394,7 +98404,9 @@ var render = function() {
                   _c("h6", { attrs: { slot: "footer" }, slot: "footer" }, [
                     _c("i", { staticClass: "ti-time" }),
                     _vm._v(
-                      "\n            " + _vm._s(activity.date) + "\n          "
+                      "\n            " +
+                        _vm._s(_vm._f("dateFormat")(activity.date)) +
+                        "\n          "
                     )
                   ])
                 ]
@@ -98741,7 +98753,17 @@ var render = function() {
           ]),
           _c(
             "time-line",
-            { attrs: { type: "simple" } },
+            {
+              directives: [
+                {
+                  name: "loading",
+                  rawName: "v-loading",
+                  value: this.loadingActivity,
+                  expression: "this.loadingActivity"
+                }
+              ],
+              attrs: { type: "simple" }
+            },
             _vm._l(_vm.activityData, function(activity) {
               return _c(
                 "time-line-item",
@@ -98766,7 +98788,9 @@ var render = function() {
                   _c("h6", { attrs: { slot: "footer" }, slot: "footer" }, [
                     _c("i", { staticClass: "ti-time" }),
                     _vm._v(
-                      "\n            " + _vm._s(activity.date) + "\n          "
+                      "\n            " +
+                        _vm._s(_vm._f("dateFormat")(activity.date)) +
+                        "\n          "
                     )
                   ])
                 ]

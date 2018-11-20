@@ -142,14 +142,14 @@
         </card>
 
         <h3 class="title mt-4 text-center">Activity</h3>
-        <time-line type="simple">
+        <time-line type="simple" v-loading="this.loadingActivity">
           <time-line-item v-for="activity in activityData" inverted="" :badge-type="getActivityBadgeType(activity.type)" :badge-image="activity.user_avatar.thumb">
             <h6 slot="header" v-html="activity.title"></h6>
             <p slot="content" v-html="activity.content.rendered"></p>
 
             <h6 slot="footer">
               <i class="ti-time"></i>
-              {{activity.date}}
+              {{ activity.date | dateFormat }}
             </h6>
           </time-line-item>
         </time-line>

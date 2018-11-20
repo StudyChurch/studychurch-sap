@@ -117,4 +117,8 @@
   .main-panel .zoomOut {
     animation-name: zoomOut95;
   }
+
+  .wrapper {
+    height: initial;
+  }
 </style>
