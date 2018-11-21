@@ -10,12 +10,12 @@
 							<h1 class="title" v-html="chapterData.title.rendered"></h1>
 						</div>
 					</div>
-				</card>
 
-				<card v-for="data in chapterData.elements" :id="'post-' + data.id">
-					<div class="card-body" v-html="data.content.rendered"></div>
-					<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
-						<answer :questionData="data"></answer>
+					<div v-for="data in chapterData.elements" :id="'post-' + data.id">
+						<div class="card-body" v-html="data.content.rendered"></div>
+						<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
+							<answer :questionData="data"></answer>
+						</div>
 					</div>
 				</card>
 

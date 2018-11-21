@@ -99391,26 +99391,27 @@ var render = function() {
                     }
                   })
                 ])
-              ])
-            ]
+              ]),
+              _vm._l(_vm.chapterData.elements, function(data) {
+                return _c("div", { attrs: { id: "post-" + data.id } }, [
+                  _c("div", {
+                    staticClass: "card-body",
+                    domProps: { innerHTML: _vm._s(data.content.rendered) }
+                  }),
+                  data["data_type"] === "question_short" ||
+                  data["data_type"] === "question_long"
+                    ? _c(
+                        "div",
+                        { staticClass: "card-footer" },
+                        [_c("answer", { attrs: { questionData: data } })],
+                        1
+                      )
+                    : _vm._e()
+                ])
+              })
+            ],
+            2
           ),
-          _vm._l(_vm.chapterData.elements, function(data) {
-            return _c("card", { attrs: { id: "post-" + data.id } }, [
-              _c("div", {
-                staticClass: "card-body",
-                domProps: { innerHTML: _vm._s(data.content.rendered) }
-              }),
-              data["data_type"] === "question_short" ||
-              data["data_type"] === "question_long"
-                ? _c(
-                    "div",
-                    { staticClass: "card-footer" },
-                    [_c("answer", { attrs: { questionData: data } })],
-                    1
-                  )
-                : _vm._e()
-            ])
-          }),
           _c(
             "div",
             [
@@ -99468,7 +99469,7 @@ var render = function() {
             1
           )
         ],
-        2
+        1
       )
     ])
   ])
