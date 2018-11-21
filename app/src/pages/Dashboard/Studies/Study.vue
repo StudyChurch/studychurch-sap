@@ -11,7 +11,7 @@
 						</div>
 					</div>
 
-					<div v-for="data in chapterData.elements" :id="'post-' + data.id">
+					<div v-for="data in chapterData.elements" :id="'post-' + data.id" v-loading="chapterDataLoading">
 						<div class="card-body" v-html="data.content.rendered"></div>
 						<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
 							<answer :questionData="data"></answer>
@@ -60,6 +60,7 @@
     data() {
       return {
         loading     : true,
+	      chapterDataLoading: true,
         todoData    : [],
         prevChapter : {
           id: 0
@@ -132,7 +133,7 @@
             this.chapters = response.data;
             this.getChapterItems();
           })
-          .finally(() => this.loading = false)
+          .finally(() => this.chapterDataLoading = false)
       },
       getChapterItems () {
         let i = 0;
