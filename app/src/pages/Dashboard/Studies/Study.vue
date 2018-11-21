@@ -11,6 +11,24 @@
 						</div>
 					</div>
 
+					<div class="study-meta">
+						<div>
+							<p>TODO: Group Name</p>
+						</div>
+						<div>
+							<p>
+								<select>
+									<option>Chapter Select</option>
+								</select>
+							</p>
+						</div>
+						<div>
+							<p>
+								Print
+							</p>
+						</div>
+					</div>
+
 					<div v-for="data in chapterData.elements" :id="'post-' + data.id" v-loading="chapterDataLoading">
 						<!--<div class="card-body" v-html="data.content.rendered | isPrivate( data['is_private'] )"></div>-->
 						<div class="card-body" v-html="$options.filters.isPrivate( data.content.rendered, data['is_private'] )"></div>
@@ -166,5 +184,15 @@
     }
   }
 </script>
-<style>
+<style scoped>
+
+	.study-meta {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: left;
+	}
+
+	.study-meta div {
+		margin: 0 .5rem;
+	}
 </style>
