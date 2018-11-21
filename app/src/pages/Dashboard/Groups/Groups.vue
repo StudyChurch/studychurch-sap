@@ -2,6 +2,51 @@
   <div>
 
     <div class="row">
+      <div class="col-md-12">
+        <div class="card card-stats card-raised">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="statistics">
+                  <div class="info">
+                    <div class="icon icon-primary">
+                      <i class="now-ui-icons users_single-02"></i>
+                    </div>
+                    <h3 class="info-title">14</h3>
+                    <h6 class="stats-title">Members</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="statistics">
+                  <div class="info">
+                    <div class="icon icon-success">
+                      <i class="now-ui-icons files_paper"></i>
+                    </div>
+                    <h3 class="info-title">3</h3>
+                    <h6 class="stats-title">Studies</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="statistics">
+                  <div class="info">
+                    <div class="icon icon-info">
+                      <i class="now-ui-icons design_bullet-list-67"></i>
+                    </div>
+                    <h3 class="info-title">0</h3>
+                    <h6 class="stats-title">Todos</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-lg-4">
         <card class="card-user">
           <div slot="image" class="image">
@@ -69,7 +114,7 @@
         </card>
       </div>
 
-      <div class="col-lg-8" style="margin-top: 2rem;">
+      <div class="col-lg-8">
 
         <h3 class="title mt-4 text-center">Upcoming Todos</h3>
         <card no-footer-line>

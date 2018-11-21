@@ -55003,6 +55003,51 @@ var WorldMap = function WorldMap() {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   components: {
@@ -98506,7 +98551,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -98523,6 +98568,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._m(0),
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
@@ -98685,7 +98731,7 @@ var render = function() {
       ),
       _c(
         "div",
-        { staticClass: "col-lg-8", staticStyle: { "margin-top": "2rem" } },
+        { staticClass: "col-lg-8" },
         [
           _c("h3", { staticClass: "title mt-4 text-center" }, [
             _vm._v("Upcoming Todos")
@@ -98794,7 +98840,62 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card card-stats card-raised" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "statistics" }, [
+                  _c("div", { staticClass: "info" }, [
+                    _c("div", { staticClass: "icon icon-primary" }, [
+                      _c("i", { staticClass: "now-ui-icons users_single-02" })
+                    ]),
+                    _c("h3", { staticClass: "info-title" }, [_vm._v("14")]),
+                    _c("h6", { staticClass: "stats-title" }, [
+                      _vm._v("Members")
+                    ])
+                  ])
+                ])
+              ]),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "statistics" }, [
+                  _c("div", { staticClass: "info" }, [
+                    _c("div", { staticClass: "icon icon-success" }, [
+                      _c("i", { staticClass: "now-ui-icons files_paper" })
+                    ]),
+                    _c("h3", { staticClass: "info-title" }, [_vm._v("3")]),
+                    _c("h6", { staticClass: "stats-title" }, [
+                      _vm._v("Studies")
+                    ])
+                  ])
+                ])
+              ]),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("div", { staticClass: "statistics" }, [
+                  _c("div", { staticClass: "info" }, [
+                    _c("div", { staticClass: "icon icon-info" }, [
+                      _c("i", {
+                        staticClass: "now-ui-icons design_bullet-list-67"
+                      })
+                    ]),
+                    _c("h3", { staticClass: "info-title" }, [_vm._v("0")]),
+                    _c("h6", { staticClass: "stats-title" }, [_vm._v("Todos")])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 if (false) {
