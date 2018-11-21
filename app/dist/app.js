@@ -55197,6 +55197,7 @@ var WorldMap = function WorldMap() {
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -56750,6 +56751,13 @@ var mixin = {
 }; // Filters
 
 __WEBPACK_IMPORTED_MODULE_2_vue__["default"].filter('dateFormat', __WEBPACK_IMPORTED_MODULE_6__filters_date__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_2_vue__["default"].filter('isPrivate', function (value, isPrivate) {
+  if (!isPrivate) {
+    return value;
+  }
+
+  return '<strong class="private-answer">(Private)</strong>' + value;
+});
 /* eslint-disable no-new */
 
 var vm = new __WEBPACK_IMPORTED_MODULE_2_vue__["default"]({
@@ -99410,7 +99418,14 @@ var render = function() {
                   [
                     _c("div", {
                       staticClass: "card-body",
-                      domProps: { innerHTML: _vm._s(data.content.rendered) }
+                      domProps: {
+                        innerHTML: _vm._s(
+                          _vm.$options.filters.isPrivate(
+                            data.content.rendered,
+                            data["is_private"]
+                          )
+                        )
+                      }
                     }),
                     data["data_type"] === "question_short" ||
                     data["data_type"] === "question_long"
