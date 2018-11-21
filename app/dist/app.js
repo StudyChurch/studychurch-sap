@@ -54264,10 +54264,6 @@ var WorldMap = function WorldMap() {
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["a"] = ({
   data: function data() {
     return {
@@ -54469,10 +54465,6 @@ var WorldMap = function WorldMap() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue2_transitions__ = __webpack_require__(14);
 
-//
-//
-//
-//
 //
 //
 //
@@ -54904,6 +54896,29 @@ var WorldMap = function WorldMap() {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components__ = __webpack_require__(23);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -96448,7 +96463,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -96484,33 +96499,7 @@ var render = function() {
             )
           ])
         ]),
-        _c("div", { staticClass: "copyright" }, [
-          _vm._v("\n      © " + _vm._s(_vm.year) + ", Designed by\n      "),
-          _c("a", { attrs: { href: "https://www.invisionapp.com/" } }, [
-            _vm._v("Invision")
-          ]),
-          _vm._v(".\n      Coded by\n      "),
-          _c(
-            "a",
-            {
-              attrs: { href: "https://github.com/cristijora", target: "_blank" }
-            },
-            [_vm._v("Cristi Jora")]
-          ),
-          _vm._v("\n      and "),
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "https://www.creative-tim.com/?ref=pdf-vuejs",
-                target: "_blank",
-                rel: "noopener"
-              }
-            },
-            [_vm._v("Creative Tim")]
-          ),
-          _vm._v(".\n    ")
-        ])
+        _c("div", { staticClass: "copyright" })
       ]
     )
   ])
@@ -97696,45 +97685,7 @@ var render = function() {
                 1
               )
             ]),
-            _c("footer", { staticClass: "footer" }, [
-              _c("div", { staticClass: "container-fluid" }, [
-                _vm._m(0),
-                _c("div", { staticClass: "copyright" }, [
-                  _vm._v(
-                    "\n            © " +
-                      _vm._s(_vm.year) +
-                      ", Designed by\n            "
-                  ),
-                  _c("a", { attrs: { href: "https://www.invisionapp.com/" } }, [
-                    _vm._v("Invision")
-                  ]),
-                  _vm._v(".\n            Coded by\n            "),
-                  _c(
-                    "a",
-                    {
-                      attrs: {
-                        href: "https://github.com/cristijora",
-                        target: "_blank"
-                      }
-                    },
-                    [_vm._v("Cristi Jora")]
-                  ),
-                  _vm._v("\n            and "),
-                  _c(
-                    "a",
-                    {
-                      attrs: {
-                        href: "https://www.creative-tim.com/?ref=pdf-vuejs",
-                        target: "_blank",
-                        rel: "noopener"
-                      }
-                    },
-                    [_vm._v("Creative Tim")]
-                  ),
-                  _vm._v(".\n          ")
-                ])
-              ])
-            ]),
+            _vm._m(0),
             _c("div", {
               staticClass: "full-page-background",
               style: _vm.imageStyles
@@ -97751,23 +97702,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("nav", [
-      _c("ul", [
-        _c("li", [
-          _c("a", { attrs: { href: "https://www.creative-tim.com" } }, [
-            _vm._v("\n                  Creative Tim\n                ")
+    return _c("footer", { staticClass: "footer" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("nav", [
+          _c("ul", [
+            _c("li", [
+              _c("a", { attrs: { href: "https://www.creative-tim.com" } }, [
+                _vm._v("\n                  Creative Tim\n                ")
+              ])
+            ]),
+            _c("li", [
+              _c(
+                "a",
+                { attrs: { href: "http://presentation.creative-tim.com" } },
+                [_vm._v("\n                  About Us\n                ")]
+              )
+            ]),
+            _c("li", [
+              _c("a", { attrs: { href: "http://blog.creative-tim.com" } }, [
+                _vm._v("\n                  Blog\n                ")
+              ])
+            ])
           ])
         ]),
-        _c("li", [
-          _c("a", { attrs: { href: "http://presentation.creative-tim.com" } }, [
-            _vm._v("\n                  About Us\n                ")
-          ])
-        ]),
-        _c("li", [
-          _c("a", { attrs: { href: "http://blog.creative-tim.com" } }, [
-            _vm._v("\n                  Blog\n                ")
-          ])
-        ])
+        _c("div", { staticClass: "copyright" })
       ])
     ])
   }
@@ -98028,7 +97986,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.table-responsive {\n  overflow: auto;\n}\n", ""]);
 
 // exports
 
@@ -98548,7 +98506,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -98688,13 +98646,46 @@ var render = function() {
                 ]
               )
             ]
+          ),
+          _c(
+            "card",
+            { staticClass: "card-chart", attrs: { "no-footer-line": "" } },
+            [
+              _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                _c("h2", { staticClass: "card-title" }, [_vm._v("Invite")])
+              ]),
+              _c("div", [
+                _c("p", [
+                  _vm._v("Use this link to invite members to join this group.")
+                ]),
+                _c("p", [
+                  _c("textarea", [
+                    _vm._v(
+                      "https://studychurch.local/join/?group=12345687890&key=abcdef1234567890"
+                    )
+                  ])
+                ])
+              ])
+            ]
+          ),
+          _c(
+            "card",
+            { staticClass: "card-chart", attrs: { "no-footer-line": "" } },
+            [
+              _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                _c("h2", { staticClass: "card-title" }, [_vm._v("Members")])
+              ]),
+              _c("div", [
+                _c("p", [_vm._v("TODO: List members and online status")])
+              ])
+            ]
           )
         ],
         1
       ),
       _c(
         "div",
-        { staticClass: "col-lg-8" },
+        { staticClass: "col-lg-8", staticStyle: { "margin-top": "2rem" } },
         [
           _c("h3", { staticClass: "title mt-4 text-center" }, [
             _vm._v("Upcoming Todos")

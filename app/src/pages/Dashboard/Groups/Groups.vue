@@ -44,9 +44,32 @@
           </div>
 
         </card>
+
+        <card class="card-chart" no-footer-line>
+
+          <div slot="header">
+            <h2 class="card-title">Invite</h2>
+          </div>
+
+          <div>
+            <p>Use this link to invite members to join this group.</p>
+            <p><textarea>https://studychurch.local/join/?group=12345687890&key=abcdef1234567890</textarea></p>
+          </div>
+        </card>
+
+        <card class="card-chart" no-footer-line>
+
+          <div slot="header">
+            <h2 class="card-title">Members</h2>
+          </div>
+
+          <div>
+            <p>TODO: List members and online status</p>
+          </div>
+        </card>
       </div>
 
-      <div class="col-lg-8">
+      <div class="col-lg-8" style="margin-top: 2rem;">
 
         <h3 class="title mt-4 text-center">Upcoming Todos</h3>
         <card no-footer-line>
@@ -193,5 +216,4 @@
   }
 </script>
 <style>
-
 </style>

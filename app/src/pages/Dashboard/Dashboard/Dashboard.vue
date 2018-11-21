@@ -258,5 +258,7 @@
   }
 </script>
 <style>
-
+  .table-responsive {
+    overflow: auto;
+  }
 </style>
