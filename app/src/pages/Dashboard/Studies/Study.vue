@@ -13,7 +13,7 @@
 
 					<div class="study-meta">
 						<div>
-							<p>TODO: Group Name</p>
+							<p>{{ getGroupName() }}</p>
 						</div>
 						<div>
 							<p>
@@ -180,7 +180,17 @@
           }
         }
 
-      }
+      },
+	    getGroupName() {
+
+		    let index = this.$root.$data.userData.groups.findIndex( x => x.id === this.$root.getCurrentGroup() );
+
+		    if ( index >= 0 ) {
+			    return this.$root.$data.userData.groups[ index ].name;
+		    }
+
+		    return '';
+	    }
     }
   }
 </script>

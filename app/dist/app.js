@@ -55158,8 +55158,14 @@ var WorldMap = function WorldMap() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Elements_Answer_vue__ = __webpack_require__(814);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_core_js_modules_es6_function_name__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_core_js_modules_es6_function_name___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_core_js_modules_es6_function_name__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_core_js_modules_es6_array_find_index__ = __webpack_require__(459);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_core_js_modules_es6_array_find_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_core_js_modules_es6_array_find_index__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Elements_Answer_vue__ = __webpack_require__(814);
+
+
 //
 //
 //
@@ -55220,13 +55226,13 @@ var WorldMap = function WorldMap() {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   components: {
-    Card: __WEBPACK_IMPORTED_MODULE_0__components__["b" /* Card */],
-    NTable: __WEBPACK_IMPORTED_MODULE_0__components__["h" /* Table */],
-    NProgress: __WEBPACK_IMPORTED_MODULE_0__components__["f" /* Progress */],
-    AnimatedNumber: __WEBPACK_IMPORTED_MODULE_0__components__["a" /* AnimatedNumber */],
-    TimeLine: __WEBPACK_IMPORTED_MODULE_0__components__["i" /* TimeLine */],
-    TimeLineItem: __WEBPACK_IMPORTED_MODULE_0__components__["j" /* TimeLineItem */],
-    Answer: __WEBPACK_IMPORTED_MODULE_1__Elements_Answer_vue__["a" /* default */]
+    Card: __WEBPACK_IMPORTED_MODULE_2__components__["b" /* Card */],
+    NTable: __WEBPACK_IMPORTED_MODULE_2__components__["h" /* Table */],
+    NProgress: __WEBPACK_IMPORTED_MODULE_2__components__["f" /* Progress */],
+    AnimatedNumber: __WEBPACK_IMPORTED_MODULE_2__components__["a" /* AnimatedNumber */],
+    TimeLine: __WEBPACK_IMPORTED_MODULE_2__components__["i" /* TimeLine */],
+    TimeLineItem: __WEBPACK_IMPORTED_MODULE_2__components__["j" /* TimeLineItem */],
+    Answer: __WEBPACK_IMPORTED_MODULE_3__Elements_Answer_vue__["a" /* default */]
   },
   data: function data() {
     return {
@@ -55330,6 +55336,19 @@ var WorldMap = function WorldMap() {
           this.nextChapter = this.chapters[i + 1];
         }
       }
+    },
+    getGroupName: function getGroupName() {
+      var _this3 = this;
+
+      var index = this.$root.$data.userData.groups.findIndex(function (x) {
+        return x.id === _this3.$root.getCurrentGroup();
+      });
+
+      if (index >= 0) {
+        return this.$root.$data.userData.groups[index].name;
+      }
+
+      return '';
     }
   }
 });
@@ -99616,7 +99635,7 @@ var render = function() {
                 ])
               ]),
               _c("div", { staticClass: "study-meta" }, [
-                _c("div", [_c("p", [_vm._v("TODO: Group Name")])]),
+                _c("div", [_c("p", [_vm._v(_vm._s(_vm.getGroupName()))])]),
                 _c("div", [
                   _c("p", [
                     _c("select", [_c("option", [_vm._v("Chapter Select")])])
