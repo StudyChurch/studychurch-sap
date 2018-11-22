@@ -2,6 +2,51 @@
   <div>
 
     <div class="row">
+      <div class="col-md-12">
+        <div class="card card-stats card-raised">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="statistics">
+                  <div class="info">
+                    <div class="icon icon-primary">
+                      <i class="now-ui-icons users_single-02"></i>
+                    </div>
+                    <h3 class="info-title">14</h3>
+                    <h6 class="stats-title">Members</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="statistics">
+                  <div class="info">
+                    <div class="icon icon-success">
+                      <i class="now-ui-icons files_paper"></i>
+                    </div>
+                    <h3 class="info-title">3</h3>
+                    <h6 class="stats-title">Studies</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="statistics">
+                  <div class="info">
+                    <div class="icon icon-info">
+                      <i class="now-ui-icons design_bullet-list-67"></i>
+                    </div>
+                    <h3 class="info-title">0</h3>
+                    <h6 class="stats-title">Todos</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-lg-4">
         <card class="card-user">
           <div slot="image" class="image">
@@ -43,6 +88,29 @@
             <i :class="this.loadingStudies ? 'now-ui-icons arrows-1_refresh-69 spin' : 'now-ui-icons arrows-1_refresh-69'"></i> Just Updated
           </div>
 
+        </card>
+
+        <card class="card-chart" no-footer-line>
+
+          <div slot="header">
+            <h2 class="card-title">Invite</h2>
+          </div>
+
+          <div>
+            <p>Use this link to invite members to join this group.</p>
+            <p><textarea>https://studychurch.local/join/?group=12345687890&key=abcdef1234567890</textarea></p>
+          </div>
+        </card>
+
+        <card class="card-chart" no-footer-line>
+
+          <div slot="header">
+            <h2 class="card-title">Members</h2>
+          </div>
+
+          <div>
+            <p>TODO: List members and online status</p>
+          </div>
         </card>
       </div>
 
@@ -193,5 +261,4 @@
   }
 </script>
 <style>
-
 </style>

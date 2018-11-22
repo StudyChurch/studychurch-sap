@@ -33,6 +33,13 @@ let mixin = {
 
 // Filters
 Vue.filter('dateFormat', DateFilter);
+Vue.filter( 'isPrivate', function( value, isPrivate ) {
+	if ( ! isPrivate ) {
+		return value;
+	}
+
+	return '<strong class="private-answer">(Private)</strong>' + value;
+});
 
 /* eslint-disable no-new */
 let vm = new Vue({

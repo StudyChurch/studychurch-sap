@@ -10,12 +10,32 @@
 							<h1 class="title" v-html="chapterData.title.rendered"></h1>
 						</div>
 					</div>
-				</card>
 
-				<card v-for="data in chapterData.elements" :id="'post-' + data.id">
-					<div class="card-body" v-html="data.content.rendered"></div>
-					<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
-						<answer :questionData="data"></answer>
+					<div class="study-meta">
+						<div>
+							<p>{{ getGroupName() }}</p>
+						</div>
+						<div>
+							<p>
+								<select>
+									<option>Chapter Select</option>
+									<option v-for="chapter in chapters">{{ chapter.title.rendered }}</option>
+								</select>
+							</p>
+						</div>
+						<div>
+							<p>
+								Print
+							</p>
+						</div>
+					</div>
+
+					<div v-for="data in chapterData.elements" :id="'post-' + data.id" v-loading="chapterDataLoading">
+						<!--<div class="card-body" v-html="data.content.rendered | isPrivate( data['is_private'] )"></div>-->
+						<div class="card-body" v-html="$options.filters.isPrivate( data.content.rendered, data['is_private'] )"></div>
+						<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
+							<answer :questionData="data"></answer>
+						</div>
 					</div>
 				</card>
 
@@ -60,6 +80,8 @@
     data() {
       return {
         loading     : true,
+	      chapterDataLoading: true,
+	      currentGroupId: 0,
         todoData    : [],
         prevChapter : {
           id: 0
@@ -106,7 +128,10 @@
 
       if (undefined !== this.$route.query['sc-group']) {
         this.$root.setCurrentGroup(this.$route.query['sc-group']);
+        this.currentGroupId = this.$route.query['sc-group'];
       }
+
+      console.log( 'Current Group ID', this.currentGroupId );
     },
     watch     : {
       '$route' (to, from) {
@@ -132,7 +157,7 @@
             this.chapters = response.data;
             this.getChapterItems();
           })
-          .finally(() => this.loading = false)
+          .finally(() => this.chapterDataLoading = false)
       },
       getChapterItems () {
         let i = 0;
@@ -160,10 +185,32 @@
           }
         }
 
-      }
+      },
+	    getGroupName() {
+
+		    let index = this.$root.$data.userData.groups.findIndex( x => x.id == this.currentGroupId );
+
+		    console.log( 'current group id', this.currentGroupId );
+		    console.log( 'index', index );
+
+		    if ( index >= 0 ) {
+			    return this.$root.$data.userData.groups[ index ].name;
+		    }
+
+		    return '';
+	    }
     }
   }
 </script>
-<style>
+<style scoped>
 
+	.study-meta {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: left;
+	}
+
+	.study-meta div {
+		margin: 0 .5rem;
+	}
 </style>
