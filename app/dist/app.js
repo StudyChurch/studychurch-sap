@@ -55222,6 +55222,7 @@ var WorldMap = function WorldMap() {
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -55238,6 +55239,7 @@ var WorldMap = function WorldMap() {
     return {
       loading: true,
       chapterDataLoading: true,
+      currentGroupId: 0,
       todoData: [],
       prevChapter: {
         id: 0
@@ -55282,6 +55284,7 @@ var WorldMap = function WorldMap() {
 
     if (undefined !== this.$route.query['sc-group']) {
       this.$root.setCurrentGroup(this.$route.query['sc-group']);
+      this.currentGroupId = this.$route.query['sc-group'];
     }
   },
   watch: {
@@ -55341,7 +55344,7 @@ var WorldMap = function WorldMap() {
       var _this3 = this;
 
       var index = this.$root.$data.userData.groups.findIndex(function (x) {
-        return x.id === _this3.$root.getCurrentGroup();
+        return x.id === _this3.currentGroupId;
       });
 
       if (index >= 0) {
@@ -99638,7 +99641,18 @@ var render = function() {
                 _c("div", [_c("p", [_vm._v(_vm._s(_vm.getGroupName()))])]),
                 _c("div", [
                   _c("p", [
-                    _c("select", [_c("option", [_vm._v("Chapter Select")])])
+                    _c(
+                      "select",
+                      [
+                        _c("option", [_vm._v("Chapter Select")]),
+                        _vm._l(_vm.chapters, function(chapter) {
+                          return _c("option", [
+                            _vm._v(_vm._s(chapter.title.rendered))
+                          ])
+                        })
+                      ],
+                      2
+                    )
                   ])
                 ]),
                 _c("div", [

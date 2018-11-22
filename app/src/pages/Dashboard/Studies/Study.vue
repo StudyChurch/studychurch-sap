@@ -19,6 +19,7 @@
 							<p>
 								<select>
 									<option>Chapter Select</option>
+									<option v-for="chapter in chapters">{{ chapter.title.rendered }}</option>
 								</select>
 							</p>
 						</div>
@@ -80,6 +81,7 @@
       return {
         loading     : true,
 	      chapterDataLoading: true,
+	      currentGroupId: 0,
         todoData    : [],
         prevChapter : {
           id: 0
@@ -126,6 +128,7 @@
 
       if (undefined !== this.$route.query['sc-group']) {
         this.$root.setCurrentGroup(this.$route.query['sc-group']);
+        this.currentGroupId = this.$route.query['sc-group'];
       }
     },
     watch     : {
@@ -183,7 +186,7 @@
       },
 	    getGroupName() {
 
-		    let index = this.$root.$data.userData.groups.findIndex( x => x.id === this.$root.getCurrentGroup() );
+		    let index = this.$root.$data.userData.groups.findIndex( x => x.id === this.currentGroupId );
 
 		    if ( index >= 0 ) {
 			    return this.$root.$data.userData.groups[ index ].name;
