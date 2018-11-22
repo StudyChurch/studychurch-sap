@@ -72963,7 +72963,15 @@ var routes = [//  {
     components: {
       default: __WEBPACK_IMPORTED_MODULE_4__pages_Dashboard_Groups_Groups_vue__["a" /* default */],
       header: __WEBPACK_IMPORTED_MODULE_2__pages_Dashboard_DefaultHeader__["a" /* default */]
-    }
+    },
+    children: [{
+      path: 'studies/:study/:chapter?',
+      name: 'Studies',
+      components: {
+        default: __WEBPACK_IMPORTED_MODULE_5__pages_Dashboard_Studies_Study_vue__["a" /* default */],
+        header: __WEBPACK_IMPORTED_MODULE_2__pages_Dashboard_DefaultHeader__["a" /* default */]
+      }
+    }]
   }]
 }, {
   path: '*',

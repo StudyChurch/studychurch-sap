@@ -35,7 +35,14 @@ const routes = [
       {
         path      : 'groups/:slug',
         name      : 'Groups',
-        components: {default: Groups, header: DefaultHeader}
+        components: {default: Groups, header: DefaultHeader},
+          children: [
+	          {
+		          path: 'studies/:study/:chapter?',
+		          name: 'Studies',
+		          components: { default: Study, header: DefaultHeader }
+	          }
+          ]
       },
     ]
   },
