@@ -52,9 +52,9 @@
   export default {
     name: 'sc-answer',
 
-	components: {
+    components: {
       AnswerComment
-	},
+    },
 
     data() {
       return {
@@ -137,12 +137,14 @@
 
         this.$http
           .post('/wp-json/studychurch/v1/answers/', {
-			type : 'answer_update',
-			user : this.$root.$data.userData.id,
-			prime_association : this.$root.getCurrentGroup(),
-			secondary_association : this.questionData.id,
-			content : this.currentValue
-		  })
+            id                   : this.answer.id,
+            component            : 'study',
+            type                 : 'answer_update',
+            user                 : this.$root.$data.userData.id,
+            prime_association    : this.$root.getCurrentGroup(),
+            secondary_association: this.questionData.id,
+            content              : this.currentValue
+          })
           .then(response => {
             console.log(response);
 
