@@ -55286,6 +55286,8 @@ var WorldMap = function WorldMap() {
       this.$root.setCurrentGroup(this.$route.query['sc-group']);
       this.currentGroupId = this.$route.query['sc-group'];
     }
+
+    console.log('Current Group ID', this.currentGroupId);
   },
   watch: {
     '$route': function $route(to, from) {
@@ -55344,8 +55346,10 @@ var WorldMap = function WorldMap() {
       var _this3 = this;
 
       var index = this.$root.$data.userData.groups.findIndex(function (x) {
-        return x.id === _this3.currentGroupId;
+        return x.id == _this3.currentGroupId;
       });
+      console.log('current group id', this.currentGroupId);
+      console.log('index', index);
 
       if (index >= 0) {
         return this.$root.$data.userData.groups[index].name;

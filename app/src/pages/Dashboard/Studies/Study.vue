@@ -130,6 +130,8 @@
         this.$root.setCurrentGroup(this.$route.query['sc-group']);
         this.currentGroupId = this.$route.query['sc-group'];
       }
+
+      console.log( 'Current Group ID', this.currentGroupId );
     },
     watch     : {
       '$route' (to, from) {
@@ -186,7 +188,10 @@
       },
 	    getGroupName() {
 
-		    let index = this.$root.$data.userData.groups.findIndex( x => x.id === this.currentGroupId );
+		    let index = this.$root.$data.userData.groups.findIndex( x => x.id == this.currentGroupId );
+
+		    console.log( 'current group id', this.currentGroupId );
+		    console.log( 'index', index );
 
 		    if ( index >= 0 ) {
 			    return this.$root.$data.userData.groups[ index ].name;
