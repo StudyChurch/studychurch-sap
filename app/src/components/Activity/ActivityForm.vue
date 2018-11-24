@@ -1,0 +1,158 @@
+<template>
+	<div :class="getClass">
+		<img v-if="avatar" class="avatar border-gray" :src="avatar">
+
+		<el-input
+			ref="commentform"
+			type="textarea"
+			:autosize="autosize"
+			resize="none"
+			:placeholder="placeholder"
+			v-model="comment"
+			v-loading="loading"
+			@change="handleKeydown"
+			@blur="handleKeydown"></el-input>
+	</div>
+</template>
+<script>
+  import { Input } from 'element-ui';
+
+  function _interopDefault (ex) {
+    return (
+      ex && (
+        typeof ex === 'object'
+      ) && 'default' in ex
+    ) ? ex['default'] : ex;
+  }
+
+  let Tribute = _interopDefault(require('tributejs'));
+
+  export default {
+
+    components: {
+      Input
+    },
+    data() {
+      return {
+        answer        : {
+          date   : 0,
+          content: {
+            raw: ''
+          }
+        },
+        comment       : '',
+        loading       : false,
+        tributeOptions: {
+          values: [
+            {key: 'Ben Wilhite', value: 'ben'},
+            {key: 'Joshua Jones', value: 'joshuajones14'}
+          ]
+        },
+        tribute       : null
+      };
+    },
+    props     : {
+      elClass      : [String],
+      activityID   : [Number], // the ID of the activity item to post this comment to, leave empty if this is a new Activity item
+      avatar       : {
+        type   : [String, Boolean],
+        default: function () {
+          return this.$root.$data.userData.avatar.full;
+        },
+      },
+      component    : {
+        type    : [String],
+        required: true
+      },
+      type         : {
+        type    : [String],
+        required: true
+      },
+      primaryItem  : {
+        type    : [Number],
+        required: true
+      },
+      secondaryItem: {
+        type: [Number]
+      },
+      placeholder  : {
+        type   : [String],
+        default: 'Post a reply'
+      },
+      autosize     : {
+        type   : [Boolean, Object],
+        default: function () {
+          return {minRows: 1}
+        }
+      }
+    },
+    computed  : {
+      getClass() {
+        return 'sc-activity--input ' + this.elClass;
+      }
+    },
+
+    watch: {},
+
+    methods: {
+      /**
+       * Submit when the user hits the Enter key
+       * @param event
+       */
+      handleKeydown(event) {
+        if (!this.tribute.isActive && event.keyCode === 13 && !event.shiftKey) {
+          event.preventDefault();
+          this.submitAnswer();
+        }
+      },
+      /**
+       * handle the answer submit
+       */
+      submitAnswer() {
+        this.loading = true;
+
+        this.$http
+          .post('/wp-json/studychurch/v1/activity/', {
+            id                   : this.activityID,
+            component            : this.component,
+            type                 : this.type,
+            user                 : this.$root.$data.userData.id,
+            prime_association    : this.primaryItem,
+            secondary_association: this.secondaryItem,
+            content              : this.comment,
+            hidden               : true,
+          })
+          .then(response => {
+            this.comment = '';
+
+            console.log(response);
+            if (response.data.length) {
+              this.$emit('activitySaved', response.data[0])
+            }
+          })
+          .finally(() => this.loading = false)
+      }
+    },
+    mounted() {
+      let _this = this;
+      let textarea = this.$refs.commentform.$refs.textarea;
+
+      this.tribute = new Tribute(this.tributeOptions);
+      this.tribute.attach(textarea);
+
+//      textarea.addEventListener('tribute-replaced', function (e) {
+//        _this.$emit('tribute-replaced', e);
+//      });
+//
+//      textarea.addEventListener('tribute-no-match', function (e) {
+//        _this.$emit('tribute-no-match', e);
+//      });
+
+      textarea.addEventListener('keydown', this.handleKeydown);
+    },
+    beforeDestroy() {
+      let textarea = this.$refs.commentform.$refs.textarea;
+      textarea.removeEventListener('keydown', this.handleKeydown);
+    }
+  };
+</script>

@@ -27,6 +27,7 @@
 @import 'now-ui-dashboard/plugins/plugin-bootstrap-select';
 @import 'now-ui-dashboard/plugins/plugin-jquery.jvectormap';
 @import 'now-ui-dashboard/plugins/plugin-fullcalendar';
+@import '~tributejs/scss/tribute';
 
 // Core CSS
 @import 'now-ui-dashboard/buttons';
@@ -57,7 +58,7 @@
 @import 'now-ui-dashboard/footers';
 @import 'now-ui-dashboard/timeline';
 @import 'now-ui-dashboard/fixed-plugin';
-@import 'now-ui-dashboard/answers';
+@import 'now-ui-dashboard/activity';
 
 // example pages and sections
 @import 'now-ui-dashboard/example-pages';

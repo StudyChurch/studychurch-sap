@@ -40,6 +40,10 @@ import SidebarPlugin from './SidebarPlugin'
 
 import AnimatedNumber from './AnimatedNumber'
 
+import Activity from './Activity/Activity.vue';
+import ActivityComment from './Activity/ActivityComment.vue';
+import ActivityForm from './Activity/ActivityForm.vue';
+
 export {
   Checkbox,
   IconCheckbox,
@@ -74,5 +78,8 @@ export {
   Collapse,
   CollapseItem,
   LoadingPanel,
-  AsyncWorldMap
+  AsyncWorldMap,
+  Activity,
+  ActivityComment,
+  ActivityForm
 }
