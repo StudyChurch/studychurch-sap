@@ -143,7 +143,7 @@
 
         <h3 class="title mt-4 text-center">Activity</h3>
         <time-line type="simple" v-loading="this.loadingActivity">
-          <time-line-item v-for="activity in activityData" inverted="" :badge-type="getActivityBadgeType(activity.type)" :badge-image="activity.user_avatar.thumb">
+          <time-line-item v-for="activity in activityData" inverted="" :badge-type="getActivityBadgeType(activity.type)" :badge-image="activity.user_avatar.full">
             <h6 slot="header" v-html="activity.title"></h6>
             <p slot="content" v-html="activity.content.rendered"></p>
 

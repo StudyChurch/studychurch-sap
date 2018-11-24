@@ -43,10 +43,7 @@
         comment       : '',
         loading       : false,
         tributeOptions: {
-          values: [
-            {key: 'Ben Wilhite', value: 'ben'},
-            {key: 'Joshua Jones', value: 'joshuajones14'}
-          ]
+          values: this.getTributeValues()
         },
         tribute       : null
       };
@@ -92,7 +89,11 @@
       }
     },
 
-    watch: {},
+    watch: {
+      '$root.currentGroup' (to, from) {
+        this.tribute.append(0, this.getTributeValues(), true);
+	  }
+	},
 
     methods: {
       /**
@@ -131,7 +132,24 @@
             }
           })
           .finally(() => this.loading = false)
-      }
+      },
+	  getTributeValues() {
+        let group = this.$root.getCurrentGroupData();
+		let values = [];
+
+        if (! group) {
+          return [];
+		}
+
+        for (let i = 0; i < group.members.length; i++) {
+			values.push({
+			  key: group.members[i].name,
+			  value: group.members[i].username
+			})
+        }
+
+        return values;
+	  }
     },
     mounted() {
       let _this = this;

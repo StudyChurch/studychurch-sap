@@ -49,6 +49,7 @@ let vm = new Vue({
   mixins: [mixin],
   data: {
     userData: getUserData(),
+    currentGroup: 0,
   },
   created() {
     this.$http.defaults.baseURL = window.location.protocol + '//' + window.location.host;
@@ -73,15 +74,28 @@ let vm = new Vue({
   },
   methods : {
     setCurrentGroup (groupID) {
-      this.userData.currentGroup = groupID;
-      setUserData( this.userData );
+      this.currentGroup = groupID;
+      localStorage.setItem('currentGroup', groupID);
     },
     getCurrentGroup () {
-      if ( undefined === this.userData.currentGroup ) {
-        return 0;
+      if ( ! this.currentGroup || undefined === this.currentGroup ) {
+        this.currentGroup = localStorage.getItem('currentGroup');
       }
 
-      return this.userData.currentGroup;
+      return this.currentGroup;
+    },
+    getCurrentGroupData() {
+      if (! this.getCurrentGroup()) {
+        return false;
+      }
+
+      for (let i = 0; i < this.$root.$data.userData.groups.length; i++) {
+        if (this.getCurrentGroup() === this.$root.$data.userData.groups[i].id) {
+          return this.$root.$data.userData.groups[i];
+        }
+      }
+
+      return false
     },
     updateUserData (data) {
       this.userData = data;

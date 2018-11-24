@@ -111,9 +111,15 @@
 						<h2 class="card-title">Members</h2>
 					</div>
 
-					<div>
-						<p>TODO: List members and online status</p>
+					<div class="table-responsive">
+						<n-table :data="groupData.members">
+							<template slot-scope="{row}">
+								<td v-html="row.avatar.img"></td>
+								<td v-html="row.name"></td>
+							</template>
+						</n-table>
 					</div>
+
 				</card>
 			</div>
 
@@ -169,11 +175,11 @@
     Table as NTable,
     Progress as NProgress,
     AnimatedNumber,
-    TimeLine,
-    TimeLineItem,
     Activity,
     ActivityForm
   } from 'src/components'
+
+  import { Table, TableColumn } from 'element-ui';
 
   function getDefaultData () {
     return {
@@ -193,10 +199,12 @@
         },
         description: {
           rendered: ''
-        }
+        },
+        members    : [],
       },
       activityData       : [],
       activityPage       : 1,
+      test               : [{name: 'test'}]
     }
   }
 
@@ -206,10 +214,10 @@
       NTable,
       NProgress,
       AnimatedNumber,
-      TimeLine,
-      TimeLineItem,
       Activity,
-      ActivityForm
+      ActivityForm,
+      Table,
+      TableColumn
     },
     data      : getDefaultData,
     mounted() {
@@ -236,10 +244,10 @@
         if (!this.groupData.id) {
           this.reset(); // this shouldn't be necessary, but better safe than sorry
           this.getCurrentGroup();
-          this.$root.setCurrentGroup(this.groupData.id);
         } else {
           this.getGroupTodos();
           this.getGroupActivity();
+          this.$root.setCurrentGroup(this.groupData.id);
         }
       },
       /**
@@ -248,7 +256,7 @@
       getCurrentGroup () {
         this.$http
           .get(
-            '/wp-json/buddypress/v1/groups/' + this.$route.params.slug)
+            '/wp-json/studychurch/v1/groups/' + this.$route.params.slug)
           .then(response => {
             this.groupData = response.data[0];
             this.$root.setCurrentGroup(this.groupData.id);
