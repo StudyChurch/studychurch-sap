@@ -204,7 +204,6 @@
       },
       activityData       : [],
       activityPage       : 1,
-      test               : [{name: 'test'}]
     }
   }
 
@@ -289,7 +288,6 @@
             '/wp-json/buddypress/v1/activity?show_hidden=true&per_page=20&display_comments=threaded&_embed=true&primary_id=' + this.groupData.id + '&page=' + this.activityPage)
           .then(response => {
             if (!response.data.length) {
-              this.loadingMoreActivity = false;
               this.activityPage = 0;
             }
 
