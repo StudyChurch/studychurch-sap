@@ -79,18 +79,18 @@
     },
     data() {
       return {
-        loading     : true,
-	      chapterDataLoading: true,
-	      currentGroupId: 0,
-        todoData    : [],
-        prevChapter : {
+        loading           : true,
+        chapterDataLoading: true,
+        currentGroupId    : 0,
+        todoData          : [],
+        prevChapter       : {
           id: 0
         },
-        nextChapter : {
+        nextChapter       : {
           id: 0
         },
-        chapters    : [],
-        chapterData : {
+        chapters          : [],
+        chapterData       : {
           id      : 0,
           title   : {
             rendered: '',
@@ -103,7 +103,7 @@
             }
           ],
         },
-        studyData   : {
+        studyData         : {
           id         : 0,
           name       : '',
           slug       : '',
@@ -118,7 +118,7 @@
             rendered: ''
           }
         },
-        activityData: [],
+        activityData      : [],
       }
     },
     mounted() {
@@ -131,7 +131,7 @@
         this.currentGroupId = this.$route.query['sc-group'];
       }
 
-      console.log( 'Current Group ID', this.currentGroupId );
+      console.log('Current Group ID', this.$root.getCurrentGroup());
     },
     watch     : {
       '$route' (to, from) {
@@ -186,19 +186,19 @@
         }
 
       },
-	    getGroupName() {
+      getGroupName() {
 
-		    let index = this.$root.$data.userData.groups.findIndex( x => x.id == this.currentGroupId );
+        let index = this.$root.$data.userData.groups.findIndex(x => x.id == this.currentGroupId);
 
-		    console.log( 'current group id', this.currentGroupId );
-		    console.log( 'index', index );
+        console.log('current group id', this.$root.getCurrentGroup());
+        console.log('index', index);
 
-		    if ( index >= 0 ) {
-			    return this.$root.$data.userData.groups[ index ].name;
-		    }
+        if (index >= 0) {
+          return this.$root.$data.userData.groups[index].name;
+        }
 
-		    return '';
-	    }
+        return '';
+      }
     }
   }
 </script>

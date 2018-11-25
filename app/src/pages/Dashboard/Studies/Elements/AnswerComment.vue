@@ -168,7 +168,7 @@
       getGroupAnswers() {
         this.$http
           .get(
-            '/wp-json/studychurch/v1/answers/?context=edit&_embed=true&display_comments=threaded&per_page=1&secondary_id=' + this.questionData.id + '&primary_id=' + this.$root.getCurrentGroup())
+            '/wp-json/studychurch/v1/activity/?context=edit&_embed=true&display_comments=threaded&per_page=1&secondary_id=' + this.questionData.id + '&primary_id=' + this.$root.getCurrentGroup())
           .then(response => {
             console.log(response);
 

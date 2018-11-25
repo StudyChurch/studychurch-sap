@@ -2,12 +2,45 @@
 
 	&--card {
 		min-height: 70px;
+
+		&--update {
+			.avatar {
+				display: none;
+			}
+		}
+
+		&--edit {
+			float: right;
+		}
+
 	}
 
 	&--mine {
 	}
 
 	&--group {
+	}
+
+	&--answer {
+		margin-bottom: 1rem;
+		position: relative;
+		margin-left: 40px;
+
+		.mention {
+			font-weight: bold;
+		}
+
+		.avatar {
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			left: -40px;
+			top: 0;
+		}
+
+		p:last-child {
+			margin-bottom: 0;
+		}
 	}
 
 	&--comment {

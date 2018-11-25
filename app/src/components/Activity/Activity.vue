@@ -2,73 +2,136 @@
 	<card class="card-chart sc-activity--card" no-footer-line>
 
 		<div slot="header" style="position:relative;padding-left:40px;">
-			<img class="avatar border-gray" :src="activity.user_avatar.full" alt="..." style="position: absolute;left:0;">
-			<div class="card-category" v-html="activity.title"></div>
-			<div class="card-category">{{activity.date | dateFormat }}</div>
-		</div>
-
-		<div v-if="showActivityContent()" v-html="activity.content.rendered"></div>
-
-		<div v-for="comment in activity.comments" class="sc-activity--comment">
-			<img class="avatar border-gray" :src="comment.user_avatar.full">
-			<p class="category" style="margin-bottom:0;">
-				{{ comment.date | dateFormat }} | <span v-html="comment.title"></span>
-			</p>
-			<div v-html="comment.content.rendered"></div>
+			<a href="#" v-if="this.item.user === this.$root.$data.userData.id" @click.stop="editActivity" class="sc-activity--card--edit">Edit</a>
+			<img class="avatar border-gray" :src="item.user_avatar.full" alt="..." style="position: absolute;left:0;">
+			<div class="card-category" v-html="item.title"></div>
+			<div class="card-category">{{item.date | dateFormat }}</div>
 		</div>
 
 		<activity-form
-			v-if="showCommentForm()"
+			v-if="showUpdateForm"
+			elClass="sc-activity--card--update"
+			ref="activityForm"
+			:activityID="this.item.id"
+			:component="this.item.component"
+			:type="this.item.type"
+			v-on:activitySaved="updateActivity"
+			:primaryItem="this.item.prime_association"
+			:secondaryItem="this.item.secondary_association"></activity-form>
+
+		<div v-if="showActivityContent" v-html="item.content.rendered"></div>
+
+		<activity-comment v-for="comment in getComments" :comment="comment"></activity-comment>
+
+		<activity-form
+			v-if="showCommentForm"
 			elClass="sc-activity--comment"
 			component="activity"
 			type="activity_comment"
 			v-on:activitySaved="addComment"
-			:primaryItem="this.activity.id"
-			:secondaryItem="this.activity.id"></activity-form>
+			:primaryItem="this.item.id"
+			:secondaryItem="this.item.id"></activity-form>
 
 	</card>
 </template>
 <script>
   import Card from '../Cards/Card.vue';
   import ActivityForm from './ActivityForm.vue';
+  import ActivityComment from './ActivityComment.vue';
 
   export default {
     components: {
       Card,
-      ActivityForm
+      ActivityForm,
+      ActivityComment
     },
     data() {
-      return {}
+      return {
+        item  : this.activity,
+        update: false
+      }
     },
     props     : {
-      activity: {}
+      activity   : {},
+      showForm   : {
+        type   : [Boolean],
+        default: false,
+      },
+      showContent: {
+        type   : [Boolean],
+        default: false,
+      }
     },
     mounted() {
 
     },
     watch     : {},
-    computed  : {},
-    methods   : {
+    computed  : {
+      getComments() {
+        if (undefined === this.item.comments) {
+          return [];
+        }
+
+        return this.item.comments;
+      },
       showActivityContent() {
+        if (this.showUpdateForm) {
+          return false;
+        }
+
+        if (this.showContent) {
+          return true;
+        }
+
         return (
-          this.activity.content.rendered && (
-            this.activity.comments.length > 0 || 'answer_update' !== this.activity.type
+          this.item.content.rendered && (
+            this.getComments > 0 || 'answer_update' !== this.item.type
           )
         );
       },
       showCommentForm() {
-        if (this.activity.comments.length > 0 && 'answer_update' === this.activity.type) {
+        if (this.showUpdateForm) {
+          return false;
+        }
+
+        if (this.showForm) {
           return true;
         }
 
-        if ('activity_update' === this.activity.type) {
+        if (this.getComments > 0 && 'answer_update' === this.item.type) {
+          return true;
+        }
+
+        if ('activity_update' === this.item.type) {
           return true;
         }
 
         return false;
       },
+      showUpdateForm() {
+        return this.update && this.item.user === this.$root.$data.userData.id;
+      },
+    },
+    methods   : {
+      editActivity(e) {
+        e.preventDefault();
+        this.update = true;
+        this.$nextTick(() => {
+          this.$refs.activityForm.updateComment(this.item.content.raw);
+          this.$refs.activityForm.setFocus();
+        })
+      },
       addComment(comment) {
-        this.activity.comments.push(comment);
+        if (undefined === this.item.comments) {
+          this.item.comments = [];
+        }
+
+        this.item.comments.push(comment);
+      },
+      updateActivity(activity) {
+        this.item.content = activity.content;
+        this.item.date = activity.date;
+        this.update = false;
       }
     }
   }

@@ -1,182 +1,72 @@
 <template>
-	<div class="sc-answer--comment">
-		<img class="avatar border-gray" :src="$root.$data.userData.avatar.full" alt="...">
-		<activity-form></activity-form>
+	<div class="sc-activity--comment--container">
+
+		<div class="sc-activity--comment" v-if="!showUpdateForm">
+			<a href="#" v-if="this.item.user === this.$root.$data.userData.id" @click.stop="editActivity" class="sc-activity--card--edit">Edit</a>
+			<img class="avatar border-gray" :src="item.user_avatar.full">
+			<p class="category" style="margin-bottom:0;">
+				{{ item.date | dateFormat }} | <span v-html="item.title"></span>
+			</p>
+			<div v-html="item.content.rendered"></div>
+		</div>
+
+		<activity-form
+			v-if="showUpdateForm"
+			elClass="sc-activity--comment"
+			ref="activityForm"
+			:activityID="this.item.id"
+			:component="this.item.component"
+			:type="this.item.type"
+			v-on:activitySaved="updateActivity"
+			:primaryItem="this.item.prime_association"
+			:secondaryItem="this.item.secondary_association"></activity-form>
+
 	</div>
 </template>
 <script>
   import ActivityForm from './ActivityForm.vue';
 
   export default {
-	components: {
-	  ActivityForm
-	},
+    components: {
+      ActivityForm
+    },
     data() {
       return {
-        answer                : {
-          date   : 0,
-          content: {
-            raw: ''
-          }
-        },
-        groupAnswers          : [],
-        currentValue          : this.value === undefined || this.value === null
-          ? ''
-          : this.value,
-        textareaCalcStyle     : {},
-        hovering              : false,
-        focused               : false,
-        isOnComposition       : false,
-        valueBeforeComposition: null
-      };
+        item  : this.comment,
+        update: false
+      }
     },
-
-    props: {
-      value       : [String, Number],
-      resize      : {
-        type   : String,
-        default: 'none'
-      },
-      autosize    : {
-        type   : [Boolean, Object],
-        default: true
-      },
-      label       : String,
-      tabindex    : String,
-      questionData: Object,
-    },
-
-    computed: {
-    },
-
-    watch: {
-      value(val, oldValue) {
-        this.setCurrentValue(val);
-      },
-    },
-
-    methods: {
-      focus() {
-        (
-          this.$refs.textarea
-        ).focus();
-      },
-      blur() {
-        (
-          this.$refs.textarea
-        ).blur();
-      },
-      handleBlur(event) {
-        this.focused = false;
-        this.$emit('blur', event);
-      },
-      handleKeydown(event) {
-        if (event.keyCode === 13 && !event.shiftKey) {
-          event.preventDefault();
-          this.submitAnswer();
-        }
-      },
-      submitAnswer() {
-        let date = new Date();
-        this.answer.date = date.toISOString();
-        this.answer.content.raw = this.currentValue;
-      },
-      resizeTextarea() {
-        if (this.$isServer) return;
-        const {autosize} = this;
-        if (!autosize) {
-          this.textareaCalcStyle = {
-            minHeight: calcTextareaHeight(this.$refs.textarea).minHeight
-          };
-          return;
-        }
-        const minRows = autosize.minRows;
-        const maxRows = autosize.maxRows;
-
-        this.textareaCalcStyle = calcTextareaHeight(this.$refs.textarea, minRows, maxRows);
-      },
-      handleEditAnswer(event) {
-        this.currentValue = this.answer.content.raw;
-        this.answer.content.raw = '';
-        this.$nextTick(() => {
-          this.$refs.textarea.focus();
-        })
-
-      },
-      handleFocus(event) {
-        this.focused = true;
-        this.$emit('focus', event);
-      },
-      handleComposition(event) {
-        if (event.type === 'compositionend') {
-          this.isOnComposition = false;
-          this.currentValue = this.valueBeforeComposition;
-          this.valueBeforeComposition = null;
-          this.handleInput(event);
-        } else {
-          const text = event.target.value;
-          const lastCharacter = text[text.length - 1] || '';
-          this.isOnComposition = true;
-          if (this.isOnComposition && event.type === 'compositionstart') {
-            this.valueBeforeComposition = text;
-          }
-        }
-      },
-      handleInput(event) {
-        const value = event.target.value;
-        this.setCurrentValue(value);
-        if (this.isOnComposition) return;
-        this.$emit('input', value);
-      },
-      handleChange(event) {
-        this.$emit('change', event.target.value);
-      },
-      setCurrentValue(value) {
-        if (this.isOnComposition && value === this.valueBeforeComposition) return;
-        this.currentValue = value;
-        if (this.isOnComposition) return;
-        this.$nextTick(this.resizeTextarea);
-      },
-      clear() {
-        this.$emit('input', '');
-        this.$emit('change', '');
-        this.$emit('clear');
-        this.setCurrentValue('');
-        this.focus();
-      },
-      getGroupAnswers() {
-        this.$http
-          .get(
-            '/wp-json/studychurch/v1/answers/?context=edit&_embed=true&display_comments=threaded&per_page=1&secondary_id=' + this.questionData.id + '&primary_id=' + this.$root.getCurrentGroup())
-          .then(response => {
-            console.log(response);
-
-            if (response.data.length) {
-              this.groupAnswers = [];
-              for (let i = 0; i < response.data.length; i++) {
-                if (this.$root.$data.userData.id === response.data[i].user) {
-                  this.answer = response.data[i];
-                } else {
-                  this.groupAnswers.push(response.data[i]);
-                }
-              }
-            }
-          })
-          .finally(() => this.loading = false)
-      },
-      resetAnswer() {
-        this.answer = {
-          date   : 0,
-          content: {
-            raw: ''
-          }
-        };
-      },
-      resetGroupAnswers() {
-        this.groupAnswers = [];
-      },
+    props     : {
+      comment   : {},
     },
     mounted() {
+
     },
-  };
+    watch     : {},
+    computed  : {
+      showUpdateForm() {
+        return this.update && this.item.user === this.$root.$data.userData.id;
+      },
+    },
+    methods   : {
+      editActivity(e) {
+        e.preventDefault();
+        this.update = true;
+        this.$nextTick(() => {
+          this.$refs.activityForm.updateComment(this.item.content.raw);
+          this.$refs.activityForm.setFocus();
+        })
+      },
+      addComment(comment) {
+        this.item.comments.push(comment);
+      },
+      updateActivity(activity) {
+        this.item.content = activity.content;
+        this.item.date = activity.date;
+        this.update = false;
+      }
+    }
+  }
 </script>
+<style>
+</style>

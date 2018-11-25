@@ -40,12 +40,12 @@
             raw: ''
           }
         },
-        comment       : '',
         loading       : false,
         tributeOptions: {
           values: this.getTributeValues()
         },
-        tribute       : null
+        tribute       : null,
+        comment       : ''
       };
     },
     props     : {
@@ -66,11 +66,11 @@
         required: true
       },
       primaryItem  : {
-        type    : [Number],
+        type    : [Number, String],
         required: true
       },
       secondaryItem: {
-        type: [Number]
+        type: [Number, String]
       },
       placeholder  : {
         type   : [String],
@@ -92,8 +92,8 @@
     watch: {
       '$root.currentGroup' (to, from) {
         this.tribute.append(0, this.getTributeValues(), true);
-	  }
-	},
+      }
+    },
 
     methods: {
       /**
@@ -133,22 +133,30 @@
           })
           .finally(() => this.loading = false)
       },
-	  getTributeValues() {
+      getTributeValues() {
         let group = this.$root.getCurrentGroupData();
-		let values = [];
+        let values = [];
 
-        if (! group) {
+        if (!group) {
           return [];
-		}
+        }
 
         for (let i = 0; i < group.members.length; i++) {
-			values.push({
-			  key: group.members[i].name,
-			  value: group.members[i].username
-			})
+          values.push({
+            key  : group.members[i].name,
+            value: group.members[i].username
+          })
         }
 
         return values;
+      },
+      setFocus() {
+        this.$nextTick(() => {
+          this.$refs.commentform.$refs.textarea.focus();
+        })
+      },
+	  updateComment(comment) {
+		this.comment = comment;
 	  }
     },
     mounted() {
