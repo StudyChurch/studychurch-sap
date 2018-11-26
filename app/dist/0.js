@@ -1,18 +1,18 @@
 webpackJsonp([0],{
 
-/***/ 870:
+/***/ 872:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cache_loader_cacheDirectory_Users_tannermoushey_Development_Local_scpilgrim_app_public_wp_content_themes_studychurch_sap_app_node_modules_cache_cache_loader_babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_UserProfile_vue__ = __webpack_require__(873);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cache_loader_cacheDirectory_Users_tannermoushey_Development_Local_scpilgrim_app_public_wp_content_themes_studychurch_sap_app_node_modules_cache_cache_loader_babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_UserProfile_vue__ = __webpack_require__(875);
 /* empty harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3ab397a4_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UserProfile_vue__ = __webpack_require__(892);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3ab397a4_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UserProfile_vue__ = __webpack_require__(894);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(4);
 var disposed = false
 function injectStyle (context) {
   if (disposed) return
-  __webpack_require__(881)
+  __webpack_require__(883)
 }
 /* script */
 
@@ -60,12 +60,12 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 873:
+/***/ 875:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UserProfile_EditProfileForm_vue__ = __webpack_require__(883);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UserProfile_UserCard_vue__ = __webpack_require__(887);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UserProfile_EditProfileForm_vue__ = __webpack_require__(885);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UserProfile_UserCard_vue__ = __webpack_require__(889);
 //
 //
 //
@@ -91,7 +91,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 874:
+/***/ 876:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -213,7 +213,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 875:
+/***/ 877:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -255,13 +255,13 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 881:
+/***/ 883:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(882);
+var content = __webpack_require__(884);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -283,7 +283,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 882:
+/***/ 884:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -298,18 +298,18 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
-/***/ 883:
+/***/ 885:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cache_loader_cacheDirectory_Users_tannermoushey_Development_Local_scpilgrim_app_public_wp_content_themes_studychurch_sap_app_node_modules_cache_cache_loader_babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_EditProfileForm_vue__ = __webpack_require__(874);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cache_loader_cacheDirectory_Users_tannermoushey_Development_Local_scpilgrim_app_public_wp_content_themes_studychurch_sap_app_node_modules_cache_cache_loader_babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_EditProfileForm_vue__ = __webpack_require__(876);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2d479718_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_EditProfileForm_vue__ = __webpack_require__(886);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2d479718_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_EditProfileForm_vue__ = __webpack_require__(888);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(4);
 var disposed = false
 function injectStyle (context) {
   if (disposed) return
-  __webpack_require__(884)
+  __webpack_require__(886)
 }
 /* script */
 
@@ -357,13 +357,13 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 884:
+/***/ 886:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(885);
+var content = __webpack_require__(887);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -385,7 +385,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 885:
+/***/ 887:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -400,7 +400,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
-/***/ 886:
+/***/ 888:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -646,18 +646,18 @@ if (false) {
 
 /***/ }),
 
-/***/ 887:
+/***/ 889:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cache_loader_cacheDirectory_Users_tannermoushey_Development_Local_scpilgrim_app_public_wp_content_themes_studychurch_sap_app_node_modules_cache_cache_loader_babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_UserCard_vue__ = __webpack_require__(875);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cache_loader_cacheDirectory_Users_tannermoushey_Development_Local_scpilgrim_app_public_wp_content_themes_studychurch_sap_app_node_modules_cache_cache_loader_babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_UserCard_vue__ = __webpack_require__(877);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7fe9ee54_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UserCard_vue__ = __webpack_require__(890);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7fe9ee54_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UserCard_vue__ = __webpack_require__(892);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(4);
 var disposed = false
 function injectStyle (context) {
   if (disposed) return
-  __webpack_require__(888)
+  __webpack_require__(890)
 }
 /* script */
 
@@ -705,13 +705,13 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 888:
+/***/ 890:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(889);
+var content = __webpack_require__(891);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -733,7 +733,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 889:
+/***/ 891:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -748,7 +748,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
-/***/ 890:
+/***/ 892:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -773,7 +773,7 @@ var render = function() {
         _c("a", { attrs: { href: "#" } }, [
           _c("img", {
             staticClass: "avatar border-gray",
-            attrs: { src: __webpack_require__(891), alt: "..." }
+            attrs: { src: __webpack_require__(893), alt: "..." }
           }),
           _c("h5", { staticClass: "title" }, [_vm._v("Mike Andrew")])
         ]),
@@ -853,14 +853,14 @@ if (false) {
 
 /***/ }),
 
-/***/ 891:
+/***/ 893:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "img/mike.aab414f7.jpg";
 
 /***/ }),
 
-/***/ 892:
+/***/ 894:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

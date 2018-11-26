@@ -2,7 +2,7 @@
 	<card class="card-chart sc-activity--card" no-footer-line>
 
 		<div slot="header" style="position:relative;padding-left:40px;">
-			<a href="#" v-if="this.item.user === this.$root.$data.userData.id" @click.stop="editActivity" class="sc-activity--card--edit">Edit</a>
+			<a href="#" v-if="showEditButton" @click.stop="editActivity" class="sc-activity--card--edit">Edit</a>
 			<img class="avatar border-gray" :src="item.user_avatar.full" alt="..." style="position: absolute;left:0;">
 			<div class="card-category" v-html="item.title"></div>
 			<div class="card-category">{{item.date | dateFormat }}</div>
@@ -21,7 +21,7 @@
 
 		<div v-if="showActivityContent" v-html="item.content.rendered"></div>
 
-		<activity-comment v-for="comment in getComments" :comment="comment"></activity-comment>
+		<activity-comment v-if="showActivityContent" v-for="comment in getComments" :comment="comment"></activity-comment>
 
 		<activity-form
 			v-if="showCommentForm"
@@ -43,7 +43,7 @@
     components: {
       Card,
       ActivityForm,
-      ActivityComment
+	  ActivityComment
     },
     data() {
       return {
@@ -70,10 +70,10 @@
       getComments() {
         if (undefined === this.item.comments) {
           return [];
-        }
+		}
 
-        return this.item.comments;
-      },
+		return this.item.comments;
+	  },
       showActivityContent() {
         if (this.showUpdateForm) {
           return false;
@@ -85,7 +85,7 @@
 
         return (
           this.item.content.rendered && (
-            this.getComments > 0 || 'answer_update' !== this.item.type
+            this.getComments.length > 0 || 'answer_update' !== this.item.type
           )
         );
       },
@@ -98,7 +98,7 @@
           return true;
         }
 
-        if (this.getComments > 0 && 'answer_update' === this.item.type) {
+        if (this.getComments.length > 0 && 'answer_update' === this.item.type) {
           return true;
         }
 
@@ -111,6 +111,9 @@
       showUpdateForm() {
         return this.update && this.item.user === this.$root.$data.userData.id;
       },
+      showEditButton() {
+        return undefined !== this.item.content.raw && this.item.user === this.$root.$data.userData.id;
+	  },
     },
     methods   : {
       editActivity(e) {
@@ -124,7 +127,7 @@
       addComment(comment) {
         if (undefined === this.item.comments) {
           this.item.comments = [];
-        }
+		}
 
         this.item.comments.push(comment);
       },
@@ -137,12 +140,4 @@
   }
 </script>
 <style>
-	.card-body {
-		padding-bottom: 0;
-	}
-
-	.card-footer {
-		padding-top: 0;
-		margin-top: 0;
-	}
 </style>

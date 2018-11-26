@@ -2,7 +2,7 @@
 	<div class="sc-activity--comment--container">
 
 		<div class="sc-activity--comment" v-if="!showUpdateForm">
-			<a href="#" v-if="this.item.user === this.$root.$data.userData.id" @click.stop="editActivity" class="sc-activity--card--edit">Edit</a>
+			<a href="#" v-if="showEditButton" @click.stop="editActivity" class="sc-activity--card--edit">Edit</a>
 			<img class="avatar border-gray" :src="item.user_avatar.full">
 			<p class="category" style="margin-bottom:0;">
 				{{ item.date | dateFormat }} | <span v-html="item.title"></span>
@@ -44,8 +44,11 @@
     },
     watch     : {},
     computed  : {
+      showEditButton() {
+        return undefined !== this.item.content.raw && this.item.user === this.$root.$data.userData.id;
+	  },
       showUpdateForm() {
-        return this.update && this.item.user === this.$root.$data.userData.id;
+        return undefined !== this.item.content.raw && this.update && this.item.user === this.$root.$data.userData.id;
       },
     },
     methods   : {
@@ -53,6 +56,7 @@
         e.preventDefault();
         this.update = true;
         this.$nextTick(() => {
+          // @todo, comments don't always have content.raw. If they don't, we need to run an api request
           this.$refs.activityForm.updateComment(this.item.content.raw);
           this.$refs.activityForm.setFocus();
         })
