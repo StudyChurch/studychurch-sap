@@ -9,7 +9,7 @@
        :aria-expanded="!collapsed"
        data-toggle="collapse"
        @click.prevent="collapseMenu">
-      <i :class="link.icon"></i>
+      <font-awesome-icon :icon="link.icon"></font-awesome-icon>
       <p>
         {{link.name}}
         <b class="caret"></b>

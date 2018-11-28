@@ -1,59 +1,51 @@
 <template>
-  <navbar :show-navbar="showNavbar">
-    <div class="navbar-wrapper">
-      <div class="navbar-toggle" :class="{toggled: $sidebar.showSidebar}">
-        <navbar-toggle-button @click.native="toggleSidebar">
-        </navbar-toggle-button>
-      </div>
-      <a class="navbar-brand" href="#pablo">
-        {{$route.name}}
-      </a>
-    </div>
-    <button @click="toggleNavbar" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navigation"
-            aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-bar navbar-kebab"></span>
-      <span class="navbar-toggler-bar navbar-kebab"></span>
-      <span class="navbar-toggler-bar navbar-kebab"></span>
-    </button>
+	<navbar :show-navbar="showNavbar">
+		<div class="navbar-wrapper">
+			<div class="navbar-toggle" :class="{toggled: $sidebar.showSidebar}">
+				<navbar-toggle-button @click.native="toggleSidebar">
+				</navbar-toggle-button>
+			</div>
+			<a class="navbar-brand" href="#pablo">
+				{{$route.name}}
+			</a>
+		</div>
+		<button @click="toggleNavbar" class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navigation"
+				aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-bar navbar-kebab"></span>
+			<span class="navbar-toggler-bar navbar-kebab"></span>
+			<span class="navbar-toggler-bar navbar-kebab"></span>
+		</button>
 
-    <template slot="navbar-menu">
+		<template slot="navbar-menu">
 
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#pablo">
-            <i class="now-ui-icons ui-1_bell-53"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Notifications</span>
-            </p>
-          </a>
-        </li>
-        <drop-down tag="li"
-                   position="right"
-                   class="nav-item"
-                   icon="now-ui-icons location_world">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<router-link to="/notifications" class="nav-link">
+						<i class="now-ui-icons ui-1_bell-53"></i>
+						<p>
+							<span class="d-lg-none d-md-block">Notifications</span>
+						</p>
+					</router-link>
+				</li>
+				<drop-down tag="li"
+						   position="right"
+						   class="nav-item"
+						   icon="now-ui-icons users_single-02">
 
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </drop-down>
+					<router-link to="/" class="dropdown-item">Dashboard</router-link>
+					<router-link to="/settings" class="dropdown-item">Settings</router-link>
+					<router-link to="/log-out" class="dropdown-item">Log out</router-link>
+				</drop-down>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#pablo">
-            <i class="now-ui-icons users_single-02"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Account</span>
-            </p>
-          </a>
-        </li>
-      </ul>
+			</ul>
 
-    </template>
-  </navbar>
+		</template>
+	</navbar>
 </template>
 <script>
-  import {RouteBreadCrumb, Navbar, NavbarToggleButton} from 'src/components';
-  import {CollapseTransition} from 'vue2-transitions'
+  import { RouteBreadCrumb, Navbar, NavbarToggleButton } from 'src/components';
+  import { CollapseTransition } from 'vue2-transitions'
 
   export default {
     components: {
@@ -62,7 +54,7 @@
       NavbarToggleButton,
       CollapseTransition
     },
-    computed: {
+    computed  : {
       routeName() {
         const {name} = this.$route
         return this.capitalizeFirstLetter(name)
@@ -71,10 +63,10 @@
     data() {
       return {
         activeNotifications: false,
-        showNavbar: false
+        showNavbar         : false
       }
     },
-    methods: {
+    methods   : {
       capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },

@@ -4,12 +4,11 @@
     <side-bar>
       <template slot-scope="props" slot="links">
         <user-menu></user-menu>
-        <sidebar-item :link="{name: 'Dashboard', icon: 'now-ui-icons design_app', path: '/'}"></sidebar-item>
-        <sidebar-item :link="{name: 'Organization', icon: 'now-ui-icons business_globe', path: '/organization'}"></sidebar-item>
-        <sidebar-item :link="{name: 'Groups', icon: 'now-ui-icons education_atom'}">
+        <sidebar-item v-if="0" :link="{name: 'Organization', icon: 'now-ui-icons business_globe', path: '/organization'}"></sidebar-item>
+        <sidebar-item v-if="$root.$data.userData.groups" :link="{name: 'Groups', icon: 'users'}">
           <sidebar-item v-for="group in $root.$data.userData.groups" :link="{name: group.name, path: cleanLink(group.link)}"></sidebar-item>
         </sidebar-item>
-        <sidebar-item :link="{name: 'Studies', icon: 'now-ui-icons design-2_ruler-pencil'}">
+        <sidebar-item v-if="$root.$data.userData.studies" :link="{name: 'Studies', icon: 'now-ui-icons design-2_ruler-pencil'}">
           <sidebar-item v-for="study in $root.$data.userData.studies" :link="{name: study.title.rendered, path: cleanLink(study.link)}"></sidebar-item>
         </sidebar-item>
       </template>

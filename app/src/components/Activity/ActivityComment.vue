@@ -18,6 +18,7 @@
 			:component="this.item.component"
 			:type="this.item.type"
 			v-on:activitySaved="updateActivity"
+			v-on:activityCanceled="cancelUpdate"
 			:primaryItem="this.item.prime_association"
 			:secondaryItem="this.item.secondary_association"></activity-form>
 
@@ -37,7 +38,7 @@
       }
     },
     props     : {
-      comment   : {},
+      comment: {},
     },
     mounted() {
 
@@ -46,7 +47,7 @@
     computed  : {
       showEditButton() {
         return undefined !== this.item.content.raw && this.item.user === this.$root.$data.userData.id;
-	  },
+      },
       showUpdateForm() {
         return undefined !== this.item.content.raw && this.update && this.item.user === this.$root.$data.userData.id;
       },
@@ -60,6 +61,9 @@
           this.$refs.activityForm.updateComment(this.item.content.raw);
           this.$refs.activityForm.setFocus();
         })
+      },
+      cancelUpdate(e) {
+        this.update = false;
       },
       addComment(comment) {
         this.item.comments.push(comment);

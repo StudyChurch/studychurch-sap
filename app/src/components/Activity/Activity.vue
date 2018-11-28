@@ -21,7 +21,7 @@
 
 		<div v-if="showActivityContent" v-html="item.content.rendered"></div>
 
-		<activity-comment v-if="showActivityContent" v-for="comment in getComments" :comment="comment"></activity-comment>
+		<activity-comment v-if="showActivityContent" v-for="comment in getComments" :comment="comment" :key="comment.id"></activity-comment>
 
 		<activity-form
 			v-if="showCommentForm"
@@ -29,6 +29,7 @@
 			component="activity"
 			type="activity_comment"
 			v-on:activitySaved="addComment"
+			v-on:activityCanceled="cancelUpdate"
 			:primaryItem="this.item.id"
 			:secondaryItem="this.item.id"></activity-form>
 
@@ -43,7 +44,7 @@
     components: {
       Card,
       ActivityForm,
-	  ActivityComment
+      ActivityComment
     },
     data() {
       return {
@@ -70,10 +71,10 @@
       getComments() {
         if (undefined === this.item.comments) {
           return [];
-		}
+        }
 
-		return this.item.comments;
-	  },
+        return this.item.comments;
+      },
       showActivityContent() {
         if (this.showUpdateForm) {
           return false;
@@ -113,7 +114,7 @@
       },
       showEditButton() {
         return undefined !== this.item.content.raw && this.item.user === this.$root.$data.userData.id;
-	  },
+      },
     },
     methods   : {
       editActivity(e) {
@@ -124,10 +125,13 @@
           this.$refs.activityForm.setFocus();
         })
       },
+      cancelUpdate(e) {
+        this.update = false;
+      },
       addComment(comment) {
         if (undefined === this.item.comments) {
           this.item.comments = [];
-		}
+        }
 
         this.item.comments.push(comment);
       },

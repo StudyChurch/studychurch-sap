@@ -4,7 +4,7 @@
 			v-if="this.$root.getCurrentGroup() && ! answer.content.raw"
 			ref="answerForm"
 			elClass="sc-activity--answer"
-			component="study"
+			component="groups"
 			type="answer_update"
 			v-on:activitySaved="addAnswer"
 			placeholder="Enter your answer..."
@@ -20,7 +20,6 @@
 	</div>
 </template>
 <script>
-  import AnswerComment from './AnswerComment.vue';
   import { Activity, ActivityForm } from 'src/components';
 
   function getDefaultData () {
@@ -40,7 +39,6 @@
     name: 'sc-answer',
 
     components: {
-      AnswerComment,
       ActivityForm,
       Activity
     },
@@ -75,7 +73,7 @@
       getGroupAnswers() {
         this.$http
           .get(
-            '/wp-json/studychurch/v1/activity/?context=edit&_embed=true&display_comments=threaded&per_page=20&secondary_id=' + this.questionData.id + '&primary_id=' + this.$root.getCurrentGroup())
+            '/wp-json/studychurch/v1/activity/?context=edit&_embed=true&component=groups&show_hidden=true&display_comments=threaded&per_page=20&secondary_id=' + this.questionData.id + '&primary_id=' + this.$root.getCurrentGroup())
           .then(response => {
             this.loading = false;
             if (response.data.length) {

@@ -208,7 +208,7 @@
       @extend .animation-transition-general;
     }
 
-    i {
+    i, svg {
       font-size: 20px;
       float: left;
       margin-right: 12px;
@@ -599,7 +599,12 @@
 }
 
 .panel-header-sm {
-  height: 135px;
+  height: 60px;
+  padding: 0;
+
+   + .content {
+     margin-top: 20px;
+   }
 }
 
 .panel-header-lg {

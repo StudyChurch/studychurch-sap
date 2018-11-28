@@ -16,22 +16,16 @@
           <ul class="nav" v-show="!isClosed">
             <slot>
               <li>
-                <a href="#vue">
-                  <span class="sidebar-mini-icon">MP</span>
-                  <span class="sidebar-normal">My Profile</span>
-                </a>
+                <router-link to="/">
+                  <span class="sidebar-mini-icon">DB</span>
+                  <span class="sidebar-normal">My Dashboard</span>
+                </router-link>
               </li>
               <li>
-                <a href="#vue">
-                  <span class="sidebar-mini-icon">EP</span>
-                  <span class="sidebar-normal">Edit Profile</span>
-                </a>
-              </li>
-              <li>
-                <a href="#vue">
+                <router-link to="/settings">
                   <span class="sidebar-mini-icon">S</span>
-                  <span class="sidebar-normal">Settings</span>
-                </a>
+                  <span class="sidebar-normal">My Settings</span>
+                </router-link>
               </li>
             </slot>
           </ul>

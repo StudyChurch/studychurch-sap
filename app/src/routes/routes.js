@@ -7,6 +7,7 @@ import DefaultHeader from 'src/pages/Dashboard/DefaultHeader';
 
 // Dashboard pages
 import Dashboard from 'src/pages/Dashboard/Dashboard/Dashboard.vue';
+import Account   from 'src/pages/Dashboard/Account/Account.vue';
 import Groups    from 'src/pages/Dashboard/Groups/Groups.vue';
 import Study     from 'src/pages/Dashboard/Studies/Study.vue';
 
@@ -26,6 +27,16 @@ const routes = [
         path      : '',
         name      : 'Dashboard',
         components: {default: Dashboard, header: DefaultHeader}
+      },
+      {
+        path      : 'settings',
+        name      : 'Settings',
+        components: {default: Account, header: DefaultHeader}
+      },
+      {
+        path      : 'notifications',
+        name      : 'Notifications',
+        components: {default: Account, header: DefaultHeader}
       },
       {
         path      : 'studies/:study/:chapter?',

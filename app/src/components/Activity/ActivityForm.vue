@@ -101,10 +101,24 @@
        * @param event
        */
       handleKeydown(event) {
-        if (!this.tribute.isActive && event.keyCode === 13 && !event.shiftKey) {
+
+        // if the name search is open, don't do anything.
+        if (this.tribute.isActive) {
+          return;
+        }
+
+        // on Enter
+        if (event.keyCode === 13 && !event.shiftKey) {
           event.preventDefault();
           this.submitAnswer();
         }
+
+        // on ESC
+        if (27 === event.keyCode) {
+          event.preventDefault();
+          this.$emit('activityCanceled');
+        }
+
       },
       /**
        * handle the answer submit
@@ -126,7 +140,6 @@
           .then(response => {
             this.comment = '';
 
-            console.log(response);
             if (response.data.length) {
               this.$emit('activitySaved', response.data[0])
             }
@@ -155,9 +168,9 @@
           this.$refs.commentform.$refs.textarea.focus();
         })
       },
-	  updateComment(comment) {
-		this.comment = comment;
-	  }
+      updateComment(comment) {
+        this.comment = comment;
+      }
     },
     mounted() {
       let _this = this;

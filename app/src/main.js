@@ -12,11 +12,22 @@ import routes from './routes/routes'
 
 import { setAccessToken, setUserData, getUserData } from './auth';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faBook, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faBook, faUsers);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+Vue.config.productionTip = false;
+
 Vue.config.devtools = true;
+
 // plugin setup
-Vue.use(VueRouter)
-Vue.use(DashboardPlugin)
-Vue.use(require('vue-cookies'))
+Vue.use(VueRouter);
+Vue.use(DashboardPlugin);
+Vue.use(require('vue-cookies'));
 
 Vue.prototype.$http = Axios;
 

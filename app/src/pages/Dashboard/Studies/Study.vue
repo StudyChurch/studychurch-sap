@@ -143,8 +143,9 @@
       getCurrentStudy () {
         this.$http
           .get(
-            '/wp-json/studychurch/v1/studies/?status=any&slug[]=' + this.$route.params.study)
+            '/wp-json/studychurch/v1/studies/?status=publish,private&slug=' + this.$route.params.study)
           .then(response => {
+            console.log( response );
             this.studyData = response.data[0];
           })
           .finally(() => this.loading = false)

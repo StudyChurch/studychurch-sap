@@ -46,12 +46,13 @@ class SCV_Setup {
 	protected function add_actions() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'wp_footer', array( $this, 'reftagger' ) );
+		add_action( 'after_setup_theme', array( $this, 'remove_actions' ) );
 	}
 
 	protected function add_filters() {
 		add_filter( 'sc_everyone_can_add_studies', '__return_false' );
 		add_filter( 'sc_froala_key', array( $this, 'froala_key' ) );
-		add_filter( 'template_include', array( $this, 'app_template' ) );
+		add_filter( 'template_include', array( $this, 'app_template' ), 11 );
 //		add_filter( 'sc_new_group_link', '__return_true' );
 	}
 
@@ -85,6 +86,10 @@ class SCV_Setup {
 		return ( defined( 'WP_DEBUG' ) && WP_DEBUG );
 	}
 
+	public function remove_actions() {
+		remove_action( 'template_redirect',  array( StudyChurch\Setup::get_instance(), 'redirect_logged_in_user' ) );
+	}
+
 	public function reftagger() {
 		?>
 		<script src="https://www.biblegateway.com/public/link-to-us/tooltips/bglinks.js" type="text/javascript"></script>
@@ -101,7 +106,7 @@ class SCV_Setup {
 			return $template;
 		}
 
-		if ( in_array( $_SERVER['REQUEST_URI'], array( '/' ) ) ) {
+		if ( in_array( $_SERVER['REQUEST_URI'], array( '/', '/settings' ) ) ) {
 			return get_stylesheet_directory() . '/app.php';
 		}
 

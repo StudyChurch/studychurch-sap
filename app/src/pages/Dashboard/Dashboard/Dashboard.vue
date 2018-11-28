@@ -1,62 +1,16 @@
 <template>
 	<div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card card-stats card-raised">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-4">
-								<div class="statistics">
-									<div class="info">
-										<div class="icon icon-primary">
-											<i class="now-ui-icons ui-2_chat-round"></i>
-										</div>
-										<h3 class="info-title">{{$root.$data.userData.groups.length}}</h3>
-										<h6 class="stats-title">Groups</h6>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="statistics">
-									<div class="info">
-										<div class="icon icon-success">
-											<i class="now-ui-icons files_paper"></i>
-										</div>
-										<h3 class="info-title">{{studyData.length}}</h3>
-										<h6 class="stats-title">Studies</h6>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="statistics">
-									<div class="info">
-										<div class="icon icon-info">
-											<i class="now-ui-icons design_bullet-list-67"></i>
-										</div>
-										<h3 class="info-title">{{todoData.length}}</h3>
-										<h6 class="stats-title">Todos</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
 
 		<div class="row">
 			<div class="col-lg-4">
 				<card class="card-user">
 					<div slot="image" class="image">
-						<img src="@/assets/img/bg5.jpg" alt="...">
+						<img src="@/assets/img/bg-bible.jpg" alt="...">
 					</div>
 					<div>
 						<div class="author">
-							<a href="#">
-								<img class="avatar border-gray" :src="userData.avatar.full" alt="...">
-								<h5 class="title">{{userData.name}}</h5>
-							</a>
+							<img class="avatar border-gray" :src="userData.avatar.full" alt="...">
+							<h5 class="title">{{userData.name}}</h5>
 							<p class="description">
 								@{{userData.username}}
 							</p>
@@ -148,7 +102,7 @@
 
 				<h3 class="title mt-4 text-center">Activity</h3>
 				<div v-loading="loadingActivity" style="min-height: 20em">
-					<activity v-for="activity in activityData" :activity="activity"></activity>
+					<activity v-for="activity in activityData" :activity="activity" :key="activity.id"></activity>
 					<div class="text-center">
 						<n-button v-if="activityPage && activityData.length" type="primary" simple="" wide="" v-loading="loadingMoreActivity" @click.native="loadMoreActivity">Load More</n-button>
 						<p v-if="! activityPage">There is no more activity to load.</p>
@@ -254,7 +208,7 @@
         });
         this.$http
           .get(
-            '/wp-json/buddypress/v1/activity?show_hidden=true&display_comments=threaded&_embed=true&per_page=10&page=' + this.activityPage + '&primary_id[]=' + groups.join('&primary_id[]='))
+            '/wp-json/studychurch/v1/activity?component=groups&show_hidden=true&display_comments=threaded&_embed=true&per_page=10&page=' + this.activityPage + '&primary_id[]=' + groups.join('&primary_id[]='))
           .then(response => {
             if (!response.data.length) {
               this.activityPage = 0;

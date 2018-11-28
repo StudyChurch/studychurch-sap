@@ -2,73 +2,55 @@
 	<div>
 
 		<div class="row">
-			<div class="col-md-12">
-				<div class="card card-stats card-raised">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-4">
-								<div class="statistics">
-									<div class="info">
-										<div class="icon icon-primary">
-											<i class="now-ui-icons users_single-02"></i>
-										</div>
-										<h3 class="info-title">14</h3>
-										<h6 class="stats-title">Members</h6>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="statistics">
-									<div class="info">
-										<div class="icon icon-success">
-											<i class="now-ui-icons files_paper"></i>
-										</div>
-										<h3 class="info-title">3</h3>
-										<h6 class="stats-title">Studies</h6>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="statistics">
-									<div class="info">
-										<div class="icon icon-info">
-											<i class="now-ui-icons design_bullet-list-67"></i>
-										</div>
-										<h3 class="info-title">0</h3>
-										<h6 class="stats-title">Todos</h6>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
 			<div class="col-lg-4">
 				<card class="card-user">
 					<div slot="image" class="image">
-						<img src="@/assets/img/bg5.jpg" alt="...">
+						<img src="@/assets/img/bg-bible.jpg" alt="...">
 					</div>
 					<div>
 						<div class="author">
-							<a href="#">
-								<img class="avatar border-gray" :src="groupData.avatar_urls.full" alt="...">
-								<h5 class="title">{{groupData.name}}</h5>
-							</a>
-							<p class="description" v-html="groupData.description.rendered"></p>
+							<img class="avatar border-gray" :src="groupData.avatar_urls.full" alt="...">
+							<h5 class="title">{{groupData.name}}</h5>
+							<p class="description" v-show="showGroupDesc" v-html="groupData.description.rendered"></p>
+							<p class="description" v-show="showGroupDesc"><a href="#" @click.stop="showGroupDesc=false">Hide details</a></p>
+							<p class="description" v-show="!showGroupDesc"><a href="#" @click.stop="showGroupDesc=true">Show details</a></p>
 						</div>
 					</div>
 				</card>
 
-				<card class="card-chart" no-footer-line>
+				<card class="card-chart" no-footer-line v-loading="loadingTodos" style="min-height: 200px;">
 
 					<div slot="header">
-						<h2 class="card-title">Studies</h2>
+						<h5 class="card-title">Upcoming Todos</h5>
 						<drop-down :hide-arrow="true" position="right">
-							<n-button slot="title" class="dropdown-toggle no-caret" round simple icon>
+							<n-button slot="title" class="dropdown-toggle no-caret" type="neutral" round icon>
+								<i class="now-ui-icons loader_gear"></i>
+							</n-button>
+
+							<a class="dropdown-item" href="#">Add a Study</a>
+						</drop-down>
+					</div>
+
+					<ul slot="raw-content" class="list-group list-group-flush">
+						<li v-for="data in todoData" :class="'list-group-item'">
+							&nbsp;
+							<h6>Due Date: {{data.date}}</h6>
+							<p v-for="lesson in data.lessons">
+								<i class="now-ui-icons design_bullet-list-67"></i>&nbsp;
+								<span v-html="lesson.title"></span>
+							</p>
+							<p v-html="data.content"></p>
+						</li>
+					</ul>
+
+				</card>
+
+				<card class="card-chart" no-footer-line v-loading="loadingStudies">
+
+					<div slot="header">
+						<h5 class="card-title">Studies</h5>
+						<drop-down :hide-arrow="true" position="right">
+							<n-button slot="title" class="dropdown-toggle no-caret" type="neutral" round icon>
 								<i class="now-ui-icons loader_gear"></i>
 							</n-button>
 
@@ -86,29 +68,19 @@
 						</n-table>
 					</div>
 
-					<div slot="footer" class="stats">
-						<i :class="this.loadingStudies ? 'now-ui-icons arrows-1_refresh-69 spin' : 'now-ui-icons arrows-1_refresh-69'"></i> Just Updated
-					</div>
-
 				</card>
 
 				<card class="card-chart" no-footer-line>
 
 					<div slot="header">
-						<h2 class="card-title">Invite</h2>
-					</div>
+						<h5 class="card-title">Members</h5>
+						<drop-down :hide-arrow="true" position="right">
+							<n-button slot="title" class="dropdown-toggle no-caret" type="neutral" round icon>
+								<i class="now-ui-icons loader_gear"></i>
+							</n-button>
 
-					<div>
-						<p>Use this link to invite members to join this group.</p>
-						<p><textarea>https://studychurch.local/join/?group=12345687890&key=abcdef1234567890</textarea>
-						</p>
-					</div>
-				</card>
-
-				<card class="card-chart" no-footer-line>
-
-					<div slot="header">
-						<h2 class="card-title">Members</h2>
+							<a class="dropdown-item" href="#">Invite a new member</a>
+						</drop-down>
 					</div>
 
 					<div class="table-responsive">
@@ -125,24 +97,6 @@
 
 			<div class="col-lg-8">
 
-				<h3 class="title mt-4 text-center">Upcoming Todos</h3>
-				<card no-footer-line>
-					<ul slot="raw-content" class="list-group list-group-flush">
-						<li v-for="data in todoData" :class="'list-group-item'">
-							&nbsp;
-							<h6>Due Date: {{data.date}}</h6>
-							<p v-for="lesson in data.lessons">
-								<i class="now-ui-icons design_bullet-list-67"></i>&nbsp;
-								<span v-html="lesson.title"></span>
-							</p>
-							<p v-html="data.content"></p>
-						</li>
-					</ul>
-					<div slot="footer" class="stats">
-						<i :class="this.loadingTodos ? 'now-ui-icons arrows-1_refresh-69 spin' : 'now-ui-icons arrows-1_refresh-69'"></i> Just Updated
-					</div>
-				</card>
-
 				<card cardBodyClasses="sc-activity--update">
 					<activity-form
 						elClass="sc-activity--update--form"
@@ -157,7 +111,7 @@
 				</card>
 
 				<div v-loading="loadingActivity" style="min-height: 20em">
-					<activity v-for="activity in activityData" :activity="activity"></activity>
+					<activity v-for="activity in activityData" :activity="activity" :key="activity.id"></activity>
 					<div class="text-center">
 						<n-button v-if="activityPage && activityData.length" type="primary" simple="" wide="" v-loading="loadingMoreActivity" @click.native="loadMoreActivity">Load More</n-button>
 						<p v-if="! activityPage">There is no more activity to load.</p>
@@ -188,6 +142,7 @@
       loadingActivity    : true,
       loadingMoreActivity: false,
       loadingTodos       : true,
+	  showGroupDesc      : false,
       todoData           : [],
       groupData          : {
         id         : 0,
@@ -285,7 +240,7 @@
       getGroupActivity () {
         this.$http
           .get(
-            '/wp-json/buddypress/v1/activity?show_hidden=true&per_page=20&display_comments=threaded&_embed=true&primary_id=' + this.groupData.id + '&page=' + this.activityPage)
+            '/wp-json/studychurch/v1/activity?components=groups&show_hidden=true&per_page=20&display_comments=threaded&_embed=true&primary_id=' + this.groupData.id + '&page=' + this.activityPage)
           .then(response => {
             if (!response.data.length) {
               this.activityPage = 0;
