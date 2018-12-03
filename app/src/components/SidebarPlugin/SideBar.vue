@@ -3,11 +3,11 @@
        :data-color="backgroundColor">
 
     <div class="logo">
-      <a href="/" class="simple-text logo-mini">
+      <router-link to="/" class="simple-text logo-mini">
         <div class="logo-image">
           <img :src="logo">
         </div>
-      </a>
+      </router-link>
 
       <a href="/" class="simple-text logo-normal">
         {{title}}

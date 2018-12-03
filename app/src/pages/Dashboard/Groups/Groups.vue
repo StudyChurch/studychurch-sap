@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="sc-group">
 
 		<div class="row">
 			<div class="col-lg-4">
@@ -9,26 +9,22 @@
 					</div>
 					<div>
 						<div class="author">
-							<img class="avatar border-gray" :src="groupData.avatar_urls.full" alt="...">
-							<h5 class="title">{{groupData.name}}</h5>
+							<font-awesome-icon icon="users" class="avatar border-gray"></font-awesome-icon>
+							<router-link :to="'/groups/' + $route.params.slug + '/'">
+								<h5 class="title">{{groupData.name}}</h5></router-link>
 							<p class="description" v-show="showGroupDesc" v-html="groupData.description.rendered"></p>
-							<p class="description" v-show="showGroupDesc"><a href="#" @click.stop="showGroupDesc=false">Hide details</a></p>
-							<p class="description" v-show="!showGroupDesc"><a href="#" @click.stop="showGroupDesc=true">Show details</a></p>
+							<p class="description" v-show="showGroupDesc">
+								<a href="#" @click.stop="showGroupDesc=false">Hide details</a></p>
+							<p class="description" v-show="!showGroupDesc">
+								<a href="#" @click.stop="showGroupDesc=true">Show details</a></p>
 						</div>
 					</div>
 				</card>
 
-				<card class="card-chart" no-footer-line v-loading="loadingTodos" style="min-height: 200px;">
+				<card class="card-chart d-lg-block d-none" no-footer-line v-loading="loadingTodos" style="min-height: 200px;">
 
 					<div slot="header">
 						<h5 class="card-title">Upcoming Todos</h5>
-						<drop-down :hide-arrow="true" position="right">
-							<n-button slot="title" class="dropdown-toggle no-caret" type="neutral" round icon>
-								<i class="now-ui-icons loader_gear"></i>
-							</n-button>
-
-							<a class="dropdown-item" href="#">Add a Study</a>
-						</drop-down>
 					</div>
 
 					<ul slot="raw-content" class="list-group list-group-flush">
@@ -36,8 +32,9 @@
 							&nbsp;
 							<h6>Due Date: {{data.date}}</h6>
 							<p v-for="lesson in data.lessons">
-								<i class="now-ui-icons design_bullet-list-67"></i>&nbsp;
-								<span v-html="lesson.title"></span>
+								<router-link :to="'/groups/' + $route.params.slug + $root.cleanLink(lesson.link)">
+									<i class="now-ui-icons design_bullet-list-67"></i>&nbsp;
+									<span v-html="lesson.title"></span></router-link>
 							</p>
 							<p v-html="data.content"></p>
 						</li>
@@ -45,24 +42,17 @@
 
 				</card>
 
-				<card class="card-chart" no-footer-line v-loading="loadingStudies">
+				<card class="card-chart d-lg-block d-none" no-footer-line v-loading="loadingStudies">
 
 					<div slot="header">
 						<h5 class="card-title">Studies</h5>
-						<drop-down :hide-arrow="true" position="right">
-							<n-button slot="title" class="dropdown-toggle no-caret" type="neutral" round icon>
-								<i class="now-ui-icons loader_gear"></i>
-							</n-button>
-
-							<a class="dropdown-item" href="#">Add a Study</a>
-						</drop-down>
 					</div>
 
 					<div class="table-responsive">
 						<n-table :data="groupData.studies">
 							<template slot-scope="{row}">
 								<td>
-									<router-link :to="$root.cleanLink(row.link)">{{row.title}}</router-link>
+									<router-link :to="'/groups/' + $route.params.slug + $root.cleanLink(row.link)">{{row.title}}</router-link>
 								</td>
 							</template>
 						</n-table>
@@ -70,15 +60,16 @@
 
 				</card>
 
-				<card class="card-chart" no-footer-line>
+				<card class="card-chart d-lg-block d-none" no-footer-line>
 
 					<div slot="header">
 						<h5 class="card-title">Members</h5>
-						<drop-down :hide-arrow="true" position="right">
+						<drop-down v-if="false" :hide-arrow="true" position="right">
 							<n-button slot="title" class="dropdown-toggle no-caret" type="neutral" round icon>
 								<i class="now-ui-icons loader_gear"></i>
 							</n-button>
 
+							<router-link :to="'/groups/' + this.$route.params.slug + '/members/'" class="dropdown-item">Manage Members</router-link>
 							<a class="dropdown-item" href="#">Invite a new member</a>
 						</drop-down>
 					</div>
@@ -97,26 +88,17 @@
 
 			<div class="col-lg-8">
 
-				<card cardBodyClasses="sc-activity--update">
-					<activity-form
-						elClass="sc-activity--update--form"
-						component="groups"
-						type="activity_update"
-						v-on:activitySaved="addActivity"
-						placeholder="Post a message to the group ..."
-						:primaryItem="this.groupData.id"
-						:secondaryItem="0"
-						:autosize="{ minRows: 3 }"></activity-form>
-					<div class="category">Use @ to mention a member of this group or use @group to notify everyone.</div>
-				</card>
+				<el-menu :default-active="defaultActiveTab" class="el-menu-demo" mode="horizontal" :router="true">
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/'"><font-awesome-icon icon="comments"></font-awesome-icon>&nbsp;&nbsp;<span>Discussion</span></el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/assignments/'"><font-awesome-icon icon="list"></font-awesome-icon>&nbsp;&nbsp;<span>Todos</span></el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/studies/'"><font-awesome-icon icon="book"></font-awesome-icon>&nbsp;&nbsp;<span>Studies</span></el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/members/'"><font-awesome-icon icon="user"></font-awesome-icon>&nbsp;&nbsp;<span>Members</span></el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/settings/'"><font-awesome-icon icon="cogs"></font-awesome-icon>&nbsp;&nbsp;<span>Settings</span></el-menu-item>
+				</el-menu>
 
-				<div v-loading="loadingActivity" style="min-height: 20em">
-					<activity v-for="activity in activityData" :activity="activity" :key="activity.id"></activity>
-					<div class="text-center">
-						<n-button v-if="activityPage && activityData.length" type="primary" simple="" wide="" v-loading="loadingMoreActivity" @click.native="loadMoreActivity">Load More</n-button>
-						<p v-if="! activityPage">There is no more activity to load.</p>
-					</div>
-				</div>
+				<br />
+
+				<router-view :groupData.sync="groupData"></router-view>
 
 			</div>
 		</div>
@@ -126,25 +108,19 @@
 <script>
   import {
     Card,
-    Table as NTable,
-    Progress as NProgress,
-    AnimatedNumber,
-    Activity,
-    ActivityForm
+    Table as NTable
   } from 'src/components'
 
-  import { Table, TableColumn } from 'element-ui';
+  import { Menu, MenuItem } from 'element-ui';
 
   function getDefaultData () {
     return {
-      loadingGroups      : false,
-      loadingStudies     : false,
-      loadingActivity    : true,
-      loadingMoreActivity: false,
-      loadingTodos       : true,
-	  showGroupDesc      : false,
-      todoData           : [],
-      groupData          : {
+      loadingGroups : false,
+      loadingStudies: false,
+      loadingTodos  : true,
+      showGroupDesc : false,
+      todoData      : [],
+      groupData     : {
         id         : 0,
         name       : '',
         slug       : '',
@@ -157,21 +133,15 @@
         },
         members    : [],
       },
-      activityData       : [],
-      activityPage       : 1,
     }
   }
 
   export default {
     components: {
+      'el-menu'     : Menu,
+      'el-menu-item': MenuItem,
       Card,
-      NTable,
-      NProgress,
-      AnimatedNumber,
-      Activity,
-      ActivityForm,
-      Table,
-      TableColumn
+      NTable
     },
     data      : getDefaultData,
     mounted() {
@@ -179,13 +149,23 @@
     },
     watch     : {
       '$route' (to, from) {
+        if (to.params.slug === from.params.slug) {
+          return;
+        }
+
         this.setupCurrentGroup();
       }
     },
-    computed  : {},
+    computed  : {
+      defaultActiveTab() {
+        return (
+          undefined === this.$route.params.study
+        ) ? this.$route.path : '/groups/' + this.$route.params.slug + '/studies/';
+      }
+    },
     methods   : {
       setupCurrentGroup () {
-
+        console.log('setup group');
         // check for cached group data
         for (let i = 0; i < this.$root.$data.userData.groups.length; i++) {
           if (this.$route.params.slug === this.$root.$data.userData.groups[i].slug) {
@@ -200,7 +180,6 @@
           this.getCurrentGroup();
         } else {
           this.getGroupTodos();
-          this.getGroupActivity();
           this.$root.setCurrentGroup(this.groupData.id);
         }
       },
@@ -215,17 +194,8 @@
             this.groupData = response.data[0];
             this.$root.setCurrentGroup(this.groupData.id);
             this.getGroupTodos();
-            this.getGroupActivity();
           })
           .finally(() => this.loadingTodos = false)
-      },
-      getActivityBadgeType (type) {
-        switch (type) {
-          case 'activity_comment' :
-            return 'info';
-          default:
-            return 'success';
-        }
       },
       getGroupTodos () {
         this.loadingTodos = true;
@@ -236,33 +206,6 @@
             this.todoData = response.data
           ))
           .finally(() => this.loadingTodos = false)
-      },
-      getGroupActivity () {
-        this.$http
-          .get(
-            '/wp-json/studychurch/v1/activity?components=groups&show_hidden=true&per_page=20&display_comments=threaded&_embed=true&primary_id=' + this.groupData.id + '&page=' + this.activityPage)
-          .then(response => {
-            if (!response.data.length) {
-              this.activityPage = 0;
-            }
-
-            this.activityData = this.activityData.concat(response.data)
-          })
-          .finally(() => this.loadingActivity = this.loadingMoreActivity = false)
-      },
-      addActivity(newActivity) {
-        newActivity.comments = [];
-        this.activityData.unshift(newActivity);
-      },
-      loadMoreActivity () {
-        console.log('click');
-        if (!this.activityPage) {
-          return false;
-        }
-
-        this.loadingMoreActivity = true;
-        this.activityPage++;
-        this.getGroupActivity();
       },
       reset (keep) {
         let def = getDefaultData();

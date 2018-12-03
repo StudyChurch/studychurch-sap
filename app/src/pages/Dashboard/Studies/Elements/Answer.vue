@@ -1,7 +1,7 @@
 <template>
 	<div class="sc-answer" v-loading="loading">
 		<activity-form
-			v-if="this.$root.getCurrentGroup() && ! answer.content.raw"
+			v-if="this.groupData.id && ! answer.content.raw"
 			ref="answerForm"
 			elClass="sc-activity--answer"
 			component="groups"
@@ -9,10 +9,12 @@
 			v-on:activitySaved="addAnswer"
 			placeholder="Enter your answer..."
 			:activityID="this.answer.id"
-			:primaryItem="this.$root.getCurrentGroup()"
+			:primaryItem="this.groupData.id"
 			:secondaryItem="this.questionData.id"></activity-form>
 
 		<activity v-if="answer.content.raw" :activity="answer" :showContent="true"></activity>
+
+		<p class="category" v-html="groupAnswerText"></p>
 
 		<div v-if="answer.content.raw && groupAnswers.length" class="sc-answer--group">
 			<activity v-for="gAnswer in groupAnswers" class="sc-question--group-answers--answer" :activity="gAnswer" :showContent="true" :showForm="true"></activity>
@@ -24,6 +26,7 @@
 
   function getDefaultData () {
     return {
+      update      : false,
       loading     : true,
       answer      : {
         date   : 0,
@@ -45,8 +48,29 @@
     data      : getDefaultData,
     props     : {
       questionData: Object,
+      groupData   : {
+        default: {
+          id     : 0,
+          studies: []
+        }
+      },
     },
-    computed  : {},
+    computed  : {
+      groupAnswerText() {
+
+        if (this.questionData.is_private) {
+		  return 'This question is private, your answer will not be shared with the group.';
+		}
+
+        if (! this.groupAnswers.length) {
+		  return 'No Group Answers Yet';
+		} else if (1 === this.groupAnswers.length) {
+          return this.groupAnswers.length + ' Group Answer';
+		} else {
+          return this.groupAnswers.length + ' Group Answers';
+		}
+	  }
+	},
     watch     : {
       '$route' () {
         this.reset();
@@ -63,17 +87,26 @@
       },
       handleEditAnswer(event) {
         event.preventDefault();
-        let currentValue = this.answer.content.raw;
-        this.answer.content.raw = '';
+        this.update = true;
         this.$nextTick(() => {
-          this.$refs.answerForm.updateComment(currentValue);
+          this.$refs.answerForm.updateComment(this.answer.content.raw);
           this.$refs.answerForm.setFocus();
         })
       },
+      cancelEdit(e) {
+        this.update = false;
+      },
       getGroupAnswers() {
+
+        let params = 'context=edit&_embed=true&component=groups&show_hidden=true&display_comments=threaded&per_page=20&secondary_id=' + this.questionData.id + '&primary_id=' + this.groupData.id;
+
+        if (this.questionData.is_private) {
+          params += '&user=' + this.$root.$data.userData.id;
+        }
+
         this.$http
           .get(
-            '/wp-json/studychurch/v1/activity/?context=edit&_embed=true&component=groups&show_hidden=true&display_comments=threaded&per_page=20&secondary_id=' + this.questionData.id + '&primary_id=' + this.$root.getCurrentGroup())
+            '/wp-json/studychurch/v1/activity/?' + params)
           .then(response => {
             this.loading = false;
             if (response.data.length) {

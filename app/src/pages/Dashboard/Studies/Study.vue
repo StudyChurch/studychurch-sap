@@ -1,56 +1,47 @@
 <template>
 	<div>
-
-		<div class="row">
-			<div class="col-md-9 ml-auto mr-auto">
-				<card v-loading="loading">
-					<div class="card-header">
-						<div>
-							<h5 class="title" v-html="studyData.title.rendered"></h5>
-							<h1 class="title" v-html="chapterData.title.rendered"></h1>
-						</div>
-					</div>
-
-					<div class="study-meta">
-						<div>
-							<p>{{ getGroupName() }}</p>
-						</div>
-						<div>
-							<p>
-								<select>
-									<option>Chapter Select</option>
-									<option v-for="chapter in chapters">{{ chapter.title.rendered }}</option>
-								</select>
-							</p>
-						</div>
-						<div>
-							<p>
-								Print
-							</p>
-						</div>
-					</div>
-
-					<div v-for="data in chapterData.elements" :id="'post-' + data.id" v-loading="chapterDataLoading">
-						<!--<div class="card-body" v-html="data.content.rendered | isPrivate( data['is_private'] )"></div>-->
-						<div class="card-body" v-html="$options.filters.isPrivate( data.content.rendered, data['is_private'] )"></div>
-						<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
-							<answer :questionData="data"></answer>
-						</div>
-					</div>
-				</card>
-
+		<card v-loading="loading" style="min-height: 200px;">
+			<div class="card-header">
 				<div>
-					<router-link v-if="prevChapter.id" :to="$root.cleanLink(prevChapter.link)" tag="button" class="btn btn-default">
-						<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-left"></i></span>
-						&nbsp;&nbsp;<span v-html="prevChapter.title.rendered"></span>
-					</router-link>
-					<router-link v-if="nextChapter.id" :to="$root.cleanLink(nextChapter.link)" tag="button" class="btn btn-default">
-						<span v-html="nextChapter.title.rendered"></span>
-						&nbsp;&nbsp;<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-right"></i></span>
-					</router-link>
+					<h5 class="title" v-html="chapterData.study"></h5>
+					<h1 class="title" v-html="chapterData.title.rendered"></h1>
 				</div>
 			</div>
 
+			<div class="study-meta">
+				<div>
+					<p>
+						<select>
+							<option>Chapter Select</option>
+							<option v-for="chapter in chapters">{{ chapter.title.rendered }}</option>
+						</select>
+					</p>
+				</div>
+				<div>
+					<p>
+						Print
+					</p>
+				</div>
+			</div>
+
+			<div v-for="data in chapterData.elements" :id="'post-' + data.id">
+				<!--<div class="card-body" v-html="data.content.rendered | isPrivate( data['is_private'] )"></div>-->
+				<div class="card-body" v-html="$options.filters.isPrivate( data.content.rendered, data['is_private'] )"></div>
+				<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
+					<answer :questionData="data" :groupData="groupData"></answer>
+				</div>
+			</div>
+		</card>
+
+		<div>
+			<router-link v-if="prevChapter.id" :to="navPrefix + $root.cleanLink(prevChapter.link)" tag="button" class="btn btn-default">
+				<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-left"></i></span>
+				&nbsp;&nbsp;<span v-html="prevChapter.title.rendered"></span>
+			</router-link>
+			<router-link v-if="nextChapter.id" :to="navPrefix + $root.cleanLink(nextChapter.link)" tag="button" class="btn btn-default">
+				<span v-html="nextChapter.title.rendered"></span>
+				&nbsp;&nbsp;<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-right"></i></span>
+			</router-link>
 		</div>
 	</div>
 
@@ -79,19 +70,17 @@
     },
     data() {
       return {
-        loading           : true,
-        chapterDataLoading: true,
-        currentGroupId    : 0,
-        todoData          : [],
-        prevChapter       : {
+        loading     : true,
+        prevChapter : {
           id: 0
         },
-        nextChapter       : {
+        nextChapter : {
           id: 0
         },
-        chapters          : [],
-        chapterData       : {
+        chapters    : [],
+        chapterData : {
           id      : 0,
+          study   : '',
           title   : {
             rendered: '',
           },
@@ -103,7 +92,7 @@
             }
           ],
         },
-        studyData         : {
+        studyData   : {
           id         : 0,
           name       : '',
           slug       : '',
@@ -118,38 +107,42 @@
             rendered: ''
           }
         },
-        activityData      : [],
+        activityData: [],
       }
     },
     mounted() {
-      this.getCurrentStudy();
       this.getChapterItems();
       this.getStudyChapters();
-
-      if (undefined !== this.$route.query['sc-group']) {
-        this.$root.setCurrentGroup(this.$route.query['sc-group']);
-        this.currentGroupId = this.$route.query['sc-group'];
-      }
-
-      console.log('Current Group ID', this.$root.getCurrentGroup());
     },
     watch     : {
       '$route' (to, from) {
         this.getChapterItems();
       }
     },
-    computed  : {},
-    methods   : {
-      getCurrentStudy () {
-        this.$http
-          .get(
-            '/wp-json/studychurch/v1/studies/?status=publish,private&slug=' + this.$route.params.study)
-          .then(response => {
-            console.log( response );
-            this.studyData = response.data[0];
-          })
-          .finally(() => this.loading = false)
+    props     : {
+      groupData: {
+        default() {
+          return {
+            id     : 0,
+            studies: []
+          }
+        }
       },
+    },
+    computed  : {
+      navPrefix() {
+        if (!this.groupData.id) {
+          return '';
+        }
+
+        if (undefined === this.$route.params.slug) {
+          return '';
+        }
+
+        return '/groups/' + this.$route.params.slug;
+      },
+    },
+    methods   : {
       getStudyChapters () {
         this.$http
           .get(
@@ -158,7 +151,7 @@
             this.chapters = response.data;
             this.getChapterItems();
           })
-          .finally(() => this.chapterDataLoading = false)
+          .finally(() => this.loading = false)
       },
       getChapterItems () {
         let i = 0;
@@ -186,19 +179,6 @@
           }
         }
 
-      },
-      getGroupName() {
-
-        let index = this.$root.$data.userData.groups.findIndex(x => x.id == this.currentGroupId);
-
-        console.log('current group id', this.$root.getCurrentGroup());
-        console.log('index', index);
-
-        if (index >= 0) {
-          return this.$root.$data.userData.groups[index].name;
-        }
-
-        return '';
       }
     }
   }

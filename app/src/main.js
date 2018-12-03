@@ -13,10 +13,10 @@ import routes from './routes/routes'
 import { setAccessToken, setUserData, getUserData } from './auth';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBook, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faUsers, faChevronRight, faComments, faList, faUser, faCogs, faBell } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faBook, faUsers);
+library.add(faBook, faUsers, faChevronRight, faComments, faList, faUser, faCogs, faBell);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

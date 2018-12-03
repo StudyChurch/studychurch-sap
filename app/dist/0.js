@@ -138,6 +138,28 @@ eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// lo
 
 /***/ }),
 
+/***/ "./src/assets/img/bg5.jpg":
+/*!********************************!*\
+  !*** ./src/assets/img/bg5.jpg ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"img/bg5.056eb058.jpg\";//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvYXNzZXRzL2ltZy9iZzUuanBnLmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vc3JjL2Fzc2V0cy9pbWcvYmc1LmpwZz9kNTIzIl0sInNvdXJjZXNDb250ZW50IjpbIm1vZHVsZS5leHBvcnRzID0gX193ZWJwYWNrX3B1YmxpY19wYXRoX18gKyBcImltZy9iZzUuMDU2ZWIwNTguanBnXCI7Il0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/assets/img/bg5.jpg\n");
+
+/***/ }),
+
+/***/ "./src/assets/img/mike.jpg":
+/*!*********************************!*\
+  !*** ./src/assets/img/mike.jpg ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"img/mike.aab414f7.jpg\";//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9zcmMvYXNzZXRzL2ltZy9taWtlLmpwZy5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9hc3NldHMvaW1nL21pa2UuanBnPzM5ZDEiXSwic291cmNlc0NvbnRlbnQiOlsibW9kdWxlLmV4cG9ydHMgPSBfX3dlYnBhY2tfcHVibGljX3BhdGhfXyArIFwiaW1nL21pa2UuYWFiNDE0ZjcuanBnXCI7Il0sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./src/assets/img/mike.jpg\n");
+
+/***/ }),
+
 /***/ "./src/pages/Dashboard/Pages/UserProfile.vue":
 /*!***************************************************!*\
   !*** ./src/pages/Dashboard/Pages/UserProfile.vue ***!

@@ -106,7 +106,7 @@ class SCV_Setup {
 			return $template;
 		}
 
-		if ( in_array( $_SERVER['REQUEST_URI'], array( '/', '/settings' ) ) ) {
+		if ( in_array( $_SERVER['REQUEST_URI'], array( '/', '/settings/', '/notifications/' ) ) ) {
 			return get_stylesheet_directory() . '/app.php';
 		}
 

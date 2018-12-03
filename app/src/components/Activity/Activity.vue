@@ -16,6 +16,7 @@
 			:component="this.item.component"
 			:type="this.item.type"
 			v-on:activitySaved="updateActivity"
+			v-on:activityCanceled="cancelUpdate"
 			:primaryItem="this.item.prime_association"
 			:secondaryItem="this.item.secondary_association"></activity-form>
 
@@ -24,12 +25,11 @@
 		<activity-comment v-if="showActivityContent" v-for="comment in getComments" :comment="comment" :key="comment.id"></activity-comment>
 
 		<activity-form
-			v-if="showCommentForm"
+			v-show="showCommentForm"
 			elClass="sc-activity--comment"
 			component="activity"
 			type="activity_comment"
 			v-on:activitySaved="addComment"
-			v-on:activityCanceled="cancelUpdate"
 			:primaryItem="this.item.id"
 			:secondaryItem="this.item.id"></activity-form>
 
@@ -91,6 +91,7 @@
         );
       },
       showCommentForm() {
+
         if (this.showUpdateForm) {
           return false;
         }
@@ -113,7 +114,7 @@
         return this.update && this.item.user === this.$root.$data.userData.id;
       },
       showEditButton() {
-        return undefined !== this.item.content.raw && this.item.user === this.$root.$data.userData.id;
+        return this.showActivityContent && this.item.user === this.$root.$data.userData.id;
       },
     },
     methods   : {

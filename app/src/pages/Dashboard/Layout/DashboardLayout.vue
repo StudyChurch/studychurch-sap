@@ -8,7 +8,8 @@
         <sidebar-item v-if="$root.$data.userData.groups" :link="{name: 'Groups', icon: 'users'}">
           <sidebar-item v-for="group in $root.$data.userData.groups" :link="{name: group.name, path: cleanLink(group.link)}"></sidebar-item>
         </sidebar-item>
-        <sidebar-item v-if="$root.$data.userData.studies" :link="{name: 'Studies', icon: 'now-ui-icons design-2_ruler-pencil'}">
+        <hr />
+        <sidebar-item v-if="$root.$data.userData.studies" :link="{name: 'Studies', icon: 'book'}">
           <sidebar-item v-for="study in $root.$data.userData.studies" :link="{name: study.title.rendered, path: cleanLink(study.link)}"></sidebar-item>
         </sidebar-item>
       </template>

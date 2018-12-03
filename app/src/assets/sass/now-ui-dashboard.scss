@@ -15,6 +15,10 @@
 
  */
 
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
 @import 'now-ui-dashboard/variables';
 @import 'now-ui-dashboard/mixins';
 
@@ -59,6 +63,10 @@
 @import 'now-ui-dashboard/timeline';
 @import 'now-ui-dashboard/fixed-plugin';
 @import 'now-ui-dashboard/activity';
+@import 'now-ui-dashboard/groups';
+
+// Bootstrap
+@import '~bootstrap/scss/utilities';
 
 // example pages and sections
 @import 'now-ui-dashboard/example-pages';
@@ -71,6 +79,7 @@
 @import "now-ui-dashboard/element-ui-plugins/input";
 @import "now-ui-dashboard/element-ui-plugins/tables";
 @import "now-ui-dashboard/element-ui-plugins/tooltip";
+@import "now-ui-dashboard/element-ui-plugins/menubar";
 
 
 @import 'now-ui-dashboard/responsive';
