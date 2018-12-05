@@ -1,18 +1,20 @@
 <template>
 
-	<div class="sc-group--studies">
+	<div class="sc-group--studies row">
+		<div class="text-right">
+			<n-button type="primary" @click.native="showModal = true">Add Study</n-button>
+		</div>
 
-		<card v-for="study in groupData.studies" class="card-chart">
-			<router-link :to="'/groups/' + $route.params.slug + $root.cleanLink(study.link)"><h3 class="card-title">{{ study.title }}</h3></router-link>
-			<div v-html="study.description"></div>
-		</card>
+		<div v-for="study in groupData.studies" class="col-md-6 d-block">
+			<study-card v-if="study.id" :id="study.id" :description="study.description" :title="study.title" :link="'/groups/' + groupData.slug + $root.cleanLink(study.link)"></study-card>
+		</div>
 
 	</div>
 
 </template>
 <script>
   import {
-    Card,
+    StudyCard,
     Table as NTable,
     Button
   } from 'src/components'
@@ -21,24 +23,24 @@
     return {
       loadingTodos: true,
       loadingMore : false,
-      todoData: [],
-      todoPage: 1,
+      todoData    : [],
+      todoPage    : 1,
     }
   }
 
   export default {
     components: {
-      Card,
+      StudyCard,
       NTable,
       Button
     },
     props     : {
       groupData: {
         default: {
-          id: 0,
-		  studies: []
+          id     : 0,
+          studies: []
         }
-	  },
+      },
     },
     data      : getDefaultData,
     computed  : {},

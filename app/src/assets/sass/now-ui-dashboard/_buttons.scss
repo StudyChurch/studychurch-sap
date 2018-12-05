@@ -82,6 +82,10 @@
             width: 24px;
         }
 
+        &:not(.btn-footer) svg {
+            height: 2.375rem;
+        }
+
     }
 
     &:not(.btn-icon) .now-ui-icons{

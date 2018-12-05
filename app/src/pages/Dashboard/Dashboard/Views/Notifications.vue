@@ -29,6 +29,9 @@
 	},
     computed  : {},
     methods   : {
+      getGroup(id) {
+        return this.$root.userData.groups.filter(group => group.id === id)[0];
+	  },
       getNotifications () {
         this.$http
           .get(

@@ -1,75 +1,65 @@
 <template>
+  <card>
+    <h5 slot="header" class="title">Edit Profile</h5>
+    <form>
+      <div class="row">
+        <div class="col-md-3">
 
-	<div class="sc-group--settings">
-		<card>
-			<h5 slot="header" class="title">Group Settings</h5>
-			<form>
+          <fg-input type="text"
+                    label="Username"
+                    placeholder="Username"
+                    :disabled="true"
+                    v-model="user.username">
+          </fg-input>
+        </div>
+        <div class="col-md-4">
+          <fg-input type="email"
+                    label="Email"
+                    placeholder="Email"
+                    v-model="user.email">
+          </fg-input>
+        </div>
+      </div>
 
-				<fg-input type="text"
-						  label="Group Name"
-						  v-model="group.name">
-				</fg-input>
-
-				<div class="form-group has-label">
-					<label>Description</label>
-					<el-input
-						ref="description"
-						type="textarea"
-						:autosize="{ minRows: 4 }"
-						resize="none"
-						v-model="group.description"></el-input>
-				</div>
-
-				<n-button type="primary" native-type="submit">Save</n-button>
-
-			</form>
-		</card>
-	</div>
-
+      <div class="row">
+        <div class="col-md-6">
+          <fg-input type="text"
+                    label="First Name"
+                    placeholder="First Name"
+                    v-model="user.firstName">
+          </fg-input>
+        </div>
+        <div class="col-md-6">
+          <fg-input type="text"
+                    label="Last Name"
+                    placeholder="Last Name"
+                    v-model="user.lastName">
+          </fg-input>
+        </div>
+      </div>
+    </form>
+  </card>
 </template>
 <script>
-  import { Input } from 'element-ui';
-
-  import {
-    Card,
-    Table as NTable,
-    Button
-  } from 'src/components'
-
   export default {
-    components: {
-      Card,
-      NTable,
-      Button,
-      Input
-    },
-    props     : {
-      groupData: {id: 0},
-    },
     data() {
       return {
-        group: {
-          name       : this.groupData.name,
-          description: this.groupData.description.raw
+        user: {
+          username: this.$root.$data.userData.username,
+          email: this.$root.$data.userData.email,
+          firstName: this.$root.$data.userData.firstName,
+          lastName: this.$root.$data.userData.lastName,
         }
       }
     },
-    watch     : {
-      'groupData' (to, from) {
-
-        // make sure we are dealing with a new group
-        if (to.id === from.id) {
-          return;
-        }
-
-        this.group = {
-          name       : this.groupData.name,
-          description: this.groupData.description.raw
-        };
+    methods: {
+      updateProfile() {
+        alert('Your data: ' + JSON.stringify(this.user))
       }
-    },
-    methods   : {}
+    }
   }
+
 </script>
 <style>
+
 </style>

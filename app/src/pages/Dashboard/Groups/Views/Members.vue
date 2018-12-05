@@ -2,6 +2,10 @@
 
 	<div class="sc-group--members">
 
+		<div class="text-right">
+			<n-button type="primary" @click.native="addMember">Add Member</n-button>
+		</div>
+
 		<card class="card-chart">
 			<h3 class="card-title">Leaders</h3>
 			<div class="table-responsive">
@@ -43,6 +47,8 @@
     Button
   } from 'src/components'
 
+  import { MessageBox } from 'element-ui';
+
   export default {
     components: {
       Card,
@@ -66,6 +72,15 @@
       }
     },
     methods   : {
+      addMember() {
+        let self = this;
+        MessageBox.prompt( 'Use this link to invite members to join this group.', 'Add a Member', {
+          dangerouslyUseHTMLString : true,
+		  inputValue : self.groupData.invite,
+		  inputType : 'textarea',
+		  showCancelButton : false
+		} ).then().catch();
+	  },
       reset (keep) {
         let def = getDefaultData();
         def[keep] = this[keep];

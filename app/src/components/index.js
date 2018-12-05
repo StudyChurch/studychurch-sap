@@ -12,6 +12,7 @@ import Table from './Table.vue'
 
 import Card from './Cards/Card.vue'
 import StatsCard from './Cards/StatsCard.vue'
+import StudyCard from './Cards/StudyCard.vue'
 import Navbar from './Navbar/Navbar';
 import NavbarToggleButton from './Navbar/NavbarToggleButton';
 
@@ -55,6 +56,7 @@ export {
   FormGroupInput,
   Card,
   StatsCard,
+  StudyCard,
   LineChart,
   BarChart,
   Table,

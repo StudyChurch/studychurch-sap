@@ -13,15 +13,14 @@ import routes from './routes/routes'
 import { setAccessToken, setUserData, getUserData } from './auth';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBook, faUsers, faChevronRight, faComments, faList, faUser, faCogs, faBell } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faUsers, faChevronRight, faComments, faList, faUser, faCogs, faBell, faEdit, faTrash, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faBook, faUsers, faChevronRight, faComments, faList, faUser, faCogs, faBell);
+library.add(faBook, faUsers, faChevronRight, faComments, faList, faUser, faCogs, faBell, faEdit, faTrash, faEye, faEyeSlash);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
-
 Vue.config.devtools = true;
 
 // plugin setup
@@ -38,10 +37,6 @@ const router = new VueRouter({
   mode: 'history'
 });
 
-let mixin = {
-  methods: {}
-};
-
 // Filters
 Vue.filter('dateFormat', DateFilter);
 Vue.filter( 'isPrivate', function( value, isPrivate ) {
@@ -57,7 +52,6 @@ let vm = new Vue({
   el: '#app',
   render: h => h(App),
   router,
-  mixins: [mixin],
   data: {
     userData: getUserData(),
     currentGroup: 0,

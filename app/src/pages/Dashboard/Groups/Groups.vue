@@ -52,7 +52,7 @@
 						<n-table :data="groupData.studies">
 							<template slot-scope="{row}">
 								<td>
-									<router-link :to="'/groups/' + $route.params.slug + $root.cleanLink(row.link)">{{row.title}}</router-link>
+									<router-link :to="'/groups/' + $route.params.slug + $root.cleanLink(row.link)" v-html="row.title"></router-link>
 								</td>
 							</template>
 						</n-table>

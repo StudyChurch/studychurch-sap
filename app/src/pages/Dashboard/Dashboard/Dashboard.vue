@@ -30,7 +30,7 @@
 					<el-menu-item :index="'/studies/'">
 						<font-awesome-icon icon="book"></font-awesome-icon>&nbsp;&nbsp;<span>Studies</span>
 					</el-menu-item>
-					<el-menu-item :index="'/notifications/'">
+					<el-menu-item v-if="false" :index="'/notifications/'">
 						<font-awesome-icon icon="bell"></font-awesome-icon>&nbsp;&nbsp;<span>Notifications</span>
 					</el-menu-item>
 					<el-menu-item :index="'/settings/'">

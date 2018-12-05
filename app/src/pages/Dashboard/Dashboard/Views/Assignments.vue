@@ -3,10 +3,10 @@
 	<div class="sc-group--assignments" v-loading="loadingTodos" style="min-height: 200px;">
 
 		<card v-for="data in todoData" :class="'card'">
-			&nbsp;
+			<router-link class="category" v-html="getGroup(data.group).name" :to="'/groups/' + getGroup(data.group).slug + '/'"></router-link>
 			<h6>Due Date: {{data.date}}</h6>
 			<p v-for="lesson in data.lessons">
-				<router-link :to="'/groups/' + $route.params.slug + $root.cleanLink(lesson.link)">
+				<router-link :to="'/groups/' + getGroup(data.group).slug + $root.cleanLink(lesson.link)">
 					<i class="now-ui-icons design_bullet-list-67"></i>&nbsp;
 					<span v-html="lesson.title"></span></router-link>
 			</p>
@@ -52,6 +52,9 @@
       }
     },
     methods   : {
+      getGroup(id) {
+        return this.$root.userData.groups.filter(group => group.id === id)[0];
+      },
       getGroupTodos () {
         this.loadingTodos = true;
         this.$http

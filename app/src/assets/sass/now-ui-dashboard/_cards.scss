@@ -158,6 +158,16 @@
     }
 }
 
+.card-study {
+    .card-image {
+        .actions {
+            position: absolute;
+            top: 0;
+            right: 10px;
+        }
+    }
+}
+
 @import "cards/card-background";
 @import "cards/card-chart";
 @import "cards/card-collapse";

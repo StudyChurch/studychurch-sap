@@ -2,25 +2,20 @@
 	<div>
 		<card v-loading="loading" style="min-height: 200px;">
 			<div class="card-header">
+				<div class="study-meta float-right">
+					<el-select class="select-primary" size="small" placeholder="Select Chapter" v-if="chapters.length" v-model="chapterSelect" style="margin:-10px -5px">
+						<el-option
+							v-for="option in chapters"
+							class="select-primary"
+							:value="getChapterLink(option)"
+							:label="option.title.rendered"
+							:key="option.id">
+						</el-option>
+					</el-select>
+				</div>
 				<div>
 					<h5 class="title" v-html="chapterData.study"></h5>
 					<h1 class="title" v-html="chapterData.title.rendered"></h1>
-				</div>
-			</div>
-
-			<div class="study-meta">
-				<div>
-					<p>
-						<select>
-							<option>Chapter Select</option>
-							<option v-for="chapter in chapters">{{ chapter.title.rendered }}</option>
-						</select>
-					</p>
-				</div>
-				<div>
-					<p>
-						Print
-					</p>
 				</div>
 			</div>
 
@@ -34,11 +29,11 @@
 		</card>
 
 		<div>
-			<router-link v-if="prevChapter.id" :to="navPrefix + $root.cleanLink(prevChapter.link)" tag="button" class="btn btn-default">
+			<router-link v-if="prevChapter.id && chapterData.id !== prevChapter.id" :to="navPrefix + $root.cleanLink(prevChapter.link)" tag="button" class="btn btn-default">
 				<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-left"></i></span>
 				&nbsp;&nbsp;<span v-html="prevChapter.title.rendered"></span>
 			</router-link>
-			<router-link v-if="nextChapter.id" :to="navPrefix + $root.cleanLink(nextChapter.link)" tag="button" class="btn btn-default">
+			<router-link v-if="nextChapter.id && chapterData.id !== nextChapter.id" :to="navPrefix + $root.cleanLink(nextChapter.link)" tag="button" class="btn btn-default float-right">
 				<span v-html="nextChapter.title.rendered"></span>
 				&nbsp;&nbsp;<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-right"></i></span>
 			</router-link>
@@ -56,6 +51,7 @@
     TimeLineItem
   } from 'src/components';
 
+  import { Select, Option } from 'element-ui';
   import Answer from './Elements/Answer.vue';
 
   export default {
@@ -66,19 +62,22 @@
       AnimatedNumber,
       TimeLine,
       TimeLineItem,
-      Answer
+      Answer,
+      'el-select': Select,
+      'el-option': Option
     },
     data() {
       return {
-        loading     : true,
-        prevChapter : {
+        loading      : true,
+        chapterSelect: '',
+        prevChapter  : {
           id: 0
         },
-        nextChapter : {
+        nextChapter  : {
           id: 0
         },
-        chapters    : [],
-        chapterData : {
+        chapters     : [],
+        chapterData  : {
           id      : 0,
           study   : '',
           title   : {
@@ -92,7 +91,7 @@
             }
           ],
         },
-        studyData   : {
+        studyData    : {
           id         : 0,
           name       : '',
           slug       : '',
@@ -107,7 +106,7 @@
             rendered: ''
           }
         },
-        activityData: [],
+        activityData : [],
       }
     },
     mounted() {
@@ -117,6 +116,11 @@
     watch     : {
       '$route' (to, from) {
         this.getChapterItems();
+      },
+      'chapterSelect' (to) {
+        if (to !== this.$route.path) {
+          this.$router.push(to);
+        }
       }
     },
     props     : {
@@ -143,6 +147,13 @@
       },
     },
     methods   : {
+      getChapterLink(chapter) {
+        if (undefined !== this.$route.params.slug) {
+          return '/groups/' + this.$route.params.slug + this.$root.cleanLink(chapter.link);
+		} else {
+          return this.$root.cleanLink(chapter.link);
+		}
+	  },
       getStudyChapters () {
         this.$http
           .get(
@@ -155,6 +166,8 @@
       },
       getChapterItems () {
         let i = 0;
+
+        this.chapterSelect = this.$route.path;
 
         for (i = 0; i < this.chapters.length; i++) {
           if (undefined === this.$route.params.chapter || this.chapters[i].slug === this.$route.params.chapter) {
@@ -170,12 +183,16 @@
         if (i > 0) {
           if (undefined !== this.chapters[i - 1]) {
             this.prevChapter = this.chapters[i - 1];
+          } else {
+            this.prevChapter = {id: 0};
           }
         }
 
         if (i < this.chapters.length) {
           if (undefined !== this.chapters[i + 1]) {
             this.nextChapter = this.chapters[i + 1];
+          } else {
+            this.nextChapter = {id: 0};
           }
         }
 
