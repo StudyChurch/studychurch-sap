@@ -106,6 +106,9 @@ let vm = new Vue({
       this.userData = data;
     },
     cleanLink (link) {
+      if ("string" !== typeof link) {
+        return link;
+      }
       return link.replace(window.location.protocol + '//' + window.location.host, '');
     }
   }

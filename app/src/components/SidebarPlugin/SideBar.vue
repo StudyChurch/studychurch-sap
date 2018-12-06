@@ -44,7 +44,7 @@
     props: {
       title: {
         type: String,
-        default: 'StudyChurch'
+        default: 'Devo360'
       },
       backgroundColor: {
         type: String,

@@ -11,7 +11,7 @@
 						<div class="author">
 							<font-awesome-icon icon="users" class="avatar border-gray"></font-awesome-icon>
 							<router-link :to="'/groups/' + $route.params.slug + '/'">
-								<h5 class="title">{{groupData.name}}</h5></router-link>
+								<h5 class="title" v-html="groupData.name"></h5></router-link>
 							<p class="description" v-show="showGroupDesc" v-html="groupData.description.rendered"></p>
 							<p class="description" v-show="showGroupDesc">
 								<a href="#" @click.stop="showGroupDesc=false">Hide details</a></p>
