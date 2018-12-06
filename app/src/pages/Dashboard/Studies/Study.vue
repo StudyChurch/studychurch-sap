@@ -3,9 +3,9 @@
 		<card v-loading="loading" style="min-height: 200px;">
 			<div class="card-header">
 				<div class="study-meta float-right">
-					<el-select class="select-primary" size="small" placeholder="Select Chapter" v-if="chapters.length" v-model="chapterSelect" style="margin:-10px -5px">
+					<el-select class="select-primary" size="small" placeholder="Select Chapter" v-if="studyData.navigation.length" v-model="studyData.currentChapter" style="margin:-10px -5px">
 						<el-option
-							v-for="option in chapters"
+							v-for="option in studyData.navigation"
 							class="select-primary"
 							:value="getChapterLink(option)"
 							:label="option.title.rendered"
@@ -14,14 +14,13 @@
 					</el-select>
 				</div>
 				<div>
-					<h5 class="title" v-html="chapterData.study"></h5>
+					<h5 class="title" v-html="studyData.name"></h5>
 					<h1 class="title" v-html="chapterData.title.rendered"></h1>
 				</div>
 			</div>
 
 			<div v-for="data in chapterData.elements" :id="'post-' + data.id">
-				<!--<div class="card-body" v-html="data.content.rendered | isPrivate( data['is_private'] )"></div>-->
-				<div class="card-body" v-html="$options.filters.isPrivate( data.content.rendered, data['is_private'] )"></div>
+				<div class="card-body" v-html="data.content.rendered"></div>
 				<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
 					<answer :questionData="data" :groupData="groupData"></answer>
 				</div>
@@ -29,12 +28,12 @@
 		</card>
 
 		<div>
-			<router-link v-if="prevChapter.id && chapterData.id !== prevChapter.id" :to="navPrefix + $root.cleanLink(prevChapter.link)" tag="button" class="btn btn-default">
+			<router-link v-if="studyData.prevChapter.id && chapterData.id !== studyData.prevChapter.id" :to="navPrefix + $root.cleanLink(studyData.prevChapter.link)" tag="button" class="btn btn-default">
 				<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-left"></i></span>
-				&nbsp;&nbsp;<span v-html="prevChapter.title.rendered"></span>
+				&nbsp;&nbsp;<span v-html="studyData.prevChapter.title.rendered"></span>
 			</router-link>
-			<router-link v-if="nextChapter.id && chapterData.id !== nextChapter.id" :to="navPrefix + $root.cleanLink(nextChapter.link)" tag="button" class="btn btn-default float-right">
-				<span v-html="nextChapter.title.rendered"></span>
+			<router-link v-if="studyData.nextChapter.id && chapterData.id !== studyData.nextChapter.id" :to="navPrefix + $root.cleanLink(studyData.nextChapter.link)" tag="button" class="btn btn-default float-right">
+				<span v-html="studyData.nextChapter.title.rendered"></span>
 				&nbsp;&nbsp;<span class="btn-label btn-label-right"><i class="now-ui-icons arrows-1_minimal-right"></i></span>
 			</router-link>
 		</div>
@@ -54,6 +53,33 @@
   import { Select, Option } from 'element-ui';
   import Answer from './Elements/Answer.vue';
 
+  function getDefaultData () {
+    return {
+      loading    : true,
+      chapterData: {
+        id      : 0,
+        study   : '',
+        title   : {
+          rendered: '',
+        },
+        elements: [
+          {
+            content: {
+              rendered: ''
+            }
+          }
+        ],
+      },
+      studyData  : {
+        name          : '',
+        currentChapter: '',
+        prevChapter   : {},
+        nextChapter   : {},
+        navigation    : []
+      },
+    }
+  }
+
   export default {
     components: {
       Card,
@@ -66,62 +92,24 @@
       'el-select': Select,
       'el-option': Option
     },
-    data() {
-      return {
-        loading      : true,
-        chapterSelect: '',
-        prevChapter  : {
-          id: 0
-        },
-        nextChapter  : {
-          id: 0
-        },
-        chapters     : [],
-        chapterData  : {
-          id      : 0,
-          study   : '',
-          title   : {
-            rendered: '',
-          },
-          elements: [
-            {
-              content: {
-                rendered: ''
-              }
-            }
-          ],
-        },
-        studyData    : {
-          id         : 0,
-          name       : '',
-          slug       : '',
-          title      : {
-            rendered: ''
-          },
-          avatar_urls: {
-            full : '',
-            thumb: ''
-          },
-          description: {
-            rendered: ''
-          }
-        },
-        activityData : [],
-      }
-    },
+    data      : getDefaultData,
     mounted() {
-      this.getChapterItems();
-      this.getStudyChapters();
+      this.getNavigation();
+      this.getChapter();
     },
     watch     : {
       '$route' (to, from) {
+        this.setupNavigation();
+
         if (to.params.study !== from.params.study) {
-          this.getStudyChapters();
-        } else {
-          this.getChapterItems();
+          this.getNavigation();
+        }
+
+        if (to.params.chapter !== from.params.chapter) {
+          this.getChapter();
         }
       },
-      'chapterSelect' (to) {
+      'studyData.currentChapter' (to) {
         if (to !== this.$route.path) {
           this.$router.push(to);
         }
@@ -158,48 +146,75 @@
           return this.$root.cleanLink(chapter.link);
         }
       },
-      getStudyChapters () {
+      getNavigation() {
+        this.reset();
+
+        this.$http
+          .get('/wp-json/studychurch/v1/studies/' + this.$route.params.study + '/navigation')
+          .then(response => {
+            this.studyData.navigation = response.data;
+            this.maybeRedirectToFirstChapter();
+            this.setupNavigation();
+          })
+      },
+      maybeRedirectToFirstChapter() {
+        if (undefined === this.$route.params.chapter && this.studyData.navigation.length) {
+          this.$router.push(this.getChapterLink(this.studyData.navigation[0]));
+        }
+      },
+      getChapter() {
+
+        if (undefined === this.$route.params.chapter) {
+          return;
+        }
+
+        this.reset('studyData');
+
         this.$http
           .get(
-            '/wp-json/studychurch/v1/studies/' + this.$route.params.study + '/chapters/')
+            '/wp-json/studychurch/v1/studies/' + this.$route.params.study + '/chapters/' + this.$route.params.chapter)
           .then(response => {
-            this.chapters = response.data;
-            this.getChapterItems();
+            this.chapterData = response.data;
+            this.studyData.name = this.chapterData.study;
           })
           .finally(() => this.loading = false)
       },
-      getChapterItems () {
+      setupNavigation () {
         let i = 0;
 
-        this.chapterSelect = this.$route.path;
+        this.studyData.currentChapter = this.$route.path;
 
-        for (i = 0; i < this.chapters.length; i++) {
-          if (undefined === this.$route.params.chapter || this.chapters[i].slug === this.$route.params.chapter) {
-            this.chapterData = this.chapters[i];
+        for (i = 0; i < this.studyData.navigation.length; i++) {
+          if (undefined === this.$route.params.chapter || this.studyData.navigation[i].slug === this.$route.params.chapter) {
             break;
           }
         }
 
-        if (i > this.chapters.length) {
+        if (i > this.studyData.navigation.length) {
           return;
         }
 
         if (i > 0) {
-          if (undefined !== this.chapters[i - 1]) {
-            this.prevChapter = this.chapters[i - 1];
+          if (undefined !== this.studyData.navigation[i - 1]) {
+            this.studyData.prevChapter = this.studyData.navigation[i - 1];
           } else {
-            this.prevChapter = {id: 0};
+            this.studyData.prevChapter = {id: 0};
           }
         }
 
-        if (i < this.chapters.length) {
-          if (undefined !== this.chapters[i + 1]) {
-            this.nextChapter = this.chapters[i + 1];
+        if (i < this.studyData.navigation.length) {
+          if (undefined !== this.studyData.navigation[i + 1]) {
+            this.studyData.nextChapter = this.studyData.navigation[i + 1];
           } else {
-            this.nextChapter = {id: 0};
+            this.studyData.nextChapter = {id: 0};
           }
         }
 
+      },
+      reset (keep) {
+        let def = getDefaultData();
+        def[keep] = this[keep];
+        Object.assign(this.$data, def);
       }
     }
   }
