@@ -13,12 +13,12 @@ import Notifications from 'src/pages/Dashboard/Dashboard/Views/Notifications.vue
 import Settings      from 'src/pages/Dashboard/Dashboard/Views/Settings.vue';
 import Studies       from 'src/pages/Dashboard/Dashboard/Views/Studies.vue';
 
-import Groups           from 'src/pages/Dashboard/Groups/Groups.vue';
-import GroupActivity    from 'src/pages/Dashboard/Groups/Views/Activity.vue';
-import GroupAssignments from 'src/pages/Dashboard/Groups/Views/Assignments.vue';
-import GroupMembers     from 'src/pages/Dashboard/Groups/Views/Members.vue';
-import GroupSettings    from 'src/pages/Dashboard/Groups/Views/Settings.vue';
-import GroupStudies     from 'src/pages/Dashboard/Groups/Views/Studies.vue';
+import Groups             from 'src/pages/Dashboard/Groups/Groups.vue';
+import GroupActivity      from 'src/pages/Dashboard/Groups/Views/Activity.vue';
+import GroupAssignments   from 'src/pages/Dashboard/Groups/Views/Assignments.vue';
+import GroupMembers       from 'src/pages/Dashboard/Groups/Views/Members.vue';
+import GroupSettings      from 'src/pages/Dashboard/Groups/Views/Settings.vue';
+import GroupStudies       from 'src/pages/Dashboard/Groups/Views/Studies.vue';
 
 import Study     from 'src/pages/Dashboard/Studies/Study.vue';
 

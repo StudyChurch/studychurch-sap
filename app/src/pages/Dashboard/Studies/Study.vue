@@ -115,7 +115,11 @@
     },
     watch     : {
       '$route' (to, from) {
-        this.getChapterItems();
+        if (to.params.study !== from.params.study) {
+          this.getStudyChapters();
+        } else {
+          this.getChapterItems();
+        }
       },
       'chapterSelect' (to) {
         if (to !== this.$route.path) {
@@ -150,14 +154,14 @@
       getChapterLink(chapter) {
         if (undefined !== this.$route.params.slug) {
           return '/groups/' + this.$route.params.slug + this.$root.cleanLink(chapter.link);
-		} else {
+        } else {
           return this.$root.cleanLink(chapter.link);
-		}
-	  },
+        }
+      },
       getStudyChapters () {
         this.$http
           .get(
-            '/wp-json/studychurch/v1/studies/' + this.$route.params.study + '/chapters')
+            '/wp-json/studychurch/v1/studies/' + this.$route.params.study + '/chapters/')
           .then(response => {
             this.chapters = response.data;
             this.getChapterItems();
