@@ -39,7 +39,7 @@
           <span class="sidebar-normal">{{link.name}}</span>
         </template>
         <template v-else>
-          <i :class="link.icon"></i>
+          <font-awesome-icon :icon="link.icon"></font-awesome-icon>
           <p>{{link.name}}</p>
         </template>
       </component>

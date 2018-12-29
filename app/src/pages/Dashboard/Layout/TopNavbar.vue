@@ -21,6 +21,12 @@
 
 			<ul class="navbar-nav">
 				<li class="nav-item">
+					<a href="/library" class="nav-link">Library</a>
+				</li>
+				<li class="nav-item">
+					<a href="/account" class="nav-link">Account</a>
+				</li>
+				<li class="nav-item">
 					<router-link to="/notifications" class="nav-link">
 						<i class="now-ui-icons ui-1_bell-53"></i>
 						<p>

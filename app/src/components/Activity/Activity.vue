@@ -39,6 +39,7 @@
   import Card from '../Cards/Card.vue';
   import ActivityForm from './ActivityForm.vue';
   import ActivityComment from './ActivityComment.vue';
+  import { mapState } from 'vuex';
 
   export default {
     components: {
@@ -68,6 +69,8 @@
     },
     watch     : {},
     computed  : {
+      ...mapState(['user', 'group']),
+
       getComments() {
         if (undefined === this.item.comments) {
           return [];
@@ -111,10 +114,10 @@
         return false;
       },
       showUpdateForm() {
-        return this.update && this.item.user === this.$root.$data.userData.id;
+        return this.update && this.item.user === this.user.me.id;
       },
       showEditButton() {
-        return this.showActivityContent && this.item.user === this.$root.$data.userData.id;
+        return this.showActivityContent && this.item.user === this.user.me.id;
       },
     },
     methods   : {

@@ -46,10 +46,10 @@
     watch     : {},
     computed  : {
       showEditButton() {
-        return undefined !== this.item.content.raw && this.item.user === this.$root.$data.userData.id;
+        return undefined !== this.item.content.raw && this.item.user === this.$state.user.me.id;
       },
       showUpdateForm() {
-        return undefined !== this.item.content.raw && this.update && this.item.user === this.$root.$data.userData.id;
+        return undefined !== this.item.content.raw && this.update && this.item.user === this.$state.user.me.id;
       },
     },
     methods   : {

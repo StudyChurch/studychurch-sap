@@ -3,10 +3,10 @@
 	<div class="sc-group--assignments" v-loading="loadingTodos" style="min-height: 200px;">
 
 		<card v-for="data in todoData" :class="'card'">
-			<router-link class="category" v-html="getGroup(data.group).name" :to="'/groups/' + getGroup(data.group).slug + '/'"></router-link>
+			<router-link class="category" v-html="getGroupById(data.group).name" :to="'/groups/' + getGroupById(data.group).slug + '/'"></router-link>
 			<h6>Due Date: {{data.date}}</h6>
 			<p v-for="lesson in data.lessons">
-				<router-link :to="'/groups/' + getGroup(data.group).slug + $root.cleanLink(lesson.link)">
+				<router-link :to="'/groups/' + getGroupById(data.group).slug + $root.cleanLink(lesson.link)">
 					<i class="now-ui-icons design_bullet-list-67"></i>&nbsp;
 					<span v-html="lesson.title"></span></router-link>
 			</p>
@@ -22,6 +22,8 @@
     Table as NTable,
     Button
   } from 'src/components'
+  import AssignmentService from '@/services/AssignmentService';
+  import { mapState, mapGetters } from 'vuex';
 
   function getDefaultData () {
     return {
@@ -43,22 +45,15 @@
     mounted() {
       this.getGroupTodos();
     },
-    computed  : {
-      leaders() {
-        return this.groupData.members.filter(member => member.admin);
-      },
-      members() {
-        return this.groupData.members.filter(member => !member.admin);
-      }
+    computed: {
+      ...mapState(['user', 'group']),
+      ...mapGetters('group', ['getGroupById'])
     },
     methods   : {
-      getGroup(id) {
-        return this.$root.userData.groups.filter(group => group.id === id)[0];
-      },
       getGroupTodos () {
         this.loadingTodos = true;
-        this.$http
-          .get(
+        AssignmentService
+          .getAssignments(
             '/wp-json/studychurch/v1/assignments')
           .then(response => (
             this.todoData = response.data

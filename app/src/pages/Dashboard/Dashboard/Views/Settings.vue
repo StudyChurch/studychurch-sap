@@ -45,10 +45,10 @@
     data() {
       return {
         user: {
-          username: this.$root.$data.userData.username,
-          email: this.$root.$data.userData.email,
-          firstName: this.$root.$data.userData.firstName,
-          lastName: this.$root.$data.userData.lastName,
+          username: this.$state.user.me.username,
+          email: this.$state.user.me.email,
+          firstName: this.$state.user.me.firstName,
+          lastName: this.$state.user.me.lastName,
         }
       }
     },

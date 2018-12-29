@@ -9,10 +9,10 @@
 					</div>
 					<div>
 						<div class="author">
-							<img class="avatar border-gray" :src="userData.avatar.full" alt="...">
-							<h5 class="title">{{userData.name}}</h5>
+							<img class="avatar border-gray" :src="user.me.avatar_urls.full" alt="...">
+							<h5 class="title">{{user.me.name}}</h5>
 							<p class="description">
-								@{{userData.username}}
+								@{{user.me.user_login}}
 							</p>
 						</div>
 					</div>
@@ -49,16 +49,10 @@
 </template>
 <script>
 
-  import { getUserData } from 'src/auth';
+  import { mapState } from 'vuex'
 
   import {
-    Card,
-    Table as NTable,
-    Progress as NProgress,
-    AnimatedNumber,
-    TimeLine,
-    TimeLineItem,
-    Activity
+    Card
   } from 'src/components'
 
   import { Menu, MenuItem } from 'element-ui';
@@ -67,74 +61,13 @@
     components: {
       'el-menu'     : Menu,
       'el-menu-item': MenuItem,
-      Card,
-      NTable,
-      NProgress,
-      AnimatedNumber,
-      TimeLine,
-      TimeLineItem,
-      Activity
+      Card
     },
-    data() {
-      return {
-        loadingGroups      : false,
-        loadingStudies     : false,
-        loadingActivity    : true,
-        loadingMoreActivity: false,
-        loadingTodos       : true,
-        todoData           : [],
-        userData           : this.$root.$data.userData,
-        groupData          : this.$root.$data.userData.groups,
-        studyData          : this.$root.$data.userData.studies,
-        activityData       : [],
-        activityPage       : 1,
-      }
-    },
-    created() {
-    },
-    computed  : {},
-    methods   : {
-      getUserGroups () {
-        this.loadingGroups = true;
-        this.$http
-          .get('/wp-json/buddypress/v1/groups/?show_hidden=true&user_id=2')
-          .then(response => {
-            this.groupData = response.data;
-            this.getUserGroupsActivity()
-          })
-          .finally(() => this.loadingGroups = false)
-      },
-      getUserGroupsActivity () {
-        let groups = this.$root.$data.userData.groups.map(function (group) {
-          return group.id;
-        });
-        this.$http
-          .get(
-            '/wp-json/studychurch/v1/activity?component=groups&show_hidden=true&display_comments=threaded&_embed=true&per_page=5&page=' + this.activityPage + '&primary_id[]=' + groups.join(
-              '&primary_id[]='))
-          .then(response => {
-            if (!response.data.length) {
-              this.activityPage = 0;
-            }
-
-            this.activityData = this.activityData.concat(response.data);
-          })
-          .finally(() => this.loadingActivity = this.loadingMoreActivity = false)
-      },
-      loadMoreActivity () {
-        if (!this.activityPage) {
-          return false;
-        }
-
-        this.loadingMoreActivity = true;
-        this.activityPage++;
-        this.getUserGroupsActivity();
-      },
-    }
+    computed  : {
+      ...mapState(['user'])
+	},
+    methods   : {}
   }
 </script>
 <style>
-	.table-responsive {
-		overflow: auto;
-	}
 </style>

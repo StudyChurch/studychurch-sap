@@ -1,6 +1,6 @@
 <template>
 	<div :class="getClass">
-		<img v-if="avatar" class="avatar border-gray" :src="avatar">
+		<img v-if="getAvatar" class="avatar border-gray" :src="getAvatar">
 
 		<el-input
 			ref="commentform"
@@ -16,6 +16,7 @@
 </template>
 <script>
   import { Input } from 'element-ui';
+  import { mapState } from 'vuex';
 
   function _interopDefault (ex) {
     return (
@@ -53,9 +54,7 @@
       activityID   : [Number], // the ID of the activity item to post this comment to, leave empty if this is a new Activity item
       avatar       : {
         type   : [String, Boolean],
-        default: function () {
-          return this.$root.$data.userData.avatar.full;
-        },
+        default: '',
       },
       component    : {
         type    : [String],
@@ -84,6 +83,10 @@
       }
     },
     computed  : {
+      ...mapState(['user', 'group']),
+	  getAvatar() {
+        return ('' === this.avatar) ? this.user.me.avatar_urls.full : this.avatar;
+	  },
       getClass() {
         return 'sc-activity--input ' + this.elClass;
       }
@@ -131,7 +134,7 @@
             id                   : this.activityID,
             component            : this.component,
             type                 : this.type,
-            user                 : this.$root.$data.userData.id,
+            user                 : this.user.me.id,
             prime_association    : this.primaryItem,
             secondary_association: this.secondaryItem,
             content              : this.comment,

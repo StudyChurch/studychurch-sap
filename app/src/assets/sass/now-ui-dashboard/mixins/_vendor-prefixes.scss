@@ -78,7 +78,7 @@
     .nav li.active > a:not([data-toggle="collapse"]){
       color: $success-color;
 
-      i,
+      i, svg,
       .sidebar-mini-icon{
         color: $success-color;
       }

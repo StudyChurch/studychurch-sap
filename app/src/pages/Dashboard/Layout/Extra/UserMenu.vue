@@ -1,12 +1,12 @@
 <template>
   <div class="user">
     <div class="photo">
-      <img :src="userData.avatar.full" alt="avatar"/>
+      <img :src="user.me.avatar_urls.full" alt="avatar"/>
     </div>
     <div class="info">
-      <a data-toggle="collapse" :aria-expanded="!isClosed" @click.stop="toggleMenu" href="#">
+      <a data-toggle="collapse" :aria-expanded="!isClosed" @click.prevent="toggleMenu" href="#">
            <span>
-             {{userData.name}}
+             {{user.me.name}}
              <b class="caret"></b>
           </span>
       </a>
@@ -37,22 +37,19 @@
 <script>
   import { CollapseTransition } from 'vue2-transitions';
   import { getUserData } from 'src/auth';
+  import { mapState } from 'vuex';
 
   export default {
     components: {
       CollapseTransition
     },
-    props: {
-      title: {
-        type: String,
-        default: 'James Amos'
-      }
-    },
     data() {
       return {
         isClosed: true,
-        userData: getUserData()
       }
+    },
+    computed: {
+      ...mapState(['user'])
     },
     methods: {
       toggleMenu() {

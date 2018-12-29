@@ -167,10 +167,10 @@
       setupCurrentGroup () {
         console.log('setup group');
         // check for cached group data
-        for (let i = 0; i < this.$root.$data.userData.groups.length; i++) {
-          if (this.$route.params.slug === this.$root.$data.userData.groups[i].slug) {
+        for (let i = 0; i < this.$state.user.me.groups.length; i++) {
+          if (this.$route.params.slug === this.$state.user.me.groups[i].slug) {
             this.reset(); // reset data just to make sure we don't pull over from the previous group if there was one
-            this.groupData = this.$root.$data.userData.groups[i];
+            this.groupData = this.$state.user.me.groups[i];
             break;
           }
         }

@@ -33,7 +33,7 @@
 			</template>
 		</modal>
 		<div class="d-flex flex-wrap row">
-			<router-link v-for="group in $root.$data.userData.groups" class="col-md-6 d-block" :to="$root.cleanLink(group.link)">
+			<router-link v-for="group in group.groups" :key="group.id" class="col-md-6 d-block" :to="$root.cleanLink(group.link)">
 				<card class="card-user" style="padding: 0;">
 					<div slot="image" class="image">
 						<img src="@/assets/img/bg-bible.jpg" alt="...">
@@ -42,7 +42,7 @@
 						<div class="author">
 							<font-awesome-icon icon="users" class="avatar border-gray"></font-awesome-icon>
 
-							<h5 class="title">{{group.name}}</h5>
+							<h5 class="title" v-html="group.name"></h5>
 							<p class="description" v-show="showGroupDesc" v-html="group.description.rendered"></p>
 						</div>
 					</div>
@@ -55,6 +55,7 @@
 </template>
 <script>
   import { Input, Message } from 'element-ui';
+  import { mapState } from 'vuex';
 
   import {
     Card,
@@ -88,6 +89,9 @@
     data      : getDefaultData,
     mounted() {
     },
+    computed  : {
+      ...mapState(['user', 'group'])
+    },
     methods   : {
       createGroup() {
         if (!this.newGroup.name || !this.newGroup.description) {
@@ -97,28 +101,20 @@
 
         this.creatingGroup = true;
 
-        this.$http.post('/wp-json/studychurch/v1/groups/', {
-          name       : this.newGroup.name,
-          description: this.newGroup.description,
-          user_id    : this.$root.userData.id,
-          status     : 'hidden',
-        })
-          .then(response => {
-			this.creatingGroup = false;
-            this.$router.push('/groups/' + response.data[0].slug);
+        this.$store
+          .dispatch('group/createGroup', {
+            name       : this.newGroup.name,
+            description: this.newGroup.description,
+            user_id    : this.user.me.id,
+            status     : 'hidden',
+          })
+          .then(group => {
+            console.log(group);
+            this.creatingGroup = false;
+            this.$router.push('/groups/' + group.slug);
             Message.success('Success! Taking your new group ...');
           })
 
-      },
-      getUserGroups () {
-        this.loading = true;
-        this.$http
-          .get('/wp-json/buddypress/v1/groups/?show_hidden=true&user_id=2')
-          .then(response => {
-            this.groupData = response.data;
-            this.getUserGroupsActivity()
-          })
-          .finally(() => this.loadingGroups = false)
       },
       reset (keep) {
         let def = getDefaultData();

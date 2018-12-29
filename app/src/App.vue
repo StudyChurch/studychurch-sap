@@ -1,14 +1,20 @@
 <template>
-  <router-view></router-view>
+	<div v-loading="undefined === user.me.id" style="min-height:500px;">
+		<router-view v-if="undefined !== user.me.id"></router-view>
+	</div>
 </template>
 
 <script>
+  import { mapState } from 'vuex';
 
   export default {
-    name: 'App',
+    name    : 'App',
     data() {
       return {}
     },
-    methods: {}
+    computed: {
+      ...mapState(['user'])
+    },
+    methods : {}
   }
 </script>

@@ -4,14 +4,17 @@
     <side-bar>
       <template slot-scope="props" slot="links">
         <user-menu></user-menu>
-        <sidebar-item v-if="0" :link="{name: 'Organization', icon: 'now-ui-icons business_globe', path: '/organization'}"></sidebar-item>
-        <sidebar-item v-if="$root.$data.userData.groups" :link="{name: 'Groups', icon: 'users'}">
-          <sidebar-item v-for="group in $root.$data.userData.groups" :link="{name: group.name, path: cleanLink(group.link)}"></sidebar-item>
+
+        <template v-if="group.organizations" class="user">
+          <div v-for="group in group.organizations" class="user">
+            <sidebar-item :link="{name: group.name, icon: 'church', path: '/organizations/' + group.slug}"></sidebar-item>
+          </div>
+        </template>
+
+        <sidebar-item v-if="group.groups" :link="{name: 'Groups', icon: 'users'}">
+          <sidebar-item v-for="group in group.groups" :link="{name: group.name, path: $root.cleanLink(group.link)}"></sidebar-item>
         </sidebar-item>
-        <hr />
-        <sidebar-item v-if="$root.$data.userData.studies" :link="{name: 'Studies', icon: 'book'}">
-          <sidebar-item v-for="study in $root.$data.userData.studies" :link="{name: study.title.rendered, path: cleanLink(study.link)}"></sidebar-item>
-        </sidebar-item>
+
       </template>
     </side-bar>
     <div class="main-panel">
@@ -32,6 +35,7 @@
   /* eslint-disable no-new */
   import PerfectScrollbar from 'perfect-scrollbar'
   import 'perfect-scrollbar/css/perfect-scrollbar.css'
+  import { mapState } from 'vuex';
 
   function hasElement (className) {
     return document.getElementsByClassName(className).length > 0;
@@ -65,14 +69,14 @@
       SlideYDownTransition,
       ZoomCenterTransition
     },
+    computed : {
+      ...mapState(['user', 'group'])
+    },
     methods: {
       toggleSidebar () {
         if (this.$sidebar.showSidebar) {
           this.$sidebar.displaySidebar(false)
         }
-      },
-      cleanLink (link) {
-        return link.replace(window.location.protocol + '//' + window.location.host, '');
       }
     },
     mounted () {

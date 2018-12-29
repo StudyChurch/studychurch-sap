@@ -32,7 +32,7 @@
 			</template>
 		</modal>
 		<div class="d-flex flex-wrap row">
-			<div v-for="study in $root.userData.studies" class="col-md-6 d-block">
+			<div v-for="study in study.studies" class="col-md-6 d-block">
 				<study-card
 					:id="study.id"
 					:title="study.title.rendered"
@@ -52,6 +52,7 @@
     StudyCard,
     Modal
   } from 'src/components'
+  import { mapState } from 'vuex';
 
   function getDefaultData () {
     return {
@@ -76,7 +77,9 @@
     },
     props     : {},
     data      : getDefaultData,
-    computed  : {},
+    computed  : {
+      ...mapState(['study'])
+    },
     methods   : {
       createStudy() {
         if (!this.newStudy.name || !this.newStudy.description) {
