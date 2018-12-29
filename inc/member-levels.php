@@ -87,11 +87,12 @@ class SCV_Member_Levels {
 
 	public function add_leader_role() {
 
-		if ( get_option( 'sc_updated_roles' ) ) {
+		if ( 2 === get_option( 'sc_updated_roles' ) ) {
 			return;
 		}
 
 		add_role( 'leader', __( 'Leader', 'sc' ), array( 'read' => true, 'manage_groups' => true ) );
+		add_role( 'organization', __( 'Organization', 'sc' ), array( 'read' => true, 'manage_groups' => true ) );
 
 		$roles = wp_roles();
 
@@ -101,7 +102,7 @@ class SCV_Member_Levels {
 			}
 		}
 
-		update_option( 'sc_updated_roles', true, 'no' );
+		update_option( 'sc_updated_roles', 2, 'no' );
 
 	}
 }
