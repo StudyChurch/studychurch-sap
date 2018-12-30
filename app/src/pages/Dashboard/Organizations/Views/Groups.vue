@@ -89,24 +89,7 @@
 								fixed="right"
 								label="Actions">
 								<div slot-scope="props" class="table-actions">
-									<n-button @click.native="handleLike(props.$index, props.row)"
-											  class="like"
-											  type="info"
-											  size="sm" round icon>
-										<i class="fa fa-heart"></i>
-									</n-button>
-									<n-button @click.native="handleEdit(props.$index, props.row)"
-											  class="edit"
-											  type="warning"
-											  size="sm" round icon>
-										<i class="fa fa-calendar"></i>
-									</n-button>
-									<n-button @click.native="handleDelete(props.$index, props.row)"
-											  class="remove"
-											  type="danger"
-											  size="sm" round icon>
-										<i class="fa fa-times"></i>
-									</n-button>
+									<router-link :to="'/groups/' + props.row.slug">View</router-link>
 								</div>
 							</el-table-column>
 						</el-table>

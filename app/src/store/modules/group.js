@@ -228,7 +228,6 @@ export const actions = {
   },
 
   fetchOrgGroups({commit, getters, state}, orgID) {
-    console.log( 'org id: ' + orgID );
     return GroupService.getOrganizationGroups(orgID)
       .then(response => {
         return response.data;
