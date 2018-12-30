@@ -292,6 +292,8 @@
       }
     },
     created () {
+      console.log(this.$store);
+      console.log(this.group);
       this.loading = true;
       this.$store
         .dispatch('group/fetchOrgGroups', this.group.organization.id)
