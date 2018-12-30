@@ -101,7 +101,7 @@
         let params = 'context=edit&_embed=true&component=groups&show_hidden=true&display_comments=threaded&per_page=20&secondary_id=' + this.questionData.id + '&primary_id=' + this.groupData.id;
 
         if (this.questionData.is_private) {
-          params += '&user=' + this.$state.user.me.id;
+          params += '&user=' + this.$store.state.user.me.id;
         }
 
         this.$http
@@ -112,7 +112,7 @@
             if (response.data.length) {
               this.groupAnswers = [];
               for (let i = 0; i < response.data.length; i++) {
-                if (this.$state.user.me.id === response.data[i].user) {
+                if (this.$store.state.user.me.id === response.data[i].user) {
                   this.answer = response.data[i];
                 } else {
                   this.groupAnswers.push(response.data[i]);

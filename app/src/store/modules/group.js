@@ -155,25 +155,27 @@ export const actions = {
    * @param getters
    * @param state
    * @param id
+   * @param key
    * @returns {*}
    */
-  fetchGroup({commit, getters, state}, id) {
-    if (id === state.group.id) {
+  fetchGroup({commit, getters, state}, {id, key = 'id'}) {
+    if (id === state.group[key]) {
       return state.group;
     }
 
-    var group = getters.getGroupById(id);
+    let group = ('id' === key) ? getters.getGroupById(id) : getters.getGroupBySlug(id);
 
     if (group) {
       commit('SET_GROUP', group);
       return group;
     } else {
       return GroupService.getGroup(id).then(response => {
-        commit('SET_GROUP', response.data);
+        commit('SET_GROUP', response.data[0]);
         return response.data;
       });
     }
   },
+
 
   /**
    * Fetch organization groups
@@ -265,6 +267,34 @@ export const getters = {
   },
 
   /**
+   * Get group members
+   *
+   * @param state
+   * @returns {*}
+   */
+  getGroupMembers: state => {
+    if (undefined === state.group.members) {
+      return [];
+    }
+
+    return state.group.members.members;
+  },
+
+  /**
+   * Get organization admins
+   *
+   * @param state
+   * @returns {*}
+   */
+  getGroupAdmins: state => {
+    if (undefined === state.group.members) {
+      return [];
+    }
+
+    return state.group.members.admins;
+  },
+
+  /**
    * Get organization members
    *
    * @param state
@@ -315,6 +345,11 @@ export const getters = {
    */
   isGroupAdmin: (state, getters, rootState) => id => {
     let group = (undefined !== id) ? getters.getGroupById(id) : state.group;
+
+    if (group.parent_id && getters.isOrgAdmin(group.parent_id)){
+      return true;
+    }
+
     return group.members.admins.includes(rootState.user.me.id);
   }
 

@@ -53,9 +53,9 @@ let vm = new Vue({
         return false;
       }
 
-      for (let i = 0; i < this.$state.user.me.groups.length; i++) {
-        if (this.getCurrentGroup() === this.$state.user.me.groups[i].id) {
-          return this.$state.user.me.groups[i];
+      for (let i = 0; i < this.$store.state.user.me.groups.length; i++) {
+        if (this.getCurrentGroup() === this.$store.state.user.me.groups[i].id) {
+          return this.$store.state.user.me.groups[i];
         }
       }
 

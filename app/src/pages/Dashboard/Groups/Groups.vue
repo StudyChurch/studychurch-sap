@@ -60,7 +60,7 @@
 
 				</card>
 
-				<card class="card-chart d-lg-block d-none" no-footer-line>
+				<card class="card-chart d-lg-block d-none" no-footer-line v-loading="loadingMembers">
 
 					<div slot="header">
 						<h5 class="card-title">Members</h5>
@@ -75,10 +75,12 @@
 					</div>
 
 					<div class="table-responsive">
-						<n-table :data="groupData.members">
+						<n-table :data="groupData.members.members" v-if="! loadingMembers">
 							<template slot-scope="{row}">
-								<td v-html="row.avatar.img"></td>
-								<td v-html="row.name"></td>
+								<td>
+									<img class="avatar" :src="getAvatar(row)" />
+								</td>
+								<td v-html="getName(row)"></td>
 							</template>
 						</n-table>
 					</div>
@@ -89,11 +91,20 @@
 			<div class="col-lg-8">
 
 				<el-menu :default-active="defaultActiveTab" class="el-menu-demo" mode="horizontal" :router="true">
-					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/'"><font-awesome-icon icon="comments"></font-awesome-icon>&nbsp;&nbsp;<span>Discussion</span></el-menu-item>
-					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/assignments/'"><font-awesome-icon icon="list"></font-awesome-icon>&nbsp;&nbsp;<span>Todos</span></el-menu-item>
-					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/studies/'"><font-awesome-icon icon="book"></font-awesome-icon>&nbsp;&nbsp;<span>Studies</span></el-menu-item>
-					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/members/'"><font-awesome-icon icon="user"></font-awesome-icon>&nbsp;&nbsp;<span>Members</span></el-menu-item>
-					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/settings/'"><font-awesome-icon icon="cogs"></font-awesome-icon>&nbsp;&nbsp;<span>Settings</span></el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/'">
+						<font-awesome-icon icon="comments"></font-awesome-icon>&nbsp;&nbsp;<span>Discussion</span>
+					</el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/assignments/'">
+						<font-awesome-icon icon="list"></font-awesome-icon>&nbsp;&nbsp;<span>Todos</span></el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/studies/'">
+						<font-awesome-icon icon="book"></font-awesome-icon>&nbsp;&nbsp;<span>Studies</span>
+					</el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/members/'">
+						<font-awesome-icon icon="user"></font-awesome-icon>&nbsp;&nbsp;<span>Members</span>
+					</el-menu-item>
+					<el-menu-item :index="'/groups/' + this.$route.params.slug + '/settings/'">
+						<font-awesome-icon icon="cogs"></font-awesome-icon>&nbsp;&nbsp;<span>Settings</span>
+					</el-menu-item>
 				</el-menu>
 
 				<br />
@@ -112,12 +123,14 @@
   } from 'src/components'
 
   import { Menu, MenuItem } from 'element-ui';
+  import { mapState, mapGetters } from 'vuex';
 
   function getDefaultData () {
     return {
       loadingGroups : false,
       loadingStudies: false,
       loadingTodos  : true,
+      loadingMembers: true,
       showGroupDesc : false,
       todoData      : [],
       groupData     : {
@@ -157,6 +170,10 @@
       }
     },
     computed  : {
+      ...mapState(['user', 'group']),
+      ...mapGetters('group', ['isOrgAdmin', 'isGroupAdmin']),
+      ...mapGetters('user', ['getAvatar', 'getName']),
+
       defaultActiveTab() {
         return (
           undefined === this.$route.params.study
@@ -165,37 +182,13 @@
     },
     methods   : {
       setupCurrentGroup () {
-        console.log('setup group');
-        // check for cached group data
-        for (let i = 0; i < this.$state.user.me.groups.length; i++) {
-          if (this.$route.params.slug === this.$state.user.me.groups[i].slug) {
-            this.reset(); // reset data just to make sure we don't pull over from the previous group if there was one
-            this.groupData = this.$state.user.me.groups[i];
-            break;
-          }
-        }
-
-        if (!this.groupData.id) {
-          this.reset(); // this shouldn't be necessary, but better safe than sorry
-          this.getCurrentGroup();
-        } else {
-          this.getGroupTodos();
-          this.$root.setCurrentGroup(this.groupData.id);
-        }
-      },
-      /**
-       * Fetch
-       */
-      getCurrentGroup () {
-        this.$http
-          .get(
-            '/wp-json/studychurch/v1/groups/' + this.$route.params.slug)
-          .then(response => {
-            this.groupData = response.data[0];
-            this.$root.setCurrentGroup(this.groupData.id);
+        this.$store
+          .dispatch('group/fetchGroup', {id: this.$route.params.slug, key: 'slug'})
+          .then(() => {
+            this.groupData = this.group.group;
             this.getGroupTodos();
-          })
-          .finally(() => this.loadingTodos = false)
+            this.getMembers();
+          });
       },
       getGroupTodos () {
         this.loadingTodos = true;
@@ -206,6 +199,14 @@
             this.todoData = response.data
           ))
           .finally(() => this.loadingTodos = false)
+      },
+      getMembers () {
+        this.loadingMembers = true;
+        return this.$store
+          .dispatch('user/fetchUsersByID', this.group.group.members.members)
+          .then(() => {
+            this.loadingMembers = false;
+          });
       },
       reset (keep) {
         let def = getDefaultData();

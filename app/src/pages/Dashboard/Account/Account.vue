@@ -71,13 +71,13 @@
     data() {
       return {
         model: {
-          imageUrl: this.$state.user.me.avatar.full
+          imageUrl: this.$store.state.user.me.avatar.full
         },
         user : {
-          username : this.$state.user.me.username,
-          email    : this.$state.user.me.email,
-          firstName: this.$state.user.me.firstName,
-          lastName : this.$state.user.me.lastName,
+          username : this.$store.state.user.me.username,
+          email    : this.$store.state.user.me.email,
+          firstName: this.$store.state.user.me.firstName,
+          lastName : this.$store.state.user.me.lastName,
         }
       }
     },
