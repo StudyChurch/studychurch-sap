@@ -82,6 +82,8 @@ export const actions = {
     return UserService.getUsersById(idsToFetch)
       .then(response => {
         commit('ADD_USERS', response.data);
+        console.log('users added to store');
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
