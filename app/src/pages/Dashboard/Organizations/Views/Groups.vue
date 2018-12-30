@@ -70,7 +70,9 @@
 								  style="width: 100%;"
 								  :data="queriedData">
 
-							<el-table-column min-width="180" key="name" label="Name" prop="name"></el-table-column>
+							<el-table-column min-width="180" key="name" label="Name" prop="name">
+								<span slot-scope="{row}" v-html="row.name"></span>
+							</el-table-column>
 
 							<el-table-column width="150" key="leader" label="Leader">
 								<span slot-scope="{row}" v-html="getName(row.creator_id)"></span>
@@ -292,22 +294,16 @@
       }
     },
     created () {
-      console.log(this.$store);
-      console.log(this.group);
       this.loading = true;
       this.$store
         .dispatch('group/fetchOrgGroups', this.group.organization.id)
         .then(groups => {
 
-          console.log('groups');
-          console.log(groups);
           let creators = [];
 
           for (let group of groups) {
             creators.push(group.creator_id);
           }
-
-          console.log(creators);
 
           this.$store
             .dispatch('user/fetchUsersByID', creators)

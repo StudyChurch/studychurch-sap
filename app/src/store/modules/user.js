@@ -82,11 +82,8 @@ export const actions = {
     return UserService.getUsersById(idsToFetch)
       .then(response => {
         commit('ADD_USERS', response.data);
-        console.log('users added to store');
-        console.log(response.data);
       })
       .catch(error => {
-        console.log(error);
       });
   },
   fetchUser({commit, getters, state}, id) {
@@ -128,8 +125,8 @@ export const getters = {
     let user = getters.getUserById(id);
     return typeof user.avatar_urls.full !== "undefined" ? user.avatar_urls.full : '';
   },
-  getName: state => id => {
-    let user = state.users.find(user => user.id === id);
+  getName: (state, getters) => id => {
+    let user = getters.getUserById(id);
     return user.name;
   },
 };
