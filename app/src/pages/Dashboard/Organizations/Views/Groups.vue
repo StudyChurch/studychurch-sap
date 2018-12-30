@@ -298,11 +298,16 @@
       this.$store
         .dispatch('group/fetchOrgGroups', this.group.organization.id)
         .then(groups => {
+
+          console.log('groups');
+          console.log(groups);
           let creators = [];
 
           for (let group of groups) {
             creators.push(group.creator_id);
           }
+
+          console.log(creators);
 
           this.$store
             .dispatch('user/fetchUsersByID', creators)
