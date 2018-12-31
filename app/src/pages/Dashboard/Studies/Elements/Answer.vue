@@ -16,13 +16,14 @@
 
 		<p class="category" v-html="groupAnswerText"></p>
 
-		<div v-if="answer.content.raw && groupAnswers.length" class="sc-answer--group">
+		<div v-if="showGroupAnswers && groupAnswers.length" class="sc-answer--group">
 			<activity v-for="gAnswer in groupAnswers" class="sc-question--group-answers--answer" :activity="gAnswer" :showContent="true" :showForm="true"></activity>
 		</div>
 	</div>
 </template>
 <script>
   import { Activity, ActivityForm } from 'src/components';
+  import { mapState, mapGetters } from 'vuex';
 
   function getDefaultData () {
     return {
@@ -56,6 +57,13 @@
       },
     },
     computed  : {
+      ...mapState(['user', 'group']),
+      ...mapGetters('group', ['isOrgAdmin', 'isGroupAdmin']),
+
+	  showGroupAnswers() {
+        return Boolean(this.answer.content.raw) || this.isGroupAdmin();
+	  },
+
       groupAnswerText() {
 
         if (this.questionData.is_private) {
@@ -69,7 +77,7 @@
 		} else {
           return this.groupAnswers.length + ' Group Answers';
 		}
-	  }
+	  },
 	},
     watch     : {
       '$route' () {

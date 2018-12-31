@@ -7,6 +7,7 @@
 			type="textarea"
 			:autosize="autosize"
 			resize="none"
+			:disabled="disabled"
 			:placeholder="placeholder"
 			v-model="comment"
 			v-loading="loading"
@@ -75,6 +76,10 @@
         type   : [String],
         default: 'Post a reply'
       },
+      disabled     : {
+        type   : [Boolean],
+        default: false
+      },
       autosize     : {
         type   : [Boolean, Object],
         default: function () {
@@ -84,9 +89,11 @@
     },
     computed  : {
       ...mapState(['user', 'group']),
-	  getAvatar() {
-        return ('' === this.avatar) ? this.user.me.avatar_urls.full : this.avatar;
-	  },
+      getAvatar() {
+        return (
+        '' === this.avatar
+        ) ? this.user.me.avatar_urls.full : this.avatar;
+      },
       getClass() {
         return 'sc-activity--input ' + this.elClass;
       }

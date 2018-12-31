@@ -27,23 +27,8 @@
 					<a href="/account" class="nav-link">Account</a>
 				</li>
 				<li class="nav-item">
-					<router-link to="/notifications" class="nav-link">
-						<i class="now-ui-icons ui-1_bell-53"></i>
-						<p>
-							<span class="d-lg-none d-md-block">Notifications</span>
-						</p>
-					</router-link>
+					<a href="/" class="nav-link">Dashboard</a>
 				</li>
-				<drop-down tag="li"
-						   position="right"
-						   class="nav-item"
-						   icon="now-ui-icons users_single-02">
-
-					<router-link to="/" class="dropdown-item">Dashboard</router-link>
-					<router-link to="/settings" class="dropdown-item">Settings</router-link>
-					<router-link to="/log-out" class="dropdown-item">Log out</router-link>
-				</drop-down>
-
 			</ul>
 
 		</template>

@@ -83,6 +83,11 @@ const router = new Router({
             {path: 'members', component: OrgMembers},
             {path: 'settings', component: OrgSettings},
             {path: 'studies', component: OrgStudies},
+            {
+              path     : 'studies/:study/:chapter?',
+              name     : 'Group Studies',
+              component: Study,
+            }
           ]
         },
       ]

@@ -22,7 +22,17 @@
 			<div v-for="data in chapterData.elements" :id="'post-' + data.id">
 				<div class="card-body" v-html="data.content.rendered"></div>
 				<div v-if="data['data_type'] === 'question_short' ||  data['data_type'] === 'question_long'" class="card-footer">
-					<answer :questionData="data" :groupData="groupData"></answer>
+					<div class="sc-answer" v-if="isPreview">
+						<activity-form
+							ref="answerForm"
+							:disabled="true"
+							elClass="sc-activity--answer"
+							component="groups"
+							type="answer_update"
+							placeholder="This study is in preview mode."
+							:primaryItem="0"></activity-form>
+					</div>
+					<answer v-else :questionData="data" :groupData="groupData"></answer>
 				</div>
 			</div>
 		</card>
@@ -47,7 +57,8 @@
     Progress as NProgress,
     AnimatedNumber,
     TimeLine,
-    TimeLineItem
+    TimeLineItem,
+	ActivityForm
   } from 'src/components';
 
   import { Select, Option } from 'element-ui';
@@ -89,6 +100,7 @@
       TimeLine,
       TimeLineItem,
       Answer,
+	  ActivityForm,
       'el-select': Select,
       'el-option': Option
     },
@@ -135,16 +147,20 @@
           return '';
         }
 
-        return '/groups/' + this.$route.params.slug;
+        let prefix = this.isOrganization ? '/organizations/' : '/groups/';
+
+        return prefix + this.$route.params.slug;
       },
+      isOrganization() {
+        return this.$route.path.includes('organizations');
+      },
+	  isPreview() {
+        return this.isOrganization;
+	  }
     },
     methods   : {
       getChapterLink(chapter) {
-        if (undefined !== this.$route.params.slug) {
-          return '/groups/' + this.$route.params.slug + this.$root.cleanLink(chapter.link);
-        } else {
-          return this.$root.cleanLink(chapter.link);
-        }
+        return this.navPrefix + this.$root.cleanLink(chapter.link);
       },
       getNavigation() {
         this.reset();

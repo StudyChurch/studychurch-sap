@@ -27,6 +27,12 @@
                   <span class="sidebar-normal">My Settings</span>
                 </router-link>
               </li>
+              <li>
+                <a href="/log-out">
+                  <span class="sidebar-mini-icon">LO</span>
+                  <span class="sidebar-normal">Log Out</span>
+                </a>
+              </li>
             </slot>
           </ul>
         </collapse-transition>

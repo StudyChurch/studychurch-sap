@@ -51,7 +51,7 @@
 				:description="study.description"
 				:title="study.title"
 				:thumbnail="study.thumbnail || ''"
-				:link="'/groups/' + groupData.slug + $root.cleanLink(study.link)"></study-card>
+				:link="'/organizations/' + groupData.slug + $root.cleanLink(study.link)"></study-card>
 		</div>
 
 	</div>
