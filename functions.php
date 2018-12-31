@@ -80,7 +80,9 @@ class SCV_Setup {
 	protected function enqueue_scripts() {
 		$postfix = ( defined( 'SCRIPT_DEBUG' ) && true === SCRIPT_DEBUG ) ? '' : '.min';
 
-		wp_dequeue_style( 'sc' );
+		if ( 'templates/study-manage.php' !== get_page_template_slug() ) {
+			wp_dequeue_style( 'sc' );
+		}
 	}
 
 	public function froala_key( $key ) {
