@@ -52,7 +52,6 @@ class SCV_Setup {
 	protected function add_filters() {
 		add_filter( 'sc_everyone_can_add_studies', '__return_false' );
 		add_filter( 'sc_froala_key', array( $this, 'froala_key' ) );
-		add_filter( 'template_include', array( $this, 'app_template' ), 11 );
 		add_filter( 'sc_header_link', function( $link ) {
 			return home_url( '/' );
 		} );
@@ -107,30 +106,6 @@ class SCV_Setup {
 		<?php
 	}
 
-	public function app_template( $template ) {
-
-		if ( ! is_user_logged_in() ) {
-			return $template;
-		}
-
-		if ( in_array( $_SERVER['REQUEST_URI'], array( '/', '/settings/', '/notifications/' ) ) ) {
-			return get_stylesheet_directory() . '/app.php';
-		}
-
-		if ( strpos( $_SERVER['REQUEST_URI'], 'groups/' ) ) {
-			return get_stylesheet_directory() . '/app.php';
-		}
-
-		if ( strpos( $_SERVER['REQUEST_URI'], 'organizations/' ) ) {
-			return get_stylesheet_directory() . '/app.php';
-		}
-
-		if ( strpos( $_SERVER['REQUEST_URI'], 'studies/' ) ) {
-			return get_stylesheet_directory() . '/app.php';
-		}
-
-		return $template;
-	}
 }
 
 /**
