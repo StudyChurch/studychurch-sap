@@ -79,7 +79,7 @@ class SCV_Setup {
 	protected function enqueue_scripts() {
 		$postfix = ( defined( 'SCRIPT_DEBUG' ) && true === SCRIPT_DEBUG ) ? '' : '.min';
 
-		if ( 'templates/study-manage.php' !== get_page_template_slug() ) {
+		if ( 'join' != get_post()->post_name && ! in_array( get_page_template_slug(), ['templates/study-manage.php' ] ) ) {
 			wp_dequeue_style( 'sc' );
 		}
 	}
