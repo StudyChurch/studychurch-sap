@@ -50,7 +50,6 @@ class SCV_Setup {
 	}
 
 	protected function add_filters() {
-		add_filter( 'sc_everyone_can_add_studies', '__return_false' );
 		add_filter( 'sc_froala_key', array( $this, 'froala_key' ) );
 		add_filter( 'sc_header_link', function( $link ) {
 			return home_url( '/' );
