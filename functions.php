@@ -50,7 +50,6 @@ class SCV_Setup {
 	}
 
 	protected function add_filters() {
-		add_filter( 'sc_froala_key', array( $this, 'froala_key' ) );
 		add_filter( 'sc_header_link', function( $link ) {
 			return home_url( '/' );
 		} );
@@ -83,17 +82,11 @@ class SCV_Setup {
 		}
 	}
 
-	public function froala_key( $key ) {
-		return ( $this->is_dev() ) ? 'lC5D4A3B1uF2C1C1I2A10C1D6A1D6F5hfugquD-11iupB2sobco==' : 'rB1G1I1A2sE7D7B5G4A1I4H4C3B6B5fhC-9mwsgsknF4rvbfnceiF5mh1A-7==';
-	}
-
 	public static function is_dev() {
 		return ( defined( 'WP_DEBUG' ) && WP_DEBUG );
 	}
 
-	public function remove_actions() {
-		remove_action( 'template_redirect',  array( StudyChurch\Setup::get_instance(), 'redirect_logged_in_user' ) );
-	}
+	public function remove_actions() {}
 
 	public function reftagger() {
 		?>
